@@ -30,8 +30,7 @@ public class FrontController extends HttpServlet {
 
         String page = command.execute(request);
         System.out.println(page);
-        //System.out.println(request.getAttribute("login"));
-       // System.out.println("role in servlet " + request.getSession().getAttribute("role"));
+
         if(page.contains("redirect:")) {
 
             response.sendRedirect(request.getContextPath() + page.replace("redirect:", ""));
