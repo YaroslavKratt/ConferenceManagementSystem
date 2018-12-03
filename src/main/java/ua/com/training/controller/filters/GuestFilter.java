@@ -6,9 +6,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionContext;
 import java.io.IOException;
-import java.util.Enumeration;
 
 public class GuestFilter implements Filter {
     @Override
@@ -22,9 +20,9 @@ public class GuestFilter implements Filter {
         HttpSession session = request.getSession();
         String role = (String) session.getAttribute("role");
         if (role==null) {
-            session.setAttribute("role", User.Roles.GUEST.getRole());
+            session.setAttribute("role", User.Role.GUEST.getRole());
             //System.out.println("atrib in filter " + session.getAttribute("role"));
-            request.getRequestDispatcher(request.getRequestURI() + User.Roles.GUEST.getRole()).forward(request, response);
+            request.getRequestDispatcher(request.getRequestURI() + User.Role.GUEST.getRole()).forward(request, response);
             return;
         }
         filterChain.doFilter(request, response);

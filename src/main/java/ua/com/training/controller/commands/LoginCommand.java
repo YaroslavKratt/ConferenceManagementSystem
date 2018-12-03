@@ -20,7 +20,7 @@ public class LoginCommand implements Command
         }
 
         if(true){
-            return "redirect:/" + User.Roles.USER.getRole();
+            return "redirect:/" + User.Role.USER.getRole();
         }
         return pathBundle.getString("login.page.path");
     }
