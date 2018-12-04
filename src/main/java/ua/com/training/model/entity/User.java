@@ -2,6 +2,9 @@ package ua.com.training.model.entity;
 
 import java.math.BigInteger;
 
+/**
+ *
+ */
 public class User {
     private long id;
     private String name;

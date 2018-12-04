@@ -21,10 +21,11 @@ public class GuestFilter implements Filter {
         String role = (String) session.getAttribute("role");
         if (role==null) {
             session.setAttribute("role", User.Role.GUEST.getRole());
-            //System.out.println("atrib in filter " + session.getAttribute("role"));
             request.getRequestDispatcher(request.getRequestURI() + User.Role.GUEST.getRole()).forward(request, response);
             return;
         }
+
+
         filterChain.doFilter(request, response);
     }
 

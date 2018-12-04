@@ -12,7 +12,7 @@ public class CommandFactory {
     public Command getCommand(HttpServletRequest request) {
         Command currentCommand = new EmptyCommand();
         String command = request.getRequestURI().replaceAll(".*/guest/|.*/admin/|.*/speaker/|.*/user/","");
-        System.out.println("command" + command);
+        System.out.println("COMMAND: " + command);
         if (command.isEmpty()) {
             return currentCommand;
         }

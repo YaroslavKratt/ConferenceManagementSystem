@@ -29,10 +29,12 @@ public class FrontController extends HttpServlet {
         Command command = commandFactory.getCommand(request);
 
         String page = command.execute(request);
-        System.out.println(page);
-
+        if(request.getSession()!=null)
+        {
+            System.out.println("SESSION:" +  request.getSession().getServletContext().getAttribute("TOM"));
+        }
         if(page.contains("redirect:")) {
-
+            System.out.println("PAGE WITH REDIRECT: " + page);
             response.sendRedirect(request.getContextPath() + page.replace("redirect:", ""));
         }
         else {
