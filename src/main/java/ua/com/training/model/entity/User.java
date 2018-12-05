@@ -13,6 +13,7 @@ public class User {
     private Role role;
     private BigInteger speakerBonus;
     private double speakerRating;
+    private String password;
 
     User() {    }
 
@@ -21,6 +22,7 @@ public class User {
         this.name = userBuilder.name;
         this.surname = userBuilder.surname;
         this.email = userBuilder.email;
+        this.password = userBuilder.password;
     }
 
     public String getName() { return name; }
@@ -34,6 +36,10 @@ public class User {
     public BigInteger getSpeakerBonus() { return speakerBonus; }
 
     public double getSpeakerRating() { return speakerRating; }
+
+    public String getPassword() {
+        return password;
+    }
 
     public enum Role {
         ADMIN("admin"),
@@ -61,6 +67,7 @@ public class User {
         private Role role;
         private BigInteger speakerBonus;
         private double speakerRating;
+        private String password;
 
 
         public Builder setId(long id) {
@@ -85,6 +92,11 @@ public class User {
 
         public Builder setEmail(String email) {
             this.email = email;
+            return this;
+        }
+
+        public Builder setPassword(String password) {
+            this.password = password;
             return this;
         }
 

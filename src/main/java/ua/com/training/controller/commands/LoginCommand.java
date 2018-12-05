@@ -19,29 +19,44 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request) {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        Locale locale = (Locale) request.getSession().getAttribute("locale");
+        logger.info("email:" + email + " password:" + password);
+        Locale locale =  request.getLocale();
         HttpSession session = request.getSession();
         System.out.println("Locale:" + locale);
         ResourceBundle messageBundle = ResourceManager.getBundle(ResourceManager.MESSAGES_BUNDLE_NAME,locale);
 
 
         if (email == null || password == null) {
-            return pathBundle.getString("login.page.path");
+            logger.info("Empty email or login");
+            return ResourceManager.getProperty(pathBundle, "login.page.path");
         }
 
         if (!isGuest(request)) {
             logger.warn("Already logged in user tried to enter");
-            return "redirect:/" + UserService.getRole(email);
+            return "redirect:/" + UserService.getRoleString(email);
 
         }
 
         if (!UserService.checkUserExist(email)) {
+            logger.info("User" + email + " dose not exist");
             putMessageInRequest(request, "wrongEmail", messageBundle,"message.no.user.with.email");
             return ResourceManager.getProperty(pathBundle, "login.page.path");
         }
 
+        if(UserService.checkPassword(email, password)){
+            logInUser(request, email,password);
+            logger.info("User " + email + "signed in");
+            return "redirect:/" + UserService.getRoleString(email);
+        }
+
 
         return pathBundle.getString("login.page.path");
+    }
+
+    private void logInUser(HttpServletRequest request, String email, String password) {
+        request.getSession().setAttribute("email", email);
+        request.getSession().setAttribute("role", UserService.getUserRole(email).getRole());
+        request.getSession().getServletContext().setAttribute(email, request.getSession());
     }
 
     private void putMessageInRequest(HttpServletRequest request, String wrongEmail, ResourceBundle messageBundle, String messageName) {

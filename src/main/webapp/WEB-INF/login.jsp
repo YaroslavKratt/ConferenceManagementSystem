@@ -18,12 +18,15 @@
 </head>
 
 <body>
-<fmt:setLocale value="${ empty sessionScope.lang ? 'en' : sessionScope.lang}"/>
+<c:set var="language"
+       value="${not empty param.language ? param.language : not empty language ? language: pageContext.request.locale}"
+       scope="session"/>
+<fmt:setLocale value="${language}" scope="session"/>
 
 <div class="login">
     <h1>Login</h1>
     <form method="post">
-        <input type="text" name="login" placeholder="Login" required="required" />
+        <input type="text" name="email" placeholder="Email" required="required" />
         <input type="password" name="password" placeholder="Password" required="required" />
         <button type="submit">Let me in.</button>
     </form>
