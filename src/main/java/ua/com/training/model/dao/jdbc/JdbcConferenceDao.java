@@ -25,8 +25,5 @@ public class JdbcConferenceDao implements ConferenceDao {
 
     }
 
-    @Override
-    public void close() throws Exception {
 
-    }
 }

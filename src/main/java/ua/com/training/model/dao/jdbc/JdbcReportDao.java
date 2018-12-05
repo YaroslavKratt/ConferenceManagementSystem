@@ -28,8 +28,5 @@ public class JdbcReportDao implements ReportDao {
 
     }
 
-    @Override
-    public void close() throws Exception {
 
-    }
 }

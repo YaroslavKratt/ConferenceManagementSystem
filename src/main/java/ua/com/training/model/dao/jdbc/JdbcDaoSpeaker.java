@@ -25,8 +25,5 @@ public class JdbcDaoSpeaker implements SpeakerDao {
 
     }
 
-    @Override
-    public void close() throws Exception {
 
-    }
 }
