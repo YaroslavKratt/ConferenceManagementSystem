@@ -6,7 +6,7 @@ import java.util.List;
 
 public class JdbcDaoSpeaker implements SpeakerDao {
     @Override
-    public Object getByid() {
+    public Object getById() {
         return null;
     }
 

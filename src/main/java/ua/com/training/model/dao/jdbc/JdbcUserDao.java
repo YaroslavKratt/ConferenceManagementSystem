@@ -20,7 +20,7 @@ public class JdbcUserDao implements UserDao {
     private ResourceBundle sqlRequestBundle = Resources.SQL_REQUESTS.getBundle();
 
     @Override
-    public User getByid() {
+    public User getById() {
         return null;
     }
 

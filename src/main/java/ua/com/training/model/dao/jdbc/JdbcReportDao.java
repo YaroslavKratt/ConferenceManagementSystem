@@ -9,7 +9,7 @@ public class JdbcReportDao implements ReportDao {
 
 
     @Override
-    public Object getByid() {
+    public Object getById() {
         return null;
     }
 

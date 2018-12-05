@@ -6,7 +6,7 @@ import java.util.List;
 
 public class JdbcConferenceDao implements ConferenceDao {
     @Override
-    public Object getByid() {
+    public Object getById() {
         return null;
     }
 
