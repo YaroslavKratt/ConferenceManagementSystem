@@ -8,6 +8,7 @@ import java.util.List;
 public interface UserDao extends DAO<User> {
 
 
-
+    public User getByEmail(String email);
+    boolean checkUserExist(String email);
 
 }

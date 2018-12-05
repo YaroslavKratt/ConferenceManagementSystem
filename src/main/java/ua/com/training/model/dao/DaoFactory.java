@@ -13,7 +13,7 @@ public abstract class DaoFactory {
 
     public abstract ConferenceDao createConferenceDao();
 
-    DaoFactory getInstanse() {
+   static public DaoFactory getInstance() {
         if (daoFactory == null) {
             synchronized (DaoFactory.class) {
                 if (daoFactory == null) {

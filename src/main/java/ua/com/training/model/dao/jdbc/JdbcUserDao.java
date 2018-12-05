@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.com.training.model.dao.UserDao;
 import ua.com.training.model.entity.User;
-import ua.com.training.model.services.Resources;
+import ua.com.training.model.services.ResourceManager;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 public class JdbcUserDao implements UserDao {
     private static final Logger logger = LogManager.getLogger(JdbcUserDao.class);
     private DataSource dataSource = ConnectionPool.getDataSource();
-    private ResourceBundle sqlRequestBundle = Resources.SQL_REQUESTS.getBundle();
+    private ResourceBundle sqlRequestBundle = ResourceManager.getBundle(ResourceManager.SQL_REQUESTS_BUNDLE_NAME);
 
     @Override
     public User getById() {
@@ -39,10 +39,11 @@ public class JdbcUserDao implements UserDao {
 
     }
 
+    @Override
     public User getByEmail(String email) {
         User user = null;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sqlRequestBundle.getString("query.user.select.by.email"))
+             PreparedStatement preparedStatement = connection.prepareStatement(ResourceManager.getProperty(sqlRequestBundle, "query.user.select.by.email"))
         ) {
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -55,8 +56,8 @@ public class JdbcUserDao implements UserDao {
         return user;
     }
 
-
-    boolean checkUserExist(String email) {
+    @Override
+    public boolean checkUserExist(String email) {
         return getByEmail(email) != null;
     }
 
