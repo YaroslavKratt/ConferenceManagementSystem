@@ -24,4 +24,9 @@ public class JdbcDaoSpeaker implements SpeakerDao {
     public void delete(Object item) {
 
     }
+
+    @Override
+    public void close() throws Exception {
+
+    }
 }

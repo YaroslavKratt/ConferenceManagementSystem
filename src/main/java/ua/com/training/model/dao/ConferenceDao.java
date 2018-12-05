@@ -1,4 +1,4 @@
 package ua.com.training.model.dao;
 
-public interface ConferenceDao {
+public interface ConferenceDao extends DAO {
 }

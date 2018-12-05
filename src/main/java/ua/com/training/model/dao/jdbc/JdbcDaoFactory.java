@@ -1,8 +1,16 @@
 package ua.com.training.model.dao.jdbc;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.com.training.model.dao.*;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class JdbcDaoFactory extends DaoFactory {
+    private static final Logger logger =  LogManager.getLogger(DaoFactory.class);
+    private DataSource dataSource = ConnectionPool.getDataSource();
     @Override
     public UserDao createUserDao() {
         return new JdbcUserDao();
@@ -23,5 +31,14 @@ public class JdbcDaoFactory extends DaoFactory {
         return new JdbcConferenceDao();
     }
 
+    Connection getConnection(){
+        try{
+            return dataSource.getConnection();
+        } catch (SQLException e) {
+            logger.warn("No connection returned: " + e);
+            throw  new RuntimeException();
+        }
+
+    }
 
 }

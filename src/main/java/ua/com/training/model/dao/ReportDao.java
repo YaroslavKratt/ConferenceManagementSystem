@@ -1,4 +1,4 @@
 package ua.com.training.model.dao;
 
-public interface ReportDao {
+public interface ReportDao extends DAO{
 }
