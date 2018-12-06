@@ -23,6 +23,7 @@ public class User {
         this.surname = userBuilder.surname;
         this.email = userBuilder.email;
         this.password = userBuilder.password;
+        this.role = userBuilder.role;
     }
 
     public String getName() { return name; }

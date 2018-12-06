@@ -31,14 +31,14 @@ public class FrontController extends HttpServlet {
         String page = command.execute(request);
         if(request.getSession()!=null)
         {
-            System.out.println("SESSION:" +  request.getSession().getServletContext().getAttribute("TOM"));
+           // System.out.println("SESSION:" +  request.getSession().getServletContext().getAttribute("TOM"));
         }
         if(page.contains("redirect:")) {
-            System.out.println("PAGE WITH REDIRECT: " + page);
+          //  System.out.println("PAGE WITH REDIRECT: " + page);
             response.sendRedirect(request.getContextPath() + page.replace("redirect:", ""));
         }
         else {
-            System.out.println(page);
+          //  System.out.println(page);
             request.getRequestDispatcher(page).forward(request,response);
         }
 
