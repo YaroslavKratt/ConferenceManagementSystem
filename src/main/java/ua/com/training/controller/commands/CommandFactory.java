@@ -7,12 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 
 
 public class CommandFactory {
-    private final static Logger log = LogManager.getLogger(CommandFactory.class);
+    private final static Logger logger = LogManager.getLogger(CommandFactory.class);
 
     public Command getCommand(HttpServletRequest request) {
         Command currentCommand = new EmptyCommand();
-        String command = request.getRequestURI().replaceAll(".*/guest/|.*/admin/|.*/speaker/|.*/user/","");
-        System.out.println("COMMAND: " + command);
+        logger.info("COMMAND BEFORE REPLACE " + request.getRequestURI());
+
+        String command = request.getRequestURI().replaceAll(".*/guest*.|.*/admin*.|.*/speaker*.|.*/user*.","");
+        logger.info("COMMAND AFTER REPLACE " + command);
         if (command.isEmpty()) {
             return currentCommand;
         }
@@ -20,8 +22,9 @@ public class CommandFactory {
         try {
             currentCommand = CommandEnum.valueOf(command.toUpperCase()).getCommand();
         } catch (IllegalArgumentException e) {
-            log.warn("There is no such command: " + command);
+            logger.warn("There is no such command: " + command);
         }
+        logger.info("THE COMMAND IS: " + currentCommand);
         return currentCommand;
     }
 }

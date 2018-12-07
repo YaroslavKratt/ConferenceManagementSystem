@@ -17,7 +17,6 @@ import java.util.ResourceBundle;
 public class JdbcUserDao implements UserDao {
     private static final Logger logger = LogManager.getLogger(JdbcUserDao.class);
     private DataSource dataSource = ConnectionPool.getDataSource();
-    {logger.info("datasource:"+dataSource);}
     private ResourceBundle sqlRequestBundle = ResourceManager.getBundle(ResourceManager.SQL_REQUESTS_BUNDLE_NAME);
 
     @Override
@@ -64,8 +63,6 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public boolean checkUserPassword(String email, String password) {
-        logger.info("user by email: " + getByEmail(email));
-        logger.info("password: " +  getByEmail(email).getPassword());
         return getByEmail(email).getPassword().equals(password);
 
     }
@@ -77,7 +74,6 @@ public class JdbcUserDao implements UserDao {
 
 
     private User extractFromResultSet(ResultSet resultSet) throws SQLException {
-        logger.info(resultSet.getLong(1));
         return new User.Builder()
                 .setId(resultSet.getLong("user_id"))
                 .setEmail(resultSet.getString("user_email"))

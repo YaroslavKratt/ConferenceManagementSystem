@@ -21,6 +21,7 @@ public class GuestFilter implements Filter {
         String role = (String) session.getAttribute("role");
         if (role==null) {
             session.setAttribute("role", User.Role.GUEST.getRole());
+            System.out.println("PATH IN FILTER:" + request.getRequestURI() + User.Role.GUEST.getRole());
             request.getRequestDispatcher(request.getRequestURI() + User.Role.GUEST.getRole()).forward(request, response);
             return;
         }

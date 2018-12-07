@@ -44,7 +44,7 @@ public class LoginCommand implements Command {
         if (UserService.checkPassword(email, password)) {
             dropSessionIfLoggedIn(request, email);
             logInUser(request, email, password);
-            logger.info("User " + email + "signed in");
+            logger.info("User " + email + " signed in");
             return "redirect:/" + UserService.getRoleString(email);
         }
         else {
@@ -56,9 +56,6 @@ public class LoginCommand implements Command {
         return pathBundle.getString("login.page.path");
     }
 
-    private boolean alreadyLoggedIn(HttpServletRequest request, String email) {
-        return request.getSession().getServletContext().getAttribute(email) != null;
-    }
 
     private void logInUser(HttpServletRequest request, String email, String password) {
         request.getSession().setAttribute("email", email);
