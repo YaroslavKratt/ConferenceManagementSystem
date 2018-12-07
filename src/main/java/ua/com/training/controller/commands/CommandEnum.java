@@ -10,6 +10,11 @@ public enum CommandEnum {
         {
             this.command = new LogOutCommand();
         }
+    },
+    REGISTRATION {
+        {
+            this.command = new RegistrationCommand();
+        }
     }
     ;
     Command command;

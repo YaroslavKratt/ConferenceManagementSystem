@@ -24,7 +24,7 @@
                                                                     href="${pageContext.request.contextPath}/guest/login">LOGIN</a>
                         </li>
                         <li class="nav-item" role="presentation"><a class="nav-link float-right"
-                                                                    href="${pageContext.request.contextPath}/guest/register">REGISTER</a>
+                                                                    href="${pageContext.request.contextPath}/guest/registration">REGISTER</a>
                         </li>
                     </ul>
                 </div>

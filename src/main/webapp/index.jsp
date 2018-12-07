@@ -30,7 +30,7 @@
         </div>
     </div>
 </section>
-
+<jsp:include page="WEB-INF/sections/footer.jsp"/>
 </body>
 
 </html>

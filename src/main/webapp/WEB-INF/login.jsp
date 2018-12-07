@@ -22,15 +22,20 @@
        value="${not empty param.language ? param.language : not empty language ? language: pageContext.request.locale}"
        scope="session"/>
 <fmt:setLocale value="${language}" scope="session"/>
-
-<div class="login">
-    <h1>Login</h1>
-    <form method="post">
-        <input type="text" name="email" placeholder="Email" required="required" />
-        <input type="password" name="password" placeholder="Password" required="required" />
-        <button type="submit">Let me in.</button>
-    </form>
-</div>
+<jsp:include page="sections/header.jsp"/>
+<main class="page login-page">
+    <section class="clean-block clean-form dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Log In</h2>
+            </div>
+            <form>
+                <div class="form-group"><label for="email" style="color: black;">Email</label><input class="form-control item" type="email" id="email"></div>
+                <div class="form-group"><label for="password">Password</label><input class="form-control" type="password" id="password"></div><button class="btn btn-primary btn-block" type="submit">Log In</button></form>
+        </div>
+    </section>
+</main>
+<jsp:include page="sections/footer.jsp"/>
 </body>
 
 </html>
