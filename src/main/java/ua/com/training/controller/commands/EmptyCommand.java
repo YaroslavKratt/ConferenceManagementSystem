@@ -8,6 +8,6 @@ public class EmptyCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
 
-        return ResourceManager.getProperty(pathBundle,"index.page.path");
+        return pathBundle.getString("index.page.path");
     }
 }

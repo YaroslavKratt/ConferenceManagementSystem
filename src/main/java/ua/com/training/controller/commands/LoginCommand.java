@@ -28,7 +28,7 @@ public class LoginCommand implements Command {
 
         if (email == null || password == null) {
             logger.info("Empty email or login");
-            return ResourceManager.getProperty(pathBundle, "login.page.path");
+            return pathBundle.getString("login.page.path");
         }
 
         if (!isGuest(request)) {
@@ -38,7 +38,7 @@ public class LoginCommand implements Command {
         if (!UserService.checkUserExist(email)) {
             logger.info("User" + email + " dose not exist");
             putMessageInRequest(request, "wrongEmail", messageBundle, "message.no.user.with.email");
-            return ResourceManager.getProperty(pathBundle, "login.page.path");
+            return pathBundle.getString("login.page.path");
         }
 
         if (UserService.checkPassword(email, password)) {
@@ -64,7 +64,7 @@ public class LoginCommand implements Command {
     }
 
     private void putMessageInRequest(HttpServletRequest request, String wrongEmail, ResourceBundle messageBundle, String messageName) {
-        request.setAttribute(wrongEmail, ResourceManager.getProperty(messageBundle, messageName));
+        request.setAttribute(wrongEmail, messageBundle.getString(messageName));
 
     }
 

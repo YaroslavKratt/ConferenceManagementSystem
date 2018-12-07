@@ -1,14 +1,20 @@
 package ua.com.training.controller.filters;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.com.training.model.entity.User;
+import ua.com.training.model.services.ResourceManager;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ResourceBundle;
+
 
 public class GuestFilter implements Filter {
+    private final static Logger logger =  LogManager.getLogger(GuestFilter.class);
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -18,11 +24,12 @@ public class GuestFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
+        ResourceBundle pathBundle = ResourceBundle.getBundle(ResourceManager.PATHS_BUNDLE_NAME);
         String role = (String) session.getAttribute("role");
         if (role==null) {
             session.setAttribute("role", User.Role.GUEST.getRole());
-            System.out.println("PATH IN FILTER:" + request.getRequestURI() + User.Role.GUEST.getRole());
-            request.getRequestDispatcher(request.getRequestURI() + User.Role.GUEST.getRole()).forward(request, response);
+            logger.debug("PATH IN FILTER: " + request.getRequestURI());
+            request.getRequestDispatcher(pathBundle.getString("index.page.path")).forward(request,response);
             return;
         }
 

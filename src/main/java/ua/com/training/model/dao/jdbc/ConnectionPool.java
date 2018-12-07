@@ -17,9 +17,9 @@ public class ConnectionPool {
                     BasicDataSource basicDataSource = new BasicDataSource();
                     ResourceBundle dbUtilBundle = ResourceManager.getBundle(ResourceManager.DB_UTILS_BUNDLE_NAME);
                     basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-                    basicDataSource.setUrl(ResourceManager.getProperty(dbUtilBundle, "url"));
-                    basicDataSource.setUsername(ResourceManager.getProperty(dbUtilBundle, "user"));
-                    basicDataSource.setPassword(ResourceManager.getProperty(dbUtilBundle, "password"));
+                    basicDataSource.setUrl(dbUtilBundle.getString("url"));
+                    basicDataSource.setUsername(dbUtilBundle.getString("user"));
+                    basicDataSource.setPassword(dbUtilBundle.getString("password"));
                     basicDataSource.setMinIdle(5);
                     basicDataSource.setMaxIdle(10);
                     basicDataSource.setMaxOpenPreparedStatements(100);

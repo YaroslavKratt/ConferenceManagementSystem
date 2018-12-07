@@ -43,7 +43,7 @@ public class JdbcUserDao implements UserDao {
     public User getByEmail(String email) {
         User user = null;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(ResourceManager.getProperty(sqlRequestBundle, "query.user.select.by.email"))
+             PreparedStatement preparedStatement = connection.prepareStatement(sqlRequestBundle.getString("query.user.select.by.email"))
         ) {
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
