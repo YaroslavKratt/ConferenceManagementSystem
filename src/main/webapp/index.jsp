@@ -11,7 +11,7 @@
     <title>Home - AllConferences</title>
     <link href="<c:url value='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO' />" crossorigin="anonymous" rel="stylesheet">
 
-    <link href="<c:url value='css/styles.css' />" rel="stylesheet">
+    <link href="<c:url value='css/index.css' />" rel="stylesheet">
     <link href="<c:url value='https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.csss' />" rel="stylesheet">
 
 

@@ -8,27 +8,37 @@
     <title>Registration - AllConferences</title>
     <link href="<c:url value='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO' />"
           crossorigin="anonymous" rel="stylesheet">
-    <link href="<c:url value='css/styles.css' />" rel="stylesheet">
+    <link href="<c:url value="/css/index.css" />" rel="stylesheet">
     <link href="<c:url value='https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.csss' />"
           rel="stylesheet">
 
 </head>
->
+<jsp:include page="sections/header.jsp"/>
 <main class="page registration-page">
-    <section class="clean-block clean-form dark">
+    <section class="form">
         <div class="container">
             <div class="block-heading">
                 <h2 class="text-info">Registration</h2>
             </div>
             <form>
-                <div class="form-group"><label for="name">Name</label><input class="form-control item" type="text"
-                                                                             id="name"></div>
-                <div class="form-group"><label>Surname</label><input class="form-control" type="text"></div>
-                <div class="form-group"><label for="password">Password</label><input class="form-control item"
-                                                                                     type="password" id="password">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input class="form-control item" type="text"
+                           id="name" name="name">
                 </div>
-                <div class="form-group"><label for="email">Email</label><input class="form-control item" type="email"
-                                                                               id="email"></div>
+                <div class="form-group">
+                    <label>Surname</label>
+                    <input class="form-control" type="text" name="surname">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input class="form-control item" type="email" id="email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input class="form-control item" type="password" id="password" name="password">
+                </div>
+
                 <button class="btn btn-primary btn-block" type="submit">Sign Up</button>
             </form>
         </div>

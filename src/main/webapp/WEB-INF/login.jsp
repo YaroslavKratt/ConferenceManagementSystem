@@ -9,9 +9,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html lang="en" >
+<html lang="en">
 
 <head>
+    <link href="<c:url value='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO' />"
+          crossorigin="anonymous" rel="stylesheet">
+    <link href="<c:url value='/css/index.css' />" rel="stylesheet">
+    <link href="<c:url value='https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.csss' />"
+          rel="stylesheet">
+</head>
     <meta charset="UTF-8">
     <title>Login Form</title>
 
@@ -24,14 +30,19 @@
 <fmt:setLocale value="${language}" scope="session"/>
 <jsp:include page="sections/header.jsp"/>
 <main class="page login-page">
-    <section class="clean-block clean-form dark">
+    <section class="form">
         <div class="container">
             <div class="block-heading">
                 <h2 class="text-info">Log In</h2>
             </div>
-            <form>
-                <div class="form-group"><label for="email" style="color: black;">Email</label><input class="form-control item" type="email" id="email"></div>
-                <div class="form-group"><label for="password">Password</label><input class="form-control" type="password" id="password"></div><button class="btn btn-primary btn-block" type="submit">Log In</button></form>
+            <form method="post">
+                <div class="form-group"><label for="email">Email</label><input class="form-control item" type="email"
+                                                                               id="email" name="email"></div>
+                <div class="form-group"><label for="password">Password</label><input class="form-control"
+                                                                                     type="password" id="password"
+                                                                                     name="password"></div>
+                <button class="btn btn-primary" type="submit">Log In</button>
+            </form>
         </div>
     </section>
 </main>
