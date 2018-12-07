@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ResourceBundle;
 
 public interface Command {
-    public ResourceBundle pathBundle = ResourceManager.getBundle(ResourceManager.PATHS_BUNDLE_NAME);
+     ResourceBundle PATH_BUNDLE = new ResourceManager().getBundle(ResourceManager.PATHS_BUNDLE_NAME);
     String execute(HttpServletRequest request);
 
 

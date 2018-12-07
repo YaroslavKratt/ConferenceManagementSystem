@@ -23,12 +23,12 @@ public class LoginCommand implements Command {
         Locale locale = request.getLocale();
         HttpSession session = request.getSession();
         System.out.println("Locale:" + locale);
-        ResourceBundle messageBundle = ResourceManager.getBundle(ResourceManager.MESSAGES_BUNDLE_NAME, locale);
+        ResourceBundle messageBundle = new ResourceManager().getBundle(ResourceManager.MESSAGES_BUNDLE_NAME, locale);
 
 
         if (email == null || password == null) {
             logger.info("Empty email or login");
-            return pathBundle.getString("login.page.path");
+            return PATH_BUNDLE.getString("login.page.path");
         }
 
         if (!isGuest(request)) {
@@ -38,7 +38,7 @@ public class LoginCommand implements Command {
         if (!UserService.checkUserExist(email)) {
             logger.info("User" + email + " dose not exist");
             putMessageInRequest(request, "wrongEmail", messageBundle, "message.no.user.with.email");
-            return pathBundle.getString("login.page.path");
+            return PATH_BUNDLE.getString("login.page.path");
         }
 
         if (UserService.checkPassword(email, password)) {
@@ -53,7 +53,7 @@ public class LoginCommand implements Command {
         }
 
 
-        return pathBundle.getString("login.page.path");
+        return PATH_BUNDLE.getString("login.page.path");
     }
 
 

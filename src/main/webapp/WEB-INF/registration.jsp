@@ -13,6 +13,7 @@
           rel="stylesheet">
 
 </head>
+<body>
 <jsp:include page="sections/header.jsp"/>
 <main class="page registration-page">
     <section class="form">
@@ -24,19 +25,19 @@
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input class="form-control item" type="text"
-                           id="name" name="name">
+                           id="name" name="name" required>
                 </div>
                 <div class="form-group">
-                    <label>Surname</label>
-                    <input class="form-control" type="text" name="surname">
+                    <label for="surname" >Surname</label>
+                    <input class="form-control" type="text" name="surname" id="surname" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input class="form-control item" type="email" id="email" name="email">
+                    <input class="form-control item" type="email" id="email" name="email" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input class="form-control item" type="password" id="password" name="password">
+                    <input class="form-control item" type="password" id="password" name="password" required>
                 </div>
 
                 <button class="btn btn-primary btn-block" type="submit">Sign Up</button>

@@ -15,7 +15,7 @@ public class ConnectionPool {
             synchronized (ConnectionPool.class) {
                 if (dataSource == null) {
                     BasicDataSource basicDataSource = new BasicDataSource();
-                    ResourceBundle dbUtilBundle = ResourceManager.getBundle(ResourceManager.DB_UTILS_BUNDLE_NAME);
+                    ResourceBundle dbUtilBundle = new ResourceManager().getBundle(ResourceManager.DB_UTILS_BUNDLE_NAME);
                     basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
                     basicDataSource.setUrl(dbUtilBundle.getString("url"));
                     basicDataSource.setUsername(dbUtilBundle.getString("user"));

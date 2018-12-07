@@ -1,14 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: kratt
-  Date: 29.11.18
-  Time: 11:25
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html lang="en">
 
 <head>
@@ -18,10 +10,8 @@
     <link href="<c:url value='https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.csss' />"
           rel="stylesheet">
 </head>
-    <meta charset="UTF-8">
-    <title>Login Form</title>
-
-</head>
+<meta charset="UTF-8">
+<title>Login Form</title>
 
 <body>
 <c:set var="language"
@@ -37,10 +27,11 @@
             </div>
             <form method="post">
                 <div class="form-group"><label for="email">Email</label><input class="form-control item" type="email"
-                                                                               id="email" name="email"></div>
+                                                                               id="email" name="email" required></div>
                 <div class="form-group"><label for="password">Password</label><input class="form-control"
                                                                                      type="password" id="password"
-                                                                                     name="password"></div>
+                                                                                     name="password" required>
+                </div>
                 <button class="btn btn-primary" type="submit">Log In</button>
             </form>
         </div>

@@ -1,4 +1,4 @@
-package ua.com.training.controller;
+package ua.com.training.controller.commands.utils;
 
 public class SecurityUtil {
     //todo

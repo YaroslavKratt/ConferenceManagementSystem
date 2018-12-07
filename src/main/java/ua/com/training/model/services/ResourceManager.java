@@ -8,12 +8,13 @@ public class ResourceManager {
     public static final String DB_UTILS_BUNDLE_NAME = "db_utils";
     public static final String PATHS_BUNDLE_NAME = "paths";
     public static final String MESSAGES_BUNDLE_NAME = "messages";
+    public static final String REGEXP_BUNDLE = "regexp";
 
-    public static ResourceBundle getBundle(String bundleName, Locale locale) {
+    public  ResourceBundle getBundle(String bundleName, Locale locale) {
         return ResourceBundle.getBundle(bundleName, locale);
     }
 
-    public static ResourceBundle getBundle(String bundleName) {
+    public  ResourceBundle getBundle(String bundleName) {
         return ResourceBundle.getBundle(bundleName);
     }
 }
