@@ -15,7 +15,14 @@ public enum CommandEnum {
         {
             this.command = new RegistrationCommand();
         }
+
+    },
+    DEFAULT {
+        {
+            this.command = new DefaultCommand();
+        }
     }
+
     ;
     Command command;
     public Command getCommand() {

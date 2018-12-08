@@ -12,4 +12,5 @@ public interface UserDao extends DAO<User> {
     boolean checkUserPassword(String email, String password);
 
     User.Role getUserRole(String email);
+
 }

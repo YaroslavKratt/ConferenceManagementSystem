@@ -34,10 +34,16 @@
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input class="form-control item" type="email" id="email" name="email" required>
+                    <p class="text-danger">
+                        ${wrongEmail}
+                    </p>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input class="form-control item" type="password" id="password" name="password" required>
+                    <p class="text-danger">
+                        ${wrongPassword}
+                    </p>
                 </div>
 
                 <button class="btn btn-primary btn-block" type="submit">Sign Up</button>

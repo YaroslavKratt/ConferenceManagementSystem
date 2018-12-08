@@ -2,7 +2,6 @@ package ua.com.training.model.dao.jdbc;
 
 import ua.com.training.model.dao.ReportDao;
 
-import java.sql.Connection;
 import java.util.List;
 
 public class JdbcReportDao implements ReportDao {
@@ -26,6 +25,12 @@ public class JdbcReportDao implements ReportDao {
     @Override
     public void delete(Object item) {
 
+    }
+
+    @Override
+    public boolean addNew(Object item) {
+
+        return false;
     }
 
 

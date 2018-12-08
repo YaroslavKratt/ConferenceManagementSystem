@@ -25,5 +25,11 @@ public class JdbcConferenceDao implements ConferenceDao {
 
     }
 
+    @Override
+    public boolean addNew(Object item) {
+
+        return false;
+    }
+
 
 }

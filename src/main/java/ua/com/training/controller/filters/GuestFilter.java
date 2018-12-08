@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 public class GuestFilter implements Filter {
     private final static Logger logger =  LogManager.getLogger(GuestFilter.class);
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
     }
 
     @Override
@@ -27,9 +27,9 @@ public class GuestFilter implements Filter {
         ResourceBundle pathBundle = ResourceBundle.getBundle(ResourceManager.PATHS_BUNDLE_NAME);
         String role = (String) session.getAttribute("role");
         if (role==null) {
-            session.setAttribute("role", User.Role.GUEST.getRole());
+            session.setAttribute("role", User.Role.GUEST.getStringRole());
             logger.debug("PATH IN FILTER: " + request.getRequestURI());
-            request.getRequestDispatcher(pathBundle.getString("index.page.path")).forward(request,response);
+            request.getRequestDispatcher(pathBundle.getString("page.index.path")).forward(request,response);
             return;
         }
 

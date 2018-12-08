@@ -22,44 +22,47 @@ public class LoginCommand implements Command {
         logger.info("email:" + email + " password:" + password);
         Locale locale = request.getLocale();
         HttpSession session = request.getSession();
+        UserService userService = new UserService();
         System.out.println("Locale:" + locale);
-        ResourceBundle messageBundle = new ResourceManager().getBundle(ResourceManager.MESSAGES_BUNDLE_NAME, locale);
+        ResourceBundle messageBundle = new ResourceManager().getBundle(ResourceManager.MESSAGE_BUNDLE, locale);
 
 
         if (email == null || password == null) {
             logger.info("Empty email or login");
-            return PATH_BUNDLE.getString("login.page.path");
+            return PATH_BUNDLE.getString("page.login.path");
         }
 
         if (!isGuest(request)) {
             logger.warn("Already logged in user tried to enter");
             return "redirect:/" + UserService.getRoleString(email);
         }
-        if (!UserService.checkUserExist(email)) {
+        if (!userService.checkUserExist(email)) {
             logger.info("User" + email + " dose not exist");
             putMessageInRequest(request, "wrongEmail", messageBundle, "message.no.user.with.email");
-            return PATH_BUNDLE.getString("login.page.path");
+            return PATH_BUNDLE.getString("page.login.path");
         }
 
-        if (UserService.checkPassword(email, password)) {
+
+        if (userService.checkPassword(email, password)) {
             dropSessionIfLoggedIn(request, email);
             logInUser(request, email, password);
             logger.info("User " + email + " signed in");
             return "redirect:/" + UserService.getRoleString(email);
         }
         else {
+            putMessageInRequest(request, "wrongPassword", messageBundle, "message.wrong.password");
             logger.warn("Wrong password");
 
         }
 
 
-        return PATH_BUNDLE.getString("login.page.path");
+        return PATH_BUNDLE.getString("page.login.path");
     }
 
 
     private void logInUser(HttpServletRequest request, String email, String password) {
         request.getSession().setAttribute("email", email);
-        request.getSession().setAttribute("role", UserService.getUserRole(email).getRole());
+        request.getSession().setAttribute("role", new UserService().getUserRole(email).getStringRole());
         request.getSession().getServletContext().setAttribute(email, request.getSession());
     }
 
@@ -69,7 +72,7 @@ public class LoginCommand implements Command {
     }
 
     private boolean isGuest(HttpServletRequest request) {
-        return request.getSession().getAttribute("role").equals(User.Role.GUEST.getRole());
+        return request.getSession().getAttribute("role").equals(User.Role.GUEST.getStringRole());
     }
 
     private void dropSessionIfLoggedIn(HttpServletRequest request, String email) {

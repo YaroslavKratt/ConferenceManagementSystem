@@ -2,6 +2,7 @@ package ua.com.training.model.dao.jdbc;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.mindrot.jbcrypt.BCrypt;
 import ua.com.training.model.dao.UserDao;
 import ua.com.training.model.entity.User;
 import ua.com.training.model.services.ResourceManager;
@@ -17,7 +18,7 @@ import java.util.ResourceBundle;
 public class JdbcUserDao implements UserDao {
     private static final Logger logger = LogManager.getLogger(JdbcUserDao.class);
     private DataSource dataSource = ConnectionPool.getDataSource();
-    private ResourceBundle sqlRequestBundle = ResourceManager.getBundle(ResourceManager.SQL_REQUESTS_BUNDLE_NAME);
+    private ResourceBundle sqlRequestBundle = new ResourceManager().getBundle(ResourceManager.SQL_REQUESTS_BUNDLE_NAME);
 
     @Override
     public User getById() {
@@ -40,10 +41,28 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
+    public boolean addNew(User user) throws RuntimeException {
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlRequestBundle.getString("query.insert.user.new"))) {
+
+            preparedStatement.setString(1,user.getName());
+            preparedStatement.setString(2,user.getSurname());
+            preparedStatement.setString(3,user.getEmail());
+            preparedStatement.setString(4,user.getPassword());
+            preparedStatement.setString(5,user.getRole().toString());
+            preparedStatement.execute();
+            return true;
+        } catch (SQLException e) {
+            logger.error("User was not added: " + e);
+            return false;
+        }
+    }
+
+    @Override
     public User getByEmail(String email) {
         User user = null;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sqlRequestBundle.getString("query.user.select.by.email"))
+             PreparedStatement preparedStatement = connection.prepareStatement(sqlRequestBundle.getString("query.select.user.by.email"))
         ) {
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -63,7 +82,7 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public boolean checkUserPassword(String email, String password) {
-        return getByEmail(email).getPassword().equals(password);
+        return BCrypt.checkpw(password,getByEmail(email).getPassword());
 
     }
 

@@ -1,5 +1,7 @@
 package ua.com.training.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.com.training.controller.commands.Command;
 import ua.com.training.controller.commands.CommandFactory;
 
@@ -12,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class FrontController extends HttpServlet {
-
+    private static final Logger LOG = LogManager.getLogger(FrontController.class);
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     processRequest(request,response);
     }
@@ -31,11 +33,13 @@ public class FrontController extends HttpServlet {
         String page = command.execute(request);
 
         if(page.contains("redirect:")) {
-           System.out.println("PAGE WITH REDIRECT: " + page);
+           LOG.trace("page with redirect: " + page);
+           LOG.trace("path after filtering: " + request.getContextPath() + page.replace("redirect:", ""));
+
             response.sendRedirect(request.getContextPath() + page.replace("redirect:", ""));
         }
         else {
-           System.out.println(page);
+            LOG.trace(page);
             request.getRequestDispatcher(page).forward(request,response);
         }
 

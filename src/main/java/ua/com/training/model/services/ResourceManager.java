@@ -7,7 +7,7 @@ public class ResourceManager {
     public static final String SQL_REQUESTS_BUNDLE_NAME = "sql_requests";
     public static final String DB_UTILS_BUNDLE_NAME = "db_utils";
     public static final String PATHS_BUNDLE_NAME = "paths";
-    public static final String MESSAGES_BUNDLE_NAME = "messages";
+    public static final String MESSAGE_BUNDLE = "messages";
     public static final String REGEXP_BUNDLE = "regexp";
 
     public  ResourceBundle getBundle(String bundleName, Locale locale) {

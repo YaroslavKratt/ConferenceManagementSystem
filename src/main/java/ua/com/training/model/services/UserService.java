@@ -12,13 +12,19 @@ public class UserService {
 
     }
 
-    public static boolean checkUserExist(String email) {
+    public  boolean checkUserExist(String email) {
         return daoFactory.createUserDao().checkUserExist(email);
     }
 
-    public static boolean checkPassword(String email, String password) { return daoFactory.createUserDao().checkUserPassword(email, password);
+    public  boolean checkPassword(String email, String password) {
+        return daoFactory.createUserDao().checkUserPassword(email, password);
     }
 
-    public static User.Role getUserRole(String email) { return daoFactory.createUserDao().getUserRole(email);
+    public  User.Role getUserRole(String email) { return daoFactory.createUserDao().getUserRole(email);
+    }
+
+    public boolean signUpUser(User user) {
+
+            return daoFactory.createUserDao().addNew(user);
     }
 }

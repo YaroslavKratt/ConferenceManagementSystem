@@ -2,14 +2,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-
-
 <body>
 <c:choose>
     <c:when test="${sessionScope.role == 'guest'}">
         <nav class="navbar navbar-light navbar-expand-md">
-            <div class="container-fluid"><a class="navbar-brand" href="#">AllConferences</a>
+            <div class="container-fluid"><a class="navbar-brand" href="/">AllConferences</a>
                 <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
                         class="navbar-toggler-icon"></span></button>
                 <div

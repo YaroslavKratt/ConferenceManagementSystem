@@ -25,5 +25,11 @@ public class JdbcDaoSpeaker implements SpeakerDao {
 
     }
 
+    @Override
+    public boolean addNew(Object item) {
+
+        return false;
+    }
+
 
 }
