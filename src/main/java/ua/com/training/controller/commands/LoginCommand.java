@@ -3,7 +3,7 @@ package ua.com.training.controller.commands;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.com.training.model.entity.User;
-import ua.com.training.model.services.ResourceManager;
+import ua.com.training.model.services.ResourceService;
 import ua.com.training.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,12 +24,12 @@ public class LoginCommand implements Command {
         HttpSession session = request.getSession();
         UserService userService = new UserService();
         System.out.println("Locale:" + locale);
-        ResourceBundle messageBundle = new ResourceManager().getBundle(ResourceManager.MESSAGE_BUNDLE, locale);
+        ResourceBundle messageBundle = new ResourceService().getBundle(ResourceService.MESSAGE_BUNDLE, locale);
 
 
         if (email == null || password == null) {
             logger.info("Empty email or login");
-            return PATH_BUNDLE.getString("page.login.path");
+            return PATH_BUNDLE.getString("page.login");
         }
 
         if (!isGuest(request)) {
@@ -39,7 +39,7 @@ public class LoginCommand implements Command {
         if (!userService.checkUserExist(email)) {
             logger.info("User" + email + " dose not exist");
             putMessageInRequest(request, "wrongEmail", messageBundle, "message.no.user.with.email");
-            return PATH_BUNDLE.getString("page.login.path");
+            return PATH_BUNDLE.getString("page.login");
         }
 
 
@@ -47,7 +47,7 @@ public class LoginCommand implements Command {
             dropSessionIfLoggedIn(request, email);
             logInUser(request, email, password);
             logger.info("User " + email + " signed in");
-            return "redirect:/" + UserService.getRoleString(email);
+            return "redirect:/" + UserService.getRoleString(email) + PATH_BUNDLE.getString("path.catalog");
         }
         else {
             putMessageInRequest(request, "wrongPassword", messageBundle, "message.wrong.password");
@@ -56,7 +56,7 @@ public class LoginCommand implements Command {
         }
 
 
-        return PATH_BUNDLE.getString("page.login.path");
+        return PATH_BUNDLE.getString("page.login");
     }
 
 
@@ -66,8 +66,8 @@ public class LoginCommand implements Command {
         request.getSession().getServletContext().setAttribute(email, request.getSession());
     }
 
-    private void putMessageInRequest(HttpServletRequest request, String wrongEmail, ResourceBundle messageBundle, String messageName) {
-        request.setAttribute(wrongEmail, messageBundle.getString(messageName));
+    private void putMessageInRequest(HttpServletRequest request, String attribute, ResourceBundle messageBundle, String messageName) {
+        request.setAttribute(attribute, messageBundle.getString(messageName));
 
     }
 

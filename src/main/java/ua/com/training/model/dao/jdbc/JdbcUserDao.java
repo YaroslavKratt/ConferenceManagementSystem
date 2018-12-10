@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 import ua.com.training.model.dao.UserDao;
 import ua.com.training.model.entity.User;
-import ua.com.training.model.services.ResourceManager;
+import ua.com.training.model.services.ResourceService;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 public class JdbcUserDao implements UserDao {
     private static final Logger logger = LogManager.getLogger(JdbcUserDao.class);
     private DataSource dataSource = ConnectionPool.getDataSource();
-    private ResourceBundle sqlRequestBundle = new ResourceManager().getBundle(ResourceManager.SQL_REQUESTS_BUNDLE_NAME);
+    private ResourceBundle sqlRequestBundle = new ResourceService().getBundle(ResourceService.SQL_REQUESTS_BUNDLE_NAME);
 
     @Override
     public User getById() {

@@ -1,6 +1,11 @@
 package ua.com.training.controller.commands;
 
 public enum CommandEnum {
+    DEFAULT {
+        {
+            this.command = new DefaultCommand();
+        }
+    },
     LOGIN {
         {
             this.command = new LoginCommand();
@@ -17,14 +22,18 @@ public enum CommandEnum {
         }
 
     },
-    DEFAULT {
+    CATALOG {
         {
-            this.command = new DefaultCommand();
+            this.command = new CatalogCommand();
         }
-    }
-
-    ;
+    },
+    CONFERENCE {
+        {
+            this.command = new ConferenceCommand();
+        }
+    };
     Command command;
+
     public Command getCommand() {
         return command;
     }

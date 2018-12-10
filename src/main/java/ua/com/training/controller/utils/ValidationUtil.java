@@ -1,11 +1,9 @@
-package ua.com.training.controller.commands.utils;
+package ua.com.training.controller.utils;
 
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.com.training.model.services.ResourceManager;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 

@@ -25,7 +25,7 @@
             <div class="jumbotron">
                 <h1>Welcome to world best conference agregator</h1>
                 <p>Here you will find conference on any topic &nbsp;you need</p>
-                <p><a class="btn btn-primary" role="button" href="#" id="central-btn">Learn more</a></p>
+                <p><a class="btn btn-primary" role="button" href="/conferences" id="central-btn">Learn more</a></p>
             </div>
         </div>
     </div>

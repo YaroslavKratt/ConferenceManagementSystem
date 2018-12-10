@@ -3,7 +3,7 @@ package ua.com.training.model.services;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class ResourceManager {
+public class ResourceService {
     public static final String SQL_REQUESTS_BUNDLE_NAME = "sql_requests";
     public static final String DB_UTILS_BUNDLE_NAME = "db_utils";
     public static final String PATHS_BUNDLE_NAME = "paths";

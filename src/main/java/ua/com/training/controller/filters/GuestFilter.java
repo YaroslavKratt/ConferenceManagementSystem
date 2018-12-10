@@ -3,7 +3,7 @@ package ua.com.training.controller.filters;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.com.training.model.entity.User;
-import ua.com.training.model.services.ResourceManager;
+import ua.com.training.model.services.ResourceService;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -24,12 +24,12 @@ public class GuestFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
-        ResourceBundle pathBundle = ResourceBundle.getBundle(ResourceManager.PATHS_BUNDLE_NAME);
+        ResourceBundle pathBundle = ResourceBundle.getBundle(ResourceService.PATHS_BUNDLE_NAME);
         String role = (String) session.getAttribute("role");
         if (role==null) {
             session.setAttribute("role", User.Role.GUEST.getStringRole());
             logger.debug("PATH IN FILTER: " + request.getRequestURI());
-            request.getRequestDispatcher(pathBundle.getString("page.index.path")).forward(request,response);
+            request.getRequestDispatcher(pathBundle.getString("page.index")).forward(request,response);
             return;
         }
 
