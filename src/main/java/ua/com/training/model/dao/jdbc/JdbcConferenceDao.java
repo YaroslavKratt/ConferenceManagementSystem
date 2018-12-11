@@ -73,18 +73,25 @@ public class JdbcConferenceDao implements ConferenceDao {
 
     @Override
     public void delete(long id) {
-    try( Connection connection = dataSource.getConnection();
-         PreparedStatement query = connection
-                 .prepareStatement(sqlRequestBundle.getString("query.delete.conference"))) {
-        query.setLong(1,id);
-        query.executeUpdate();
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement query = connection
+                     .prepareStatement(sqlRequestBundle.getString("query.delete.conference"))) {
+            query.setLong(1, id);
+            query.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public boolean addNew(Conference item) {
+        try(Connection connection = dataSource.getConnection();
+        PreparedStatement conderenceQuery = connection.prepareStatement(sqlRequestBundle.getString("query.insert.conference"));
+        PreparedStatement reportQuery = connection.prepareStatement((sqlRequestBundle.getString("query.insert.report")))) {
 
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
