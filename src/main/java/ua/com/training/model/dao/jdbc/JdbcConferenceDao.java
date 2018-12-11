@@ -7,7 +7,6 @@ import ua.com.training.model.dao.mappers.ConferenceMapper;
 import ua.com.training.model.dao.mappers.ReportMapper;
 import ua.com.training.model.entity.Conference;
 import ua.com.training.model.entity.Report;
-import ua.com.training.model.entity.User;
 import ua.com.training.model.services.ResourceService;
 
 import javax.sql.DataSource;
@@ -34,8 +33,6 @@ public class JdbcConferenceDao implements ConferenceDao {
         ConferenceMapper conferenceMapper = new ConferenceMapper();
         ReportMapper reportMapper = new ReportMapper();
         Map<Long, List<Report>> reportsById = new HashMap<>();
-        Map<Long, User> speakersById = new HashMap<>();
-
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement conferenceStatement = connection
@@ -55,17 +52,17 @@ public class JdbcConferenceDao implements ConferenceDao {
             while (reportResultSet.next()) {
                 reportsById.get(reportResultSet.getLong("id_conference")).add(reportMapper.mapToObject(reportResultSet));
             }
-            for (Conference conference : conferences) {
 
+            for (Conference conference : conferences) {
                 conference.setReports(reportsById.get(conference.getId()));
             }
 
             connection.commit();
             return conferences;
+
         } catch (SQLException e) {
             LOG.error("Cant get all conferences: " + e);
         }
-
         return null;
     }
 
@@ -75,12 +72,19 @@ public class JdbcConferenceDao implements ConferenceDao {
     }
 
     @Override
-    public void delete(long  id) {
-
+    public void delete(long id) {
+    try( Connection connection = dataSource.getConnection();
+         PreparedStatement query = connection
+                 .prepareStatement(sqlRequestBundle.getString("query.delete.conference"))) {
+        query.setLong(1,id);
+        query.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
     }
 
     @Override
     public boolean addNew(Conference item) {
-        return false;
+
     }
 }
