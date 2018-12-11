@@ -23,7 +23,7 @@ public class JdbcReportDao implements ReportDao {
     }
 
     @Override
-    public void delete(Report item) {
+    public void delete(long  id) {
 
     }
 

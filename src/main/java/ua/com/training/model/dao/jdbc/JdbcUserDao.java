@@ -36,7 +36,7 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public void delete(User item) {
+    public void delete(long id) {
 
     }
 

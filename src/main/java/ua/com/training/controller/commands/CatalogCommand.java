@@ -19,6 +19,7 @@ public class CatalogCommand implements Command {
             LOG.info(conference);
 
         }
+        LOG.info("conferences list size:" + conferences.size());
         return PATH_BUNDLE.getString("page.catalog");
     }
 }

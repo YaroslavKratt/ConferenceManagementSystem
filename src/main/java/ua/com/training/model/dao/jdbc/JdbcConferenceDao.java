@@ -55,7 +55,6 @@ public class JdbcConferenceDao implements ConferenceDao {
             while (reportResultSet.next()) {
                 reportsById.get(reportResultSet.getLong("id_conference")).add(reportMapper.mapToObject(reportResultSet));
             }
-            LOG.info("reports by id: " + reportsById);
             for (Conference conference : conferences) {
 
                 conference.setReports(reportsById.get(conference.getId()));
@@ -76,7 +75,7 @@ public class JdbcConferenceDao implements ConferenceDao {
     }
 
     @Override
-    public void delete(Conference item) {
+    public void delete(long  id) {
 
     }
 
