@@ -93,5 +93,6 @@ public class JdbcConferenceDao implements ConferenceDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 }
