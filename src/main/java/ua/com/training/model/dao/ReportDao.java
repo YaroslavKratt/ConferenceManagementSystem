@@ -1,4 +1,6 @@
 package ua.com.training.model.dao;
 
-public interface ReportDao extends DAO{
+import ua.com.training.model.entity.Report;
+
+public interface ReportDao extends DAO<Report>{
 }

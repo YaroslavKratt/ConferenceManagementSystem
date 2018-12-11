@@ -1,4 +1,6 @@
 package ua.com.training.model.dao;
 
-public interface ConferenceDao extends DAO {
+import ua.com.training.model.entity.Conference;
+
+public interface ConferenceDao extends DAO<Conference> {
 }

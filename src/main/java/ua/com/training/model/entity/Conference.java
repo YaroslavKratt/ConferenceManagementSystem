@@ -1,13 +1,18 @@
 package ua.com.training.model.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Conference {
     private long id;
     private String topic;
     private String location;
-    private List<Report> reports;
+    private List<Report> reports = new ArrayList<>();
 
+    public void addReport(Report report){
+        reports.add(report);
+
+    }
     public long getId() {
         return id;
     }
@@ -38,5 +43,15 @@ public class Conference {
 
     public void setReports(List<Report> reports) {
         this.reports = reports;
+    }
+
+    @Override
+    public String toString(){
+
+        return "Conference: "
+                + " Id: " + id
+                + " Topic: " + topic
+                + " Location: " + location
+                +  reports.stream().map(Report::toString).reduce("\n", String::concat) + "\n";
     }
 }

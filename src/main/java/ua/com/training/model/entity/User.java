@@ -11,7 +11,7 @@ public class User {
     private String surname;
     private String email;
     private Role role;
-    private BigInteger speakerBonus;
+    private int speakerBonus;
     private double speakerRating;
     private String password;
 
@@ -34,7 +34,7 @@ public class User {
 
     public Role getRole() { return role; }
 
-    public BigInteger getSpeakerBonus() { return speakerBonus; }
+    public int getSpeakerBonus() { return speakerBonus; }
 
     public double getSpeakerRating() { return speakerRating; }
 
@@ -67,7 +67,7 @@ public class User {
         private String surname;
         private String email;
         private Role role;
-        private BigInteger speakerBonus;
+        private int speakerBonus;
         private double speakerRating;
         private String password;
 
@@ -102,7 +102,7 @@ public class User {
             return this;
         }
 
-        public Builder setSpeakerBonus(BigInteger speakerBonus) {
+        public Builder setSpeakerBonus(int speakerBonus) {
             this.speakerBonus = speakerBonus;
             return this;
         }
@@ -116,5 +116,16 @@ public class User {
             return new User(this);
         }
 
+    }
+
+    @Override
+    public String toString(){
+        return    "Id: " + id
+                + " Name: " + name
+                + " Surname: " + surname
+                + " Role: " + role
+                + " Email: " + email
+                + " Speaker bonus: " + speakerBonus
+                + " Speaker rating: " + speakerRating;
     }
 }
