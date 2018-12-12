@@ -49,11 +49,7 @@ public class JdbcConferenceDao implements ConferenceDao {
             while (reportResultSet.next()) {
                 reportsById.get(reportResultSet.getLong("id_conference")).add(reportMapper.mapToObject(reportResultSet));
             }
-
-            for (Conference conference : conferences) {
-                conference.setReports(reportsById.get(conference.getId()));
-            }
-
+            conferences.forEach(conference -> conference.setReports(reportsById.get(conference.getId())));
             connection.commit();
             return conferences;
 
@@ -82,18 +78,18 @@ public class JdbcConferenceDao implements ConferenceDao {
 
     @Override
     public boolean addNew(Conference conference) {
-        try(Connection connection = dataSource.getConnection();
-        PreparedStatement conferenceQuery = connection
-                .prepareStatement(sqlRequestBundle.getString("query.insert.conference"));
-        PreparedStatement reportQuery = connection
-                .prepareStatement((sqlRequestBundle.getString("query.insert.report")))) {
-        conferenceQuery.setString(1,conference.getTopic());
-        conferenceQuery.setString(2,conference.getLocation());
-        conferenceQuery.setTimestamp(3,Timestamp.valueOf(conference.getDateTime()));
-            for (Report report: conference.getReports()) {
-                reportQuery.setString(1,report.getTopic());
-                reportQuery.setLong(2,conference.getId());
-                reportQuery.setLong(3,report.getSpeaker().getId());
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement conferenceQuery = connection
+                     .prepareStatement(sqlRequestBundle.getString("query.insert.conference"));
+             PreparedStatement reportQuery = connection
+                     .prepareStatement((sqlRequestBundle.getString("query.insert.report")))) {
+            conferenceQuery.setString(1, conference.getTopic());
+            conferenceQuery.setString(2, conference.getLocation());
+            conferenceQuery.setTimestamp(3, Timestamp.valueOf(conference.getDateTime()));
+            for (Report report : conference.getReports()) {
+                reportQuery.setString(1, report.getTopic());
+                reportQuery.setLong(2, conference.getId());
+                reportQuery.setLong(3, report.getSpeaker().getId());
                 reportQuery.addBatch();
             }
             conferenceQuery.executeUpdate();

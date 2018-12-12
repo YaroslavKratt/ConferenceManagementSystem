@@ -15,6 +15,7 @@ public class ConferenceMapper implements Mapper<Conference>  {
             conference.setId(resultSet.getLong("id_conference"));
             conference.setLocation(resultSet.getString("conference_location"));
             conference.setTopic(resultSet.getString("conference_topic"));
+            conference.setDateTime(resultSet.getTimestamp("conference_timestamp").toLocalDateTime());
             return  conference;
         }
     }

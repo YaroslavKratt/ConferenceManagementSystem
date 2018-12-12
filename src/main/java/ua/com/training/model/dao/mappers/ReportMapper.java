@@ -19,6 +19,7 @@ public class ReportMapper implements Mapper<Report> {
         report.setTopic(resultSet.getString("report_topic"));
         report.setRegestratedAmount(resultSet.getInt("registrated_participants_amount"));
         report.setVisitorsAmount(resultSet.getInt("visited_participants_amount"));
+        report.setDateTime(resultSet.getTimestamp("report_datetime").toLocalDateTime());
         report.setSpeaker(speaker);
         return report;
 

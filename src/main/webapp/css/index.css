@@ -72,8 +72,15 @@ body {
     background-color: rgba(255,252,252,0);
 }
 
-.btn .btn-primary {
-   border-radius: 400px;
+.btn-primary {
+    background-color: #007bff;
+    border-radius: 100px;
+    display: inline-block;
+    float: none;
+    text-align: center;
+    width: 120px;
+    font-size: 14px;
+    color: white;
 }
 
 .page-footer {

@@ -15,11 +15,7 @@ public class CatalogCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         List<Conference> conferences = new ConferenceService().getAllConferences();
-        for (Conference conference: conferences) {
-            LOG.info(conference);
-
-        }
-        LOG.info("conferences list size:" + conferences.size());
-        return PATH_BUNDLE.getString("page.catalog");
+        request.setAttribute("conferences", conferences);
+            return PATH_BUNDLE.getString("page.catalog");
     }
 }

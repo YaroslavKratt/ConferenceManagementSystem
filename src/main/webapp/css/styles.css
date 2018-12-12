@@ -23,6 +23,16 @@ section {
     margin-right: auto;
     margin-left: auto;
 }
+.btn-primary {
+    background-color: #007bff;
+    border-radius: 100px;
+    display: inline-block;
+    float: none;
+    text-align: center;
+    width: 120px;
+    font-size: 14px;
+    color: white;
+}
 .navbar-light .navbar-nav .nav-link {
     border: 2px solid rgb(0, 0, 0);
     border-radius: 100px;

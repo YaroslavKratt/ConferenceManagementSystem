@@ -1,10 +1,13 @@
 package ua.com.training.model.entity;
 
+import java.time.LocalDateTime;
+
 public class Report {
     private String topic;
     private User speaker;
     private int regestratedAmount;
     private int visitorsAmount;
+    private LocalDateTime dateTime;
 
     public String getTopic() {
         return topic;
@@ -45,5 +48,13 @@ public class Report {
                 + " Speaker: " + speaker.toString() + "\n"
                 + " Registrated amount: " + regestratedAmount
                 + " Visitors amount: " + visitorsAmount + "\n";
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 }
