@@ -13,31 +13,31 @@ import java.util.ResourceBundle;
 
 
 public class LoginCommand implements Command {
-    private final static Logger logger = LogManager.getLogger(LoginCommand.class);
+    private final static Logger LOG = LogManager.getLogger(LoginCommand.class);
 
     @Override
     public String execute(HttpServletRequest request) {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        logger.info("email:" + email + " password:" + password);
+        LOG.info("email:" + email + " password:" + password);
         Locale locale = request.getLocale();
         HttpSession session = request.getSession();
         UserService userService = new UserService();
-        System.out.println("Locale:" + locale);
+        LOG.trace("Locale:" + locale);
         ResourceBundle messageBundle = new ResourceService().getBundle(ResourceService.MESSAGE_BUNDLE, locale);
 
 
         if (email == null || password == null) {
-            logger.info("Empty email or login");
+            LOG.info("Empty email or login");
             return PATH_BUNDLE.getString("page.login");
         }
 
         if (!isGuest(request)) {
-            logger.warn("Already logged in user tried to enter");
+            LOG.warn("Already logged in user tried to enter");
             return "redirect:/" + UserService.getRoleString(email);
         }
         if (!userService.checkUserExist(email)) {
-            logger.info("User" + email + " dose not exist");
+            LOG.info("User" + email + " dose not exist");
             putMessageInRequest(request, "wrongEmail", messageBundle, "message.no.user.with.email");
             return PATH_BUNDLE.getString("page.login");
         }
@@ -46,12 +46,12 @@ public class LoginCommand implements Command {
         if (userService.checkPassword(email, password)) {
             dropSessionIfLoggedIn(request, email);
             logInUser(request, email, password);
-            logger.info("User " + email + " signed in");
+            LOG.info("User " + email + " signed in");
             return "redirect:/" + UserService.getRoleString(email) + PATH_BUNDLE.getString("path.catalog");
         }
         else {
             putMessageInRequest(request, "wrongPassword", messageBundle, "message.wrong.password");
-            logger.warn("Wrong password");
+            LOG.warn("Wrong password");
 
         }
 

@@ -10,10 +10,7 @@ import ua.com.training.model.entity.Report;
 import ua.com.training.model.services.ResourceService;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 
 public class JdbcConferenceDao implements ConferenceDao {
@@ -84,14 +81,26 @@ public class JdbcConferenceDao implements ConferenceDao {
     }
 
     @Override
-    public boolean addNew(Conference item) {
+    public boolean addNew(Conference conference) {
         try(Connection connection = dataSource.getConnection();
-        PreparedStatement conderenceQuery = connection.prepareStatement(sqlRequestBundle.getString("query.insert.conference"));
-        PreparedStatement reportQuery = connection.prepareStatement((sqlRequestBundle.getString("query.insert.report")))) {
-
-
+        PreparedStatement conferenceQuery = connection
+                .prepareStatement(sqlRequestBundle.getString("query.insert.conference"));
+        PreparedStatement reportQuery = connection
+                .prepareStatement((sqlRequestBundle.getString("query.insert.report")))) {
+        conferenceQuery.setString(1,conference.getTopic());
+        conferenceQuery.setString(2,conference.getLocation());
+        conferenceQuery.setTimestamp(3,Timestamp.valueOf(conference.getDateTime()));
+            for (Report report: conference.getReports()) {
+                reportQuery.setString(1,report.getTopic());
+                reportQuery.setLong(2,conference.getId());
+                reportQuery.setLong(3,report.getSpeaker().getId());
+                reportQuery.addBatch();
+            }
+            conferenceQuery.executeUpdate();
+            reportQuery.executeUpdate();
+            return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Conference inserting failed: " + e);
         }
         return false;
     }

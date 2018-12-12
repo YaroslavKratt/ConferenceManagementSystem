@@ -1,5 +1,6 @@
 package ua.com.training.model.entity;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,12 +8,14 @@ public class Conference {
     private long id;
     private String topic;
     private String location;
+    private LocalDateTime dateTime;
     private List<Report> reports = new ArrayList<>();
 
-    public void addReport(Report report){
+    public void addReport(Report report) {
         reports.add(report);
 
     }
+
     public long getId() {
         return id;
     }
@@ -45,13 +48,23 @@ public class Conference {
         this.reports = reports;
     }
 
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
     @Override
-    public String toString(){
+    public String toString() {
 
         return "Conference: "
                 + " Id: " + id
                 + " Topic: " + topic
                 + " Location: " + location
-                +  reports.stream().map(Report::toString).reduce("\n", String::concat) + "\n";
+                + reports.stream().map(Report::toString).reduce("\n", String::concat) + "\n";
     }
+
+
 }

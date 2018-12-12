@@ -1,7 +1,5 @@
 package ua.com.training.model.entity;
 
-import java.math.BigInteger;
-
 /**
  *
  */
@@ -15,7 +13,8 @@ public class User {
     private double speakerRating;
     private String password;
 
-    User() {    }
+    User() {
+    }
 
     private User(Builder userBuilder) {
         this.id = userBuilder.id;
@@ -26,21 +25,49 @@ public class User {
         this.role = userBuilder.role;
     }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public String getSurname() { return surname; }
+    public String getSurname() {
+        return surname;
+    }
 
-    public String getEmail() { return email; }
+    public String getEmail() {
+        return email;
+    }
 
-    public Role getRole() { return role; }
+    public Role getRole() {
+        return role;
+    }
 
-    public int getSpeakerBonus() { return speakerBonus; }
+    public int getSpeakerBonus() {
+        return speakerBonus;
+    }
 
-    public double getSpeakerRating() { return speakerRating; }
+    public double getSpeakerRating() {
+        return speakerRating;
+    }
 
     public String getPassword() {
         return password;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Id: " + id
+                + " Name: " + name
+                + " Surname: " + surname
+                + " Role: " + role
+                + " Email: " + email
+                + " Speaker bonus: " + speakerBonus
+                + " Speaker rating: " + speakerRating;
+    }
+
 
     public enum Role {
         ADMIN("admin"),
@@ -59,7 +86,6 @@ public class User {
         }
 
     }
-
 
     public static class Builder {
         private long id;
@@ -116,16 +142,5 @@ public class User {
             return new User(this);
         }
 
-    }
-
-    @Override
-    public String toString(){
-        return    "Id: " + id
-                + " Name: " + name
-                + " Surname: " + surname
-                + " Role: " + role
-                + " Email: " + email
-                + " Speaker bonus: " + speakerBonus
-                + " Speaker rating: " + speakerRating;
     }
 }
