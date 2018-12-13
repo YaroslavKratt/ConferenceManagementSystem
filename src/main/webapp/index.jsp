@@ -9,10 +9,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Home - AllConferences</title>
-    <link href="<c:url value='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO' />" crossorigin="anonymous" rel="stylesheet">
 
-    <link href="<c:url value='css/index.css' />" rel="stylesheet">
-    <link href="<c:url value='https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.csss' />" rel="stylesheet">
+    <link href="<c:url value='/bootstrap/css/bootstrap.css' />" rel="stylesheet">
+    <link href="<c:url value='/bootstrap/css/bootstrap-grid.css' />" rel="stylesheet">
+    <link href="<c:url value='/bootstrap/css/bootstrap-reboot.css' />" rel="stylesheet">
+    <link href="<c:url value='/css/index.css' />" rel="stylesheet">
+
 
 
 </head>
@@ -25,7 +27,7 @@
             <div class="jumbotron">
                 <h1>Welcome to world best conference agregator</h1>
                 <p>Here you will find conference on any topic &nbsp;you need</p>
-                <p><a class="btn btn-primary" role="button" href="/conferences">Learn more</a></p>
+                <p><a class="btn btn-primary" role="button" href="${pageContext.request.contextPath}/${sessionScope.role}/catalog">Learn more</a></p>
             </div>
         </div>
     </div>

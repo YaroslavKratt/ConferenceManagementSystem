@@ -32,13 +32,15 @@ body {
     color: #000000;
 }
 
+
+
 .btn-primary {
     background-color: #007bff;
     border-radius: 100px;
     display: inline-block;
     float: none;
     text-align: center;
-    width: 120px;
+    width: 135px;
     font-size: 14px;
     color: white;
 }
@@ -98,3 +100,27 @@ td {
 .footer-copyright{
     color:black
 }
+.form-horizontal .form-control{
+    border: 2px solid black;
+    background-color: #ffffff;
+    border-radius: 100px;
+    display: inline-block;
+    text-align: center;
+    width: auto;
+    height: 26px;
+    margin-left: 6px;
+    padding: 0px!important;
+    font-size: 14px;
+    color: transparent;
+}
+.form-horizontal .form-control:hover {
+    color:grey;
+    border: 2px solid grey;
+    border-radius: 100px;
+    display: inline-block;
+    float: none;
+    text-align: center;
+    font-size: 14px;
+}
+
+
