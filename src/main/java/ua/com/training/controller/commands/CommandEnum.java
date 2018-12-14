@@ -31,7 +31,14 @@ public enum CommandEnum {
         {
             this.command = new ConferenceCommand();
         }
-    };
+
+    },
+    SUBSCRIBE {
+        {
+            this.command = new SubscribeCommand();
+        }
+
+    } ;
     Command command;
 
     public Command getCommand() {

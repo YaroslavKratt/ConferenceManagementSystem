@@ -36,10 +36,16 @@
                 <th>${conference.topic}</th>
                 <th>${conference.location}</th>
                 <th>${conference.dateTime}</th>
-                <th>
-                    <button class="btn btn-primary" type="button"><fmt:message key="page.message.edit"/></button>
-                    <button class="btn btn-primary" type="button"><fmt:message key="page.message.delete"/></button>
-                </th>
+                <c:choose>
+                    <c:when test="${sessionScope.role == 'admin'}">
+                        <th>
+                            <button class="btn btn-primary" type="button"><fmt:message
+                                    key="page.message.edit"/></button>
+                            <button class="btn btn-primary" type="button"><fmt:message
+                                    key="page.message.delete"/></button>
+                        </th>
+                    </c:when>
+                </c:choose>
             </tr>
             </thead>
             <c:forEach items="${conference.reports}" var="report">
@@ -48,12 +54,23 @@
                     <td>${report.topic}</td>
                     <td>${report.speaker.name} ${report.speaker.surname}</td>
                     <td>${report.dateTime}</td>
-                    <td>
-                        <button class="btn btn-primary" type="button"><fmt:message
-                                key="page.message.subscribe"/></button>
-                        <button class="btn btn-primary" type="button"><fmt:message
-                                key="page.message.unsubscribe"/></button>
-                    </td>
+                    <c:choose>
+                        <c:when test="${sessionScope.role=='user' || sessionScope.role =='admin'}">
+                            <td>
+                                <form  method="post" action="${pageContext.request.contextPath}/${sessionScope.role}/subscribe">
+                                    <button class="btn btn-primary" type="submit" name="reportForSubscription"
+                                            value="${report.id}"><fmt:message
+                                            key="page.message.subscribe"/></button>
+                                </form>
+                                <form  method="post" action="${pageContext.request.contextPath}/${sessionScope.role}/unsubscribe">
+
+                                    <button class="btn btn-primary" type="submit" name="reportForUnsubscription"
+                                            value="${report.id}"><fmt:message
+                                            key="page.message.unsubscribe"/></button>
+                                </form>
+                            </td>
+                        </c:when>
+                    </c:choose>
                 </tr>
             </c:forEach>
 
@@ -62,10 +79,10 @@
     </c:forEach>
 </div>
 <jsp:include page="sections/footer.jsp"/>
-<script src=<c:url value="/bootstrap/js/bootstrap.bundle.js" />></script>
-<script src=<c:url value="/bootstrap/js/bootstrap.js" />></script>
-<script src=<c:url value="/bootstrap/js/jquery.min.js" />></script>
-<script src=<c:url value="/bootstrap/js/smoothproducts.min.js" />></script>
-<script src=<c:url value="/bootstrap/js/theme.js" />></script>
+<script src=<c:url value="/bootstrap/js/bootstrap.bundle.js"/>></script>
+<script src=<c:url value="/bootstrap/js/bootstrap.js"/>></script>
+<script src=<c:url value="/bootstrap/js/jquery.min.js"/>></script>
+<script src=<c:url value="/bootstrap/js/smoothproducts.min.js"/>></script>
+<script src=<c:url value="/bootstrap/js/theme.js"/>></script>
 </body>
 </html>

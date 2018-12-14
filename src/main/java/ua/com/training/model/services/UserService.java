@@ -28,4 +28,7 @@ public class UserService {
 
         return userDao.addNew(user);
     }
+    public long getUserId(String email) {
+       return userDao.getByEmail(email).getId();
+    }
 }

@@ -19,8 +19,9 @@ public class JdbcConferenceDao implements ConferenceDao {
     private ResourceBundle sqlRequestBundle = new ResourceService()
             .getBundle(ResourceService.SQL_REQUESTS_BUNDLE_NAME);
 
+
     @Override
-    public Conference getById() {
+    public Conference getById(long id) {
         return null;
     }
 
@@ -29,7 +30,7 @@ public class JdbcConferenceDao implements ConferenceDao {
         List<Conference> conferences = null;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement conferenceStatement = connection
-                     .prepareStatement(sqlRequestBundle.getString("query.select.all.conferences"))) {
+                     .prepareStatement(sqlRequestBundle.getString("conferences.select.all."))) {
 
             ResultSet resultSet = conferenceStatement.executeQuery();
             conferences = new ConferenceMapper().mapToList(resultSet);
@@ -50,7 +51,7 @@ public class JdbcConferenceDao implements ConferenceDao {
     public void delete(long id) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement query = connection
-                     .prepareStatement(sqlRequestBundle.getString("query.delete.conference"))) {
+                     .prepareStatement(sqlRequestBundle.getString("conference.delete"))) {
             query.setLong(1, id);
             query.executeUpdate();
         } catch (SQLException e) {
@@ -62,9 +63,9 @@ public class JdbcConferenceDao implements ConferenceDao {
     public boolean addNew(Conference conference) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement conferenceQuery = connection
-                     .prepareStatement(sqlRequestBundle.getString("query.insert.conference"));
+                     .prepareStatement(sqlRequestBundle.getString("conference.insert"));
              PreparedStatement reportQuery = connection
-                     .prepareStatement((sqlRequestBundle.getString("query.insert.report")))) {
+                     .prepareStatement((sqlRequestBundle.getString("report.insert")))) {
             conferenceQuery.setString(1, conference.getTopic());
             conferenceQuery.setString(2, conference.getLocation());
             conferenceQuery.setTimestamp(3, Timestamp.valueOf(conference.getDateTime()));

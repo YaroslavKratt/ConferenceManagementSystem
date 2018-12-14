@@ -14,7 +14,7 @@ public class ReportMapper implements Mapper<Report> {
     @Override
     public Report mapToObject(ResultSet resultSet) throws SQLException {
         Report report = new Report();
-
+        report.setId(resultSet.getLong("id_report"));
         report.setTopic(resultSet.getString("report_topic"));
         report.setRegestratedAmount(resultSet.getInt("registrated_participants_amount"));
         report.setVisitorsAmount(resultSet.getInt("visited_participants_amount"));

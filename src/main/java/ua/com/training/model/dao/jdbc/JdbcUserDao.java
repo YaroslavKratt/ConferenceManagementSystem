@@ -20,8 +20,9 @@ public class JdbcUserDao implements UserDao {
     private DataSource dataSource = ConnectionPool.getDataSource();
     private ResourceBundle sqlRequestBundle = new ResourceService().getBundle(ResourceService.SQL_REQUESTS_BUNDLE_NAME);
 
+
     @Override
-    public User getById() {
+    public User getById(long id) {
         return null;
     }
 
@@ -43,7 +44,7 @@ public class JdbcUserDao implements UserDao {
     @Override
     public boolean addNew(User user) throws RuntimeException {
         try(Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlRequestBundle.getString("query.insert.user.new"))) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlRequestBundle.getString("user.insert.new"))) {
 
             preparedStatement.setString(1,user.getName());
             preparedStatement.setString(2,user.getSurname());
@@ -62,7 +63,7 @@ public class JdbcUserDao implements UserDao {
     public User getByEmail(String email) {
         User user = null;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sqlRequestBundle.getString("query.select.user.by.email"))
+             PreparedStatement preparedStatement = connection.prepareStatement(sqlRequestBundle.getString("user.select.by.email"))
         ) {
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();

@@ -3,6 +3,7 @@ package ua.com.training.model.entity;
 import java.time.LocalDateTime;
 
 public class Report {
+    private long id;
     private String topic;
     private User speaker;
     private int regestratedAmount;
@@ -77,5 +78,13 @@ public class Report {
 
     public void setSpeakerName(String speakerName) {
         this.speakerName = speakerName;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
