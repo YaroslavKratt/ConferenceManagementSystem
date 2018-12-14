@@ -74,7 +74,6 @@
                 </tr>
             </c:forEach>
 
-            </tbody>
         </table>
     </c:forEach>
 </div>
@@ -84,5 +83,4 @@
 <script src=<c:url value="/bootstrap/js/jquery.min.js"/>></script>
 <script src=<c:url value="/bootstrap/js/smoothproducts.min.js"/>></script>
 <script src=<c:url value="/bootstrap/js/theme.js"/>></script>
-</body>
 </html>
