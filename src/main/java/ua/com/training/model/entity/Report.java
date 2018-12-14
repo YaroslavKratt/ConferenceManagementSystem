@@ -8,6 +8,11 @@ public class Report {
     private int regestratedAmount;
     private int visitorsAmount;
     private LocalDateTime dateTime;
+    private String speakerName;
+    private String speakerSurname;
+
+    public Report() {
+    }
 
     public String getTopic() {
         return topic;
@@ -45,7 +50,7 @@ public class Report {
     public  String toString() {
         return "Report: "
                 + " Topic: " + topic
-                + " Speaker: " + speaker.toString() + "\n"
+                + " Speaker: " + speakerName + " " + speakerSurname + "\n"
                 + " Registrated amount: " + regestratedAmount
                 + " Visitors amount: " + visitorsAmount + "\n";
     }
@@ -56,5 +61,21 @@ public class Report {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public String getSpeakerSurname() {
+        return speakerSurname;
+    }
+
+    public void setSpeakerSurname(String speakerSurname) {
+        this.speakerSurname = speakerSurname;
+    }
+
+    public String getSpeakerName() {
+        return speakerName;
+    }
+
+    public void setSpeakerName(String speakerName) {
+        this.speakerName = speakerName;
     }
 }

@@ -14,13 +14,13 @@ public class ReportMapper implements Mapper<Report> {
     @Override
     public Report mapToObject(ResultSet resultSet) throws SQLException {
         Report report = new Report();
-        User speaker = new UserMapper().mapToObject(resultSet);
 
         report.setTopic(resultSet.getString("report_topic"));
         report.setRegestratedAmount(resultSet.getInt("registrated_participants_amount"));
         report.setVisitorsAmount(resultSet.getInt("visited_participants_amount"));
         report.setDateTime(resultSet.getTimestamp("report_datetime").toLocalDateTime());
-        report.setSpeaker(speaker);
+        report.setSpeakerName(resultSet.getString("speaker_name"));
+        report.setSpeakerSurname(resultSet.getString("speaker_surname"));
         return report;
 
     }

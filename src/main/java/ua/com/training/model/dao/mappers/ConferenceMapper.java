@@ -1,22 +1,43 @@
 package ua.com.training.model.dao.mappers;
 
-import ua.com.training.model.dao.jdbc.ConnectionPool;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.com.training.model.entity.Conference;
+import ua.com.training.model.entity.Report;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.*;
 
-public class ConferenceMapper implements Mapper<Conference>  {
+public class ConferenceMapper implements Mapper<Conference> {
+    private static final Logger LOG = LogManager.getLogger(ConferenceMapper.class);
 
     @Override
     public Conference mapToObject(ResultSet resultSet) throws SQLException {
-            Conference conference =  new Conference();
+        Conference conference = new Conference();
 
-            conference.setId(resultSet.getLong("id_conference"));
-            conference.setLocation(resultSet.getString("conference_location"));
-            conference.setTopic(resultSet.getString("conference_topic"));
-            conference.setDateTime(resultSet.getTimestamp("conference_timestamp").toLocalDateTime());
-            return  conference;
-        }
+        conference.setId(resultSet.getLong("id_conference"));
+        conference.setLocation(resultSet.getString("conference_location"));
+        conference.setTopic(resultSet.getString("conference_topic"));
+        conference.setDateTime(resultSet.getTimestamp("conference_timestamp").toLocalDateTime());
+        return conference;
     }
+
+    public List<Conference> mapToList(ResultSet conferencesWithReports) throws SQLException {
+        Set<Conference> conferences = new HashSet<>();
+        ReportMapper reportMapper = new ReportMapper();
+        Map<Long, List<Report>> conferenceReports = new HashMap<>();
+
+        while (conferencesWithReports.next()) {
+            conferences.add(mapToObject(conferencesWithReports));
+            conferenceReports.putIfAbsent(conferencesWithReports.getLong("id_conference"), new ArrayList<>());
+            conferenceReports.get(conferencesWithReports.getLong("id_conference"))
+                             .add(reportMapper.mapToObject(conferencesWithReports));
+        }
+        conferences.forEach(conference -> conference.setReports(conferenceReports.get(conference.getId())));
+        LOG.info("onferences with reports " + conferenceReports);
+        return new ArrayList<>(conferences);
+    }
+}
+
 

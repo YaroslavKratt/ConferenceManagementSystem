@@ -3,6 +3,7 @@ package ua.com.training.model.entity;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Conference {
     private long id;
@@ -10,6 +11,7 @@ public class Conference {
     private String location;
     private LocalDateTime dateTime;
     private List<Report> reports = new ArrayList<>();
+    private Object obj;
 
     public void addReport(Report report) {
         reports.add(report);
@@ -66,5 +68,25 @@ public class Conference {
                 + reports.stream().map(Report::toString).reduce("\n", String::concat) + "\n";
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null ||obj.getClass()!=this.getClass()){
+            return false;
+        }
+        if (this == obj){
+            return true;
+        }
+        Conference conference = (Conference)obj;
+        return     this.id==conference.id
+                && this.topic.equals(conference.topic)
+                && this.location.equals(conference.location)
+                && this.dateTime.equals(conference.dateTime);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, topic, location, dateTime);
+    }
 
 }

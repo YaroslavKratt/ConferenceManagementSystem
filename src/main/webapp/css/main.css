@@ -111,7 +111,7 @@ td {
     margin-left: 6px;
     padding: 0px!important;
     font-size: 14px;
-    color: transparent;
+    color: #000000;
 }
 .form-horizontal .form-control:hover {
     color:grey;
