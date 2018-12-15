@@ -6,4 +6,6 @@ public interface ReportDao extends DAO<Report>{
     boolean subscribe(long userId, long reportId);
 
     boolean checkSubscription(long userId, long reportId);
+
+    void unsubscribe(long userId, long reportId);
 }

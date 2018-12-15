@@ -38,6 +38,12 @@ public enum CommandEnum {
             this.command = new SubscribeCommand();
         }
 
+    },
+    UNSUBSCRIBE {
+        {
+            this.command = new UnsubscribeCommand();
+        }
+
     } ;
     Command command;
 

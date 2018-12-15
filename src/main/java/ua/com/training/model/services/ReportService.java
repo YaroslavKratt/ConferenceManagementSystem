@@ -15,4 +15,8 @@ public class ReportService {
     public boolean checkSubscription(long userId, long reportId) {
         return reportDao.checkSubscription(userId, reportId);
     }
+
+    public void unsubscribeUserFromReport(long userId, long reportId) {
+        reportDao.unsubscribe(userId, reportId);
+    }
 }

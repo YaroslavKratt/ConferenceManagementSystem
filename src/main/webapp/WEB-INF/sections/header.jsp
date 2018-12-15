@@ -36,7 +36,7 @@
 
         <nav class="navbar navbar-light navbar-expand-md">
 
-            <div class="container-fluid"><a class="navbar-brand" href="#">AllConferences</a>
+            <div class="container-fluid"><a class="navbar-brand" href="/">AllConferences</a>
                 <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span
                         class="sr-only"></span><span
                         class="navbar-toggler-icon"></span></button>

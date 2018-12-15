@@ -12,11 +12,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class JdbcUserDao implements UserDao {
-    private static final Logger logger = LogManager.getLogger(JdbcUserDao.class);
+    private static final Logger LOG = LogManager.getLogger(JdbcUserDao.class);
     private DataSource dataSource = ConnectionPool.getDataSource();
     private ResourceBundle sqlRequestBundle = new ResourceService().getBundle(ResourceService.SQL_REQUESTS_BUNDLE_NAME);
 
@@ -54,7 +55,7 @@ public class JdbcUserDao implements UserDao {
             preparedStatement.execute();
             return true;
         } catch (SQLException e) {
-            logger.error("User was not added: " + e);
+            LOG.error("User was not added: " + e);
             return false;
         }
     }
@@ -71,7 +72,7 @@ public class JdbcUserDao implements UserDao {
                 user = extractFromResultSet(resultSet);
             }
         } catch (SQLException e) {
-            logger.error(e);
+            LOG.error(e);
         }
         return user;
     }
@@ -90,6 +91,26 @@ public class JdbcUserDao implements UserDao {
     @Override
     public User.Role getUserRole(String email) {
         return getByEmail(email).getRole();
+    }
+
+    @Override
+    public List<Long> getUserSubscriptionsIds(long userId) {
+        List<Long> userSubscriptionsIds = new ArrayList<>();
+        try(Connection connection = dataSource.getConnection();
+
+        PreparedStatement preparedStatement = connection
+                .prepareStatement(sqlRequestBundle.getString("get.user.subscriptions.ids"))) {
+            preparedStatement.setLong(1,userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                userSubscriptionsIds.add(resultSet.getLong("reports_id_report"));
+            }
+            return userSubscriptionsIds;
+        } catch (SQLException e) {
+            LOG.error("Can`y get list of user subscription: " + e);
+            throw  new RuntimeException();
+        }
     }
 
 

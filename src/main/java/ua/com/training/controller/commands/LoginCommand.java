@@ -38,7 +38,7 @@ public class LoginCommand implements Command {
         }
         if (!userService.checkUserExist(email)) {
             LOG.info("User" + email + " dose not exist");
-            putMessageInRequest(request, "wrongEmail", messageBundle, "message.no.user.with.email");
+            putMessageInRequest(request, "wrongEmail", messageBundle, "info.message.no.user.with.email");
             return PATH_BUNDLE.getString("page.login");
         }
 
@@ -50,7 +50,7 @@ public class LoginCommand implements Command {
             return "redirect:/" + UserService.getRoleString(email) + PATH_BUNDLE.getString("path.catalog");
         }
         else {
-            putMessageInRequest(request, "wrongPassword", messageBundle, "message.wrong.password");
+            putMessageInRequest(request, "wrongPassword", messageBundle, "info.message.wrong.password");
             LOG.warn("Wrong password");
 
         }

@@ -24,18 +24,18 @@ public class RegistrationCommand implements Command {
             return PATH_BUNDLE.getString("page.registration");
         }
         if(userService.checkUserExist(request.getParameter("email"))) {
-            request.setAttribute("wrongEmail", messageBundle.getString("user.already.exist") );
+            request.setAttribute("wrongEmail", messageBundle.getString("info.message.user.already.exist") );
             return PATH_BUNDLE.getString("page.registration");
         }
 
         if(!validationUtil.validate(request.getParameter("email"),regexpBundle.getString("regexp.email"))){
-            request.setAttribute("wrongEmail", messageBundle.getString("wrong.email.input") );
+            request.setAttribute("wrongEmail", messageBundle.getString("info.message.wrong.email.input") );
 
             return PATH_BUNDLE.getString("page.registration");
 
         }
         if(!validationUtil.validate(request.getParameter("password"),regexpBundle.getString("regexp.password"))){
-            request.setAttribute("wrongPassword", messageBundle.getString("wrong.password.input") );
+            request.setAttribute("wrongPassword", messageBundle.getString("info.message.wrong.password.input") );
             return PATH_BUNDLE.getString("page.registration");
 
         }

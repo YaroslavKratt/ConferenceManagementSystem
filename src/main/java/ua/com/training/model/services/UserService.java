@@ -4,6 +4,9 @@ import ua.com.training.model.dao.DaoFactory;
 import ua.com.training.model.dao.UserDao;
 import ua.com.training.model.entity.User;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class UserService {
     private static UserDao userDao = DaoFactory.getInstance().createUserDao();
 
@@ -28,7 +31,12 @@ public class UserService {
 
         return userDao.addNew(user);
     }
+
     public long getUserId(String email) {
-       return userDao.getByEmail(email).getId();
+        return userDao.getByEmail(email).getId();
+    }
+
+    public List<Long> getUserSubscriptionsIds(long userId) {
+        return userDao.getUserSubscriptionsIds(userId);
     }
 }

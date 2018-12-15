@@ -22,16 +22,17 @@ public class JdbcReportDao implements ReportDao {
     private ResourceBundle sqlRequestBundle = new ResourceService()
             .getBundle(ResourceService.SQL_REQUESTS_BUNDLE_NAME);
     private Mapper<Report> reportMapper = new ReportMapper();
+
     @Override
-    public Report getById( long id) {
-        try(Connection connection = dataSource.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(sqlRequestBundle.getString("report.select.by.id"))) {
+    public Report getById(long id) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sqlRequestBundle.getString("report.select.by.id"))) {
 
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             return reportMapper.mapToObject(resultSet);
         } catch (SQLException e) {
-            LOG.error("getById failed: " + e );
+            LOG.error("getById failed: " + e);
             throw new RuntimeException();
         }
     }
@@ -73,17 +74,31 @@ public class JdbcReportDao implements ReportDao {
 
     @Override
     public boolean checkSubscription(long userId, long reportId) {
-       try(Connection connection = dataSource.getConnection();
-       PreparedStatement preparedStatement = connection
-               .prepareStatement(sqlRequestBundle.getString("report.select.subscription.by.id"))) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("report.select.subscription.by.id"))) {
 
-           preparedStatement.setLong(1,userId);
-           preparedStatement.setLong(2, reportId);
-           return preparedStatement.executeQuery().next();
+            preparedStatement.setLong(1, userId);
+            preparedStatement.setLong(2, reportId);
+            return preparedStatement.executeQuery().next();
 
-       } catch (SQLException e) {
-           LOG.error("Check subscription failed: " + e);
-           throw new RuntimeException();
-       }
+        } catch (SQLException e) {
+            LOG.error("Check subscription failed: " + e);
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public void unsubscribe(long userId, long reportId) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("report.unsubscribe.user"))) {
+            preparedStatement.setLong(1, userId);
+            preparedStatement.setLong(2, reportId);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            LOG.error("Unsubscription failed: " + e);
+            throw new RuntimeException();
+        }
     }
 }

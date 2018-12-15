@@ -11,13 +11,20 @@ import javax.servlet.http.HttpSession;
 
 public class SubscribeCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(SubscribeCommand.class);
+
     @Override
     public String execute(HttpServletRequest request) {
         ReportService reportService = new ReportService();
         UserService userService = new UserService();
         HttpSession session = request.getSession();
-        reportService.subscribeUserOnReport(userService.getUserId((String) session.getAttribute("email")),
-                Long.valueOf(request.getParameter("reportForSubscription")));
-        return session.getAttribute("role") + PATH_BUNDLE.getString("path.catalog");
+        long reportId = Long.valueOf(request.getParameter("reportForSubscription"));
+        long userId = userService.getUserId((String) session.getAttribute("email"));
+
+        reportService.subscribeUserOnReport(userId, reportId);
+        request.setAttribute(String.valueOf(reportId), "subscribed");
+        request.setAttribute("subscriptions", userService.getUserSubscriptionsIds(userId));
+
+        return "redirect:/" + session.getAttribute("role") + PATH_BUNDLE.getString("path.catalog");
+
     }
 }
