@@ -44,7 +44,13 @@ public enum CommandEnum {
             this.command = new UnsubscribeCommand();
         }
 
-    } ;
+    },
+    CHANGELANGUAGE {
+        {
+            this.command = new ChangeLanguageCommand();
+        }
+
+    };
     Command command;
 
     public Command getCommand() {

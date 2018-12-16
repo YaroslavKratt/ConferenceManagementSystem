@@ -35,7 +35,6 @@ public class ConferenceMapper implements Mapper<Conference> {
                              .add(reportMapper.mapToObject(conferencesWithReports));
         }
         conferences.forEach(conference -> conference.setReports(conferenceReports.get(conference.getId())));
-        LOG.info("onferences with reports " + conferenceReports);
         return new ArrayList<>(conferences);
     }
 }
