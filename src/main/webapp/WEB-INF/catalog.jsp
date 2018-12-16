@@ -12,7 +12,6 @@
     <link href="<c:url value='/bootstrap/css/bootstrap.css' />" rel="stylesheet">
     <link href="<c:url value='/bootstrap/css/bootstrap-grid.css' />" rel="stylesheet">
     <link href="<c:url value='/bootstrap/css/bootstrap-reboot.css' />" rel="stylesheet">
-
     <link href="<c:url value='/css/main.css' />" rel="stylesheet">
     <meta charset="UTF-8">
 

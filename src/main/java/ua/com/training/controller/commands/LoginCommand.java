@@ -76,8 +76,12 @@ public class LoginCommand implements Command {
     }
 
     private void dropSessionIfLoggedIn(HttpServletRequest request, String email) {
-        if (request.getSession().getServletContext().getAttribute(email) != null) {
-            ((HttpSession) request.getSession().getServletContext().getAttribute(email)).invalidate();
+        try {
+            if (request.getSession().getServletContext().getAttribute(email) != null) {
+                ((HttpSession) request.getSession().getServletContext().getAttribute(email)).invalidate();
+            }
+        } catch (IllegalStateException ise) {
+
         }
-    }
+           }
 }
