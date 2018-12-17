@@ -37,10 +37,16 @@
                 <c:choose>
                     <c:when test="${sessionScope.role == 'admin'}">
                         <th>
+                            <form action="${pageContext.request.contextPath}/${sessionScope.role}/deleteconference" method="post">
+                                <input type="hidden" name="deleteConference" value="${conference.id}">
+                            <button class="btn btn-primary" type="submit"><fmt:message
+                                    key="page.message.delete"/></button>
+                            </form>
+
+                            <form action="${pageContext.request.contextPath}/${sessionScope.role}/editconference" method="post">
                             <button class="btn btn-primary" type="button"><fmt:message
                                     key="page.message.edit"/></button>
-                            <button class="btn btn-primary" type="button"><fmt:message
-                                    key="page.message.delete"/></button>
+                            </form>
                         </th>
                     </c:when>
                 </c:choose>

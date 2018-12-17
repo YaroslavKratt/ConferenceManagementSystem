@@ -32,7 +32,7 @@ public class CreateConferenceCommand implements Command {
                 return PATH_BUNDLE.getString("page.conference");
             }
             LocalDateTime conferenceDateTime = LocalDateTime.parse(request.getParameter("conference-date-time"));
-            if (conferenceDateTime.compareTo(LocalDateTime.now())<0) {
+            if (conferenceDateTime.compareTo(LocalDateTime.now()) < 0) {
                 request.setAttribute("wrongDate", messages.getString("info.message.early.date"));
                 return PATH_BUNDLE.getString("page.conference");
             }
@@ -52,13 +52,12 @@ public class CreateConferenceCommand implements Command {
                 LocalDateTime reportDateTime = LocalDateTime.parse(timesIterator.next());
                 long speakerId = Long.valueOf(speakersIterator.next());
 
-                if(reportDateTime.compareTo(conferenceDateTime)<0){
-                    request.setAttribute("erlierThanConference",messages.getString("info.message.earlier.than.conference"));
+                if (reportDateTime.compareTo(conferenceDateTime) < 0) {
+                    request.setAttribute("erlierThanConference", messages.getString("info.message.earlier.than.conference"));
                     return PATH_BUNDLE.getString("page.conference");
                 }
-                if(userService.getUserRole(speakerId)== User.Role.USER)
-                {
-                    userService.changeRole(speakerId,User.Role.SPEAKER);
+                if (userService.getUserRole(speakerId) == User.Role.USER) {
+                    userService.changeRole(speakerId, User.Role.SPEAKER);
                 }
                 LOG.trace(userService.getUserRole(speakerId));
                 reports.add(new Report.Builder()
@@ -70,17 +69,13 @@ public class CreateConferenceCommand implements Command {
             }
 
             conference.setReports(reports);
-           if( !new ConferenceService().addConference(conference)) {
-               LOG.error("Can't save new conference");
-               throw new RuntimeException(messages.getString("error.message.not.saved"));
-           }
-
-
-
-            return PATH_BUNDLE.getString("page.conference");
+            if (!new ConferenceService().addConference(conference)) {
+                LOG.error("Can't save new conference");
+                throw new RuntimeException(messages.getString("error.message.not.saved"));
+            }
+             return "redirect:/" +  request.getSession().getAttribute("role") + PATH_BUNDLE.getString("path.catalog");
         }
     }
-
 
 
 }

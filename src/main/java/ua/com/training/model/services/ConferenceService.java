@@ -16,4 +16,8 @@ public class ConferenceService {
     public boolean addConference(Conference conference) {
         return conferenceDao.addNew(conference);
     }
+
+    public boolean deleteConference(Long id) {
+        return conferenceDao.delete(id);
+    }
 }

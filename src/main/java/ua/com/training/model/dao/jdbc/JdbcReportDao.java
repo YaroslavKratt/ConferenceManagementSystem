@@ -48,8 +48,8 @@ public class JdbcReportDao implements ReportDao {
     }
 
     @Override
-    public void delete(long id) {
-
+    public boolean delete(long id) {
+        return false;
     }
 
     @Override

@@ -48,14 +48,16 @@ public class JdbcConferenceDao implements ConferenceDao {
     }
 
     @Override
-    public void delete(long id) {
+    public boolean delete(long id) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement query = connection
                      .prepareStatement(sqlRequestBundle.getString("conference.delete"))) {
             query.setLong(1, id);
             query.executeUpdate();
+            return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Delete conference failed: " + e);
+            return false;
         }
     }
 
