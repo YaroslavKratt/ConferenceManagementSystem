@@ -63,20 +63,25 @@ public class JdbcConferenceDao implements ConferenceDao {
     public boolean addNew(Conference conference) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement conferenceQuery = connection
-                     .prepareStatement(sqlRequestBundle.getString("conference.insert"));
+                     .prepareStatement(sqlRequestBundle.getString("conference.insert"), Statement.RETURN_GENERATED_KEYS);
              PreparedStatement reportQuery = connection
                      .prepareStatement((sqlRequestBundle.getString("report.insert")))) {
             conferenceQuery.setString(1, conference.getTopic());
             conferenceQuery.setString(2, conference.getLocation());
             conferenceQuery.setTimestamp(3, Timestamp.valueOf(conference.getDateTime()));
-            for (Report report : conference.getReports()) {
-                reportQuery.setString(1, report.getTopic());
-                reportQuery.setLong(2, conference.getId());
-                reportQuery.setLong(3, report.getSpeaker().getId());
-                reportQuery.addBatch();
-            }
             conferenceQuery.executeUpdate();
-            reportQuery.executeUpdate();
+            ResultSet idResultSet = conferenceQuery.getGeneratedKeys();
+            if (idResultSet.next()) {
+
+                for (Report report : conference.getReports()) {
+                    reportQuery.setString(1, report.getTopic());
+                    reportQuery.setLong(2, idResultSet.getLong(1));
+                    reportQuery.setLong(3, report.getSpeakerId());
+                    reportQuery.setTimestamp(4,Timestamp.valueOf(report.getDateTime()));
+                    reportQuery.addBatch();
+                }
+            }
+            reportQuery.executeBatch();
             return true;
         } catch (SQLException e) {
             LOG.error("Conference inserting failed: " + e);

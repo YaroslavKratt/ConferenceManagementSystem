@@ -50,6 +50,12 @@ public enum CommandEnum {
             this.command = new ChangeLanguageCommand();
         }
 
+    },
+    CREATECONFERENCE {
+        {
+            this.command = new CreateConferenceCommand();
+        }
+
     };
     Command command;
 

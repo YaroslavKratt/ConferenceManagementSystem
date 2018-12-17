@@ -12,4 +12,8 @@ public class ConferenceService {
     public List<Conference> getAllConferences() {
         return conferenceDao.getAll();
     }
+
+    public boolean addConference(Conference conference) {
+        return conferenceDao.addNew(conference);
+    }
 }

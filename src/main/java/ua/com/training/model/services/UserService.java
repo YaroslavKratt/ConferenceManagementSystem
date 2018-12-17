@@ -26,6 +26,9 @@ public class UserService {
     public User.Role getUserRole(String email) {
         return userDao.getUserRole(email);
     }
+    public User.Role getUserRole(long id) {
+        return userDao.getUserRole(id);
+    }
 
     public boolean signUpUser(User user) {
 
@@ -38,5 +41,13 @@ public class UserService {
 
     public List<Long> getUserSubscriptionsIds(long userId) {
         return userDao.getUserSubscriptionsIds(userId);
+    }
+
+    public List<User> getAllUsers() {
+        return userDao.getAll();
+    }
+
+    public void changeRole(long id, User.Role role) {
+        userDao.changeRole(id,role);
     }
 }

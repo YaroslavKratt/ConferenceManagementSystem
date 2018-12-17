@@ -16,16 +16,15 @@
     <meta charset="UTF-8">
 
 
-
 </head>
 <jsp:include page="sections/header.jsp"/>
 <fmt:setLocale value="${ empty sessionScope.lang ? 'en_US' : sessionScope.lang}" scope="session"/>
 <fmt:bundle basename="messages">
 <body>
 <div>
-
-    <button class="btn btn-primary" type="button"><fmt:message key="page.message.create.conference"/>
-    </button>
+    <form action="${pageContext.request.contextPath}/${sessionScope.role}/createconference" method="post">
+        <button class="btn btn-primary" type="submit"><fmt:message key="page.message.create.conference"/>   </button>
+    </form>
 </div>
 <div class="table-responsive">
     <c:forEach items="${requestScope.conferences}" var="conference">

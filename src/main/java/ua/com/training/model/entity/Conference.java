@@ -11,7 +11,6 @@ public class Conference {
     private String location;
     private LocalDateTime dateTime;
     private List<Report> reports = new ArrayList<>();
-    private Object obj;
 
     public void addReport(Report report) {
         reports.add(report);

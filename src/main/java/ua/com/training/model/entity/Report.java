@@ -11,16 +11,26 @@ public class Report {
     private LocalDateTime dateTime;
     private String speakerName;
     private String speakerSurname;
+    private long speakerId;
 
-    public Report() {
+    private Report(Builder builder) {
+        this.id = builder.id;
+        this.topic = builder.topic;
+        this.speaker = builder.speaker;
+        this.speakerName = builder.speakerName;
+        this.speakerSurname = builder.speakerSurname;
+        this.dateTime = builder.dateTime;
+        this.regestratedAmount = builder.regestratedAmount;
+        this.visitorsAmount = builder.visitorsAmount;
+        this.speakerId = builder.speakerId;
+    }
+
+    public long getSpeakerId() {
+        return speakerId;
     }
 
     public String getTopic() {
         return topic;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
     }
 
     public User getSpeaker() {
@@ -35,49 +45,20 @@ public class Report {
         return regestratedAmount;
     }
 
-    public void setRegestratedAmount(int registratedAmount) {
-        this.regestratedAmount = registratedAmount;
-    }
-
     public int getVisitorsAmount() {
         return visitorsAmount;
-    }
-
-    public void setVisitorsAmount(int visitorsAmount) {
-        this.visitorsAmount = visitorsAmount;
-    }
-
-    @Override
-    public  String toString() {
-        return "Report: "
-                + " Topic: " + topic
-                + " Speaker: " + speakerName + " " + speakerSurname + "\n"
-                + " Registrated amount: " + regestratedAmount
-                + " Visitors amount: " + visitorsAmount + "\n";
     }
 
     public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
     public String getSpeakerSurname() {
         return speakerSurname;
     }
 
-    public void setSpeakerSurname(String speakerSurname) {
-        this.speakerSurname = speakerSurname;
-    }
-
     public String getSpeakerName() {
         return speakerName;
-    }
-
-    public void setSpeakerName(String speakerName) {
-        this.speakerName = speakerName;
     }
 
     public long getId() {
@@ -87,4 +68,77 @@ public class Report {
     public void setId(long id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Report: "
+                + " Topic: " + topic
+                + " Speaker: " + speakerName + " " + speakerSurname + "\n"
+                + " Registrated amount: " + regestratedAmount
+                + " Visitors amount: " + visitorsAmount + "\n";
+    }
+
+    public static class Builder {
+        private long id;
+        private String topic;
+        private User speaker;
+        private int regestratedAmount;
+        private int visitorsAmount;
+        private LocalDateTime dateTime;
+        private String speakerName;
+        private String speakerSurname;
+        private long speakerId;
+
+        public Report build() {
+            return new Report(this);
+        }
+
+        public Builder setSpeakerId(long speakerId) {
+            this.speakerId = speakerId;
+            return this;
+        }
+
+        public Builder setId(long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setTopic(String topic) {
+            this.topic = topic;
+            return this;
+        }
+
+        public Builder setSpeaker(User speaker) {
+            this.speaker = speaker;
+            return this;
+        }
+
+        public Builder setDateTime(LocalDateTime dateTime) {
+            this.dateTime = dateTime;
+            return this;
+        }
+
+        public Builder setRegestratedAmount(int regestratedAmount) {
+            this.regestratedAmount = regestratedAmount;
+            return this;
+        }
+
+        public Builder setSpeakerName(String speakerName) {
+            this.speakerName = speakerName;
+            return this;
+        }
+
+        public Builder setSpeakerSurname(String speakerSurname) {
+            this.speakerSurname = speakerSurname;
+            return this;
+
+        }
+
+        public Builder setVisitorsAmount(int visitorsAmount) {
+            this.visitorsAmount = visitorsAmount;
+            return this;
+        }
+
+    }
+
 }

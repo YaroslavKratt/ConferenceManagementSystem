@@ -9,19 +9,17 @@ import java.sql.SQLException;
 public class ReportMapper implements Mapper<Report> {
 
 
-
-
     @Override
     public Report mapToObject(ResultSet resultSet) throws SQLException {
-        Report report = new Report();
-        report.setId(resultSet.getLong("id_report"));
-        report.setTopic(resultSet.getString("report_topic"));
-        report.setRegestratedAmount(resultSet.getInt("registrated_participants_amount"));
-        report.setVisitorsAmount(resultSet.getInt("visited_participants_amount"));
-        report.setDateTime(resultSet.getTimestamp("report_datetime").toLocalDateTime());
-        report.setSpeakerName(resultSet.getString("speaker_name"));
-        report.setSpeakerSurname(resultSet.getString("speaker_surname"));
-        return report;
+        return new Report.Builder()
+                .setId(resultSet.getLong("id_report"))
+                .setTopic(resultSet.getString("report_topic"))
+                .setRegestratedAmount(resultSet.getInt("registrated_participants_amount"))
+                .setVisitorsAmount(resultSet.getInt("visited_participants_amount"))
+                .setDateTime(resultSet.getTimestamp("report_datetime").toLocalDateTime())
+                .setSpeakerName(resultSet.getString("speaker_name"))
+                .setSpeakerSurname(resultSet.getString("speaker_surname"))
+                .build();
 
     }
 
