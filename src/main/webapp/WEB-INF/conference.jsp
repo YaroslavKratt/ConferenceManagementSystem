@@ -18,7 +18,7 @@
     <fmt:bundle basename="messages"></head>
 
 <body>
-<form method="post" action="${pageContext.request.contextPath}/${sessionScope.role}/createconference">
+<form  id="new-confernce"method="post" action="${pageContext.request.contextPath}/${sessionScope.role}/createconference">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6 col-lg-6 col-sm-12  centered">
@@ -26,15 +26,15 @@
             </div>
         </div>
         <div class="row align-items-center">
-            <div class="col-md-6 col-lg-6 col-sm-12  centered">
+            <div class="col-md-4 col-lg-4 col-sm-12  centered">
                 <label for="conference-name"><fmt:message key="page.message.topic.of.conference"/></label>
                 <input type="text" name="conference-name" id="conference-name" required>
             </div>
-            <div class="col-md-6 col-lg-6 col-sm-12  centered">
+            <div class="col-md-4 col-lg-4 col-sm-12  centered">
                 <label for="conference-location"><fmt:message key="page.message.conference.location"/></label>
                 <input type="text" name="conference-location" id="conference-location" required>
             </div>
-            <div class="col-md-6 col-lg-6 col-sm-12  centered">
+            <div class="col-md-4 col-lg-4 col-sm-12  centered">
                 <label for="conference-date-time"><fmt:message key="page.message.date.of.conference"/> </label>
                 <input type="datetime-local" name="conference-date-time" id="conference-date-time" required>
                 <p class="text-danger"> ${wrongDate}</p>

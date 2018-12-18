@@ -48,7 +48,7 @@ body {
 }
 
 .page-footer {
-    position: fixed;
+    position: inherit;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -137,6 +137,9 @@ tr{
 input{
 
     margin: 10px;
+}
+#new-confernce{
+    margin-top: 10rem;
 }
 
 

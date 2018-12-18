@@ -12,7 +12,7 @@
 </head>
 <body>
 <footer class="page-footer">
-    <div class="footer-copyright" style="margin: 1px;">
+    <div class="footer-copyright" >
         <p>© 2018 Yaroslav Kratt</p>
     </div>
 </footer>

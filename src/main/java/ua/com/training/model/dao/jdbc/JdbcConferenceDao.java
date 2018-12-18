@@ -68,13 +68,13 @@ public class JdbcConferenceDao implements ConferenceDao {
                      .prepareStatement(sqlRequestBundle.getString("conference.insert"), Statement.RETURN_GENERATED_KEYS);
              PreparedStatement reportQuery = connection
                      .prepareStatement((sqlRequestBundle.getString("report.insert")))) {
+            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED); connection.setAutoCommit(false);
             conferenceQuery.setString(1, conference.getTopic());
             conferenceQuery.setString(2, conference.getLocation());
             conferenceQuery.setTimestamp(3, Timestamp.valueOf(conference.getDateTime()));
             conferenceQuery.executeUpdate();
             ResultSet idResultSet = conferenceQuery.getGeneratedKeys();
             if (idResultSet.next()) {
-
                 for (Report report : conference.getReports()) {
                     reportQuery.setString(1, report.getTopic());
                     reportQuery.setLong(2, idResultSet.getLong(1));
@@ -84,6 +84,7 @@ public class JdbcConferenceDao implements ConferenceDao {
                 }
             }
             reportQuery.executeBatch();
+            connection.commit();
             return true;
         } catch (SQLException e) {
             LOG.error("Conference inserting failed: " + e);
