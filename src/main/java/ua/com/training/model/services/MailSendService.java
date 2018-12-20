@@ -2,7 +2,12 @@ package ua.com.training.model.services;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.util.Properties;
+import ua.com.training.controller.listeners.SessionListener;
+import ua.com.training.model.dao.ConferenceDao;
+import ua.com.training.model.dao.DaoFactory;
+import ua.com.training.model.dto.SubscriptionDTO;
+
+import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -10,7 +15,10 @@ import java.util.Properties;
 
 
 public class MailSendService implements Runnable {
-    private Logger LOG = LogManager.getLogger(MailSendService.class);
+    private final static Logger LOG = LogManager.getLogger(MailSendService.class);
+    private final static ResourceBundle EMAIL_BUNDLE = new ResourceService().getBundle(ResourceService.EMAIL_BUNDLE);
+    private static ConferenceDao conferenceDao = DaoFactory.getInstance().createConferenceDao();
+
     @Override
     public void run() {
         final String username = "all.conferences.mail@gmail.com";
@@ -33,32 +41,55 @@ public class MailSendService implements Runnable {
         try {
             Transport transport = session.getTransport("smtp");
             transport.connect();
-            Message message;
-            String [] mails={"kratt202@gmail.com","wtf0100@gmail.com","kratt202@gmail.com","wtf0100@gmail.com","kratt202@gmail.com","wtf0100@gmail.com","kratt202@gmail.com","wtf0100@gmail.com","kratt202@gmail.com","wtf0100@gmail.com","kratt202@gmail.com","wtf0100@gmail.com","kratt202@gmail.com","wtf0100@gmail.com","kratt202@gmail.com","wtf0100@gmail.com","kratt202@gmail.com","wtf0100@gmail.com","kratt202@gmail.com","wtf0100@gmail.com","kratt202@gmail.com","wtf0100@gmail.com","kratt202@gmail.com","wtf0100@gmail.com"};
-
-            for (int i = 0; i < 2; i++)
-            { message= new MimeMessage(session);
-                message.setFrom(new InternetAddress("all.conferences.mail@gmail.com"));
-                message.setRecipients(Message.RecipientType.TO,
-                        InternetAddress.parse(mails[i]));
-                message.setSubject("Message alert" + i);
-                message.setText("Dear Yaroslav ,"
-                        + "\n\n I`m testing my app");
-
-                message.saveChanges();
+            List<Message> messages = buildMessages(session, conferenceDao.getAllSubscriptions());
+            for (Message message : messages) {
                 transport.send(message);
             }
+
             transport.close();
             LOG.info("Message Sent");
 
         } catch (MessagingException e) {
-            LOG.info("Cant send");
-
+            LOG.info("Cant send" + e);
             throw new RuntimeException(e);
         }
 
     }
 
+    private List<Message> buildMessages(Session session, List<SubscriptionDTO> subscriptions) throws MessagingException {
+        List<Message> messages = new ArrayList<>();
+        for (SubscriptionDTO subscription : subscriptions) {
+            messages.add(createMessage(session, subscription));
+        }
+        return messages;
+
     }
+
+    private Message createMessage(Session session, SubscriptionDTO subscription) throws MessagingException {
+        Message message = new MimeMessage(session);
+
+        message.setFrom(new InternetAddress(EMAIL_BUNDLE.getString("app.email.address")));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(subscription.getUserEmail()));
+        message.setSubject(EMAIL_BUNDLE.getString("email.subject"));
+
+        StringBuilder emailText = new StringBuilder()
+                .append(EMAIL_BUNDLE.getString("email.text.start"))
+                .append(subscription.getUserName()+" ")
+                .append(subscription.getUserSurname())
+                .append(EMAIL_BUNDLE.getString("email.text.why"))
+                .append(EMAIL_BUNDLE.getString("email.text.conference"))
+                .append(subscription.getConferenceTopic())
+                .append(EMAIL_BUNDLE.getString("email.text.location"))
+                .append(subscription.getConferenceLocation())
+                .append(EMAIL_BUNDLE.getString("email.text.report.topic"))
+                .append(subscription.getReportTopic())
+                .append(EMAIL_BUNDLE.getString("email.text.thanks"));
+
+        message.setText(emailText.toString());
+        return message;
+    }
+
+
+}
 
 

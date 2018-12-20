@@ -18,14 +18,13 @@ public class LoginCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         String email = request.getParameter("email");
-        String password = request.getParameter("mysql.password");
+        String password = request.getParameter("password");
         LOG.info("email:" + email + " password:" + password);
         Locale locale = request.getLocale();
         HttpSession session = request.getSession();
         UserService userService = new UserService();
         LOG.trace("Locale:" + locale);
         ResourceBundle messageBundle = new ResourceService().getBundle(ResourceService.MESSAGE_BUNDLE, locale);
-
 
         if (email == null || password == null) {
             LOG.info("Empty email or login");

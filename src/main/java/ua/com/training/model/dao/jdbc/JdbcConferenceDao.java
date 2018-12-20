@@ -4,12 +4,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.com.training.model.dao.ConferenceDao;
 import ua.com.training.model.dao.mappers.ConferenceMapper;
+import ua.com.training.model.dao.mappers.SubscriptionDtoMapper;
+import ua.com.training.model.dto.SubscriptionDTO;
 import ua.com.training.model.entity.Conference;
 import ua.com.training.model.entity.Report;
 import ua.com.training.model.services.ResourceService;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -90,5 +93,22 @@ public class JdbcConferenceDao implements ConferenceDao {
             LOG.error("Conference inserting failed: " + e);
         }
         return false;
+    }
+
+    public List<SubscriptionDTO> getAllSubscriptions() {
+        List<SubscriptionDTO> subscriptions = new ArrayList<>();
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection
+                    .prepareStatement(sqlRequestBundle.getString("subscription.get.all"))
+        ) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                subscriptions.add(new SubscriptionDtoMapper().mapToObject(resultSet));
+            }
+            return subscriptions;
+        } catch (SQLException e) {
+            LOG.error("Cant get subscriptions: " + e);
+            throw new RuntimeException();
+        }
     }
 }

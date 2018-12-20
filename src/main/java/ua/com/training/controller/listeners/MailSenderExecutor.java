@@ -17,8 +17,8 @@ public class MailSenderExecutor implements ServletContextListener {
     public void contextInitialized(ServletContextEvent event) {
         executorService = Executors.newSingleThreadScheduledExecutor();
 
-        LOG.info("started");
-        executorService.scheduleAtFixedRate(new MailSendService(),0,1, TimeUnit.SECONDS);
+        LOG.info("Sending emails...");
+        executorService.scheduleAtFixedRate(new MailSendService(),0,30, TimeUnit.SECONDS);
     }
 
     @Override

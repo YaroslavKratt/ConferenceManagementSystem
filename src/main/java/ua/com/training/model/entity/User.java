@@ -72,7 +72,7 @@ public class User {
     public enum Role {
         ADMIN("admin"),
         SPEAKER("speaker"),
-        USER("mysql.user"),
+        USER("user"),
         GUEST("guest");
 
         private String role;

@@ -66,7 +66,7 @@ public class JdbcReportDao implements ReportDao {
             preparedStatement.setLong(2, reportId);
             return preparedStatement.execute();
         } catch (SQLException e) {
-            LOG.error("Subscription failed:  " + e);
+            LOG.error("SubscriptionDTO failed:  " + e);
         }
 
         return false;

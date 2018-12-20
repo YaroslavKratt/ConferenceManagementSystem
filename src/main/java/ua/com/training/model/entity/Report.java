@@ -20,7 +20,7 @@ public class Report {
         this.speakerName = builder.speakerName;
         this.speakerSurname = builder.speakerSurname;
         this.dateTime = builder.dateTime;
-        this.regestratedAmount = builder.regestratedAmount;
+        this.regestratedAmount = builder.registratedAmount;
         this.visitorsAmount = builder.visitorsAmount;
         this.speakerId = builder.speakerId;
     }
@@ -82,7 +82,7 @@ public class Report {
         private long id;
         private String topic;
         private User speaker;
-        private int regestratedAmount;
+        private int registratedAmount;
         private int visitorsAmount;
         private LocalDateTime dateTime;
         private String speakerName;
@@ -118,8 +118,8 @@ public class Report {
             return this;
         }
 
-        public Builder setRegestratedAmount(int regestratedAmount) {
-            this.regestratedAmount = regestratedAmount;
+        public Builder setRegistratedAmount(int registratedAmount) {
+            this.registratedAmount = registratedAmount;
             return this;
         }
 

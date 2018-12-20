@@ -75,7 +75,7 @@
                         <td>${report.speaker.name} ${report.speaker.surname}</td>
                         <td>${report.dateTime}</td>
                         <c:choose>
-                            <c:when test="${sessionScope.role=='user' || sessionScope.role =='admin'}">
+                            <c:when test="${sessionScope.role=='user' || sessionScope.role =='admin' ||sessionScope.role =='speaker'}">
                                 <td>
 
                                     <c:choose>
