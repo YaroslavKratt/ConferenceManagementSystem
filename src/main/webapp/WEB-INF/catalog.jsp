@@ -13,83 +13,102 @@
     <link href="<c:url value='/bootstrap/css/bootstrap-grid.css' />" rel="stylesheet">
     <link href="<c:url value='/bootstrap/css/bootstrap-reboot.css' />" rel="stylesheet">
     <link href="<c:url value='/css/main.css' />" rel="stylesheet">
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" >
+
 
 
 </head>
 <jsp:include page="sections/header.jsp"/>
 <fmt:setLocale value="${ empty sessionScope.lang ? 'en_US' : sessionScope.lang}" scope="session"/>
 <fmt:bundle basename="messages">
-<body>
-<div>
-    <form action="${pageContext.request.contextPath}/${sessionScope.role}/createconference" method="post">
-        <button class="btn btn-primary" type="submit"><fmt:message key="page.message.create.conference"/>   </button>
-    </form>
-</div>
-<div class="table-responsive">
-    <c:forEach items="${requestScope.conferences}" var="conference">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>${conference.topic}</th>
-                <th>${conference.location}</th>
-                <th>${conference.dateTime}</th>
-                <c:choose>
-                    <c:when test="${sessionScope.role == 'admin'}">
-                        <th>
-                            <form action="${pageContext.request.contextPath}/${sessionScope.role}/deleteconference" method="post">
-                                <input type="hidden" name="deleteConference" value="${conference.id}">
-                            <button class="btn btn-primary" type="submit"><fmt:message
-                                    key="page.message.delete"/></button>
-                            </form>
+<body >
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 text-center">
+    <c:choose>
 
-                            <form action="${pageContext.request.contextPath}/${sessionScope.role}/editconference" method="post">
-                            <button class="btn btn-primary" type="button"><fmt:message
-                                    key="page.message.edit"/></button>
-                            </form>
-                        </th>
-                    </c:when>
-                </c:choose>
-            </tr>
-            </thead>
-            <c:forEach items="${conference.reports}" var="report">
+        <c:when test="${sessionScope.role == 'admin'}">
+            <form
+                  action="${pageContext.request.contextPath}/${sessionScope.role}/createconference" method="post">
+                <button class="btn btn-primary" type="submit"><fmt:message
+                        key="page.message.create.conference"/></button>
+            </form>
+        </c:when>
+    </c:choose>
+        </div>
+    </div>
 
+<div class="row">
+
+        <c:forEach items="${requestScope.conferences}" var="conference">
+            <table class="table" >
+                <thead>
                 <tr>
-                    <td>${report.topic}</td>
-                    <td>${report.speaker.name} ${report.speaker.surname}</td>
-                    <td>${report.dateTime}</td>
+                    <th>${conference.topic}</th>
+                    <th>${conference.location}</th>
+                    <th>${conference.dateTime}</th>
                     <c:choose>
-                        <c:when test="${sessionScope.role=='user' || sessionScope.role =='admin'}">
-                            <td>
+                        <c:when test="${sessionScope.role == 'admin'}">
+                            <th class="row">
 
-                                <c:choose>
-                                    <c:when test="${not fn:contains(requestScope.subscriptions, report.id)}">
-                                        <form method="post"
-                                              action="${pageContext.request.contextPath}/${sessionScope.role}/subscribe">
-                                            <button class="btn btn-primary" type="submit" name="reportForSubscription"
-                                                    value="${report.id}"><fmt:message
-                                                    key="page.message.subscribe"/></button>
-                                        </form>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <form method="post"
-                                              action="${pageContext.request.contextPath}/${sessionScope.role}/unsubscribe">
+                                <form action="${pageContext.request.contextPath}/${sessionScope.role}/deleteconference"
+                                      method="post">
+                                    <input type="hidden" name="deleteConference" value="${conference.id}">
+                                    <button class="btn btn-danger" type="submit"><fmt:message
+                                            key="page.message.delete"/></button>
+                                </form>
 
-                                            <button class="btn btn-primary" type="submit" name="reportForUnsubscription"
-                                                    value="${report.id}"><fmt:message
-                                                    key="page.message.unsubscribe"/></button>
-                                        </form>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
+                                <form action="${pageContext.request.contextPath}/${sessionScope.role}/editconference"
+                                      method="post">
+                                    <button class="btn btn-primary" type="submit"><fmt:message
+                                            key="page.message.edit"/></button>
+                                </form>
+                            </th>
                         </c:when>
-
                     </c:choose>
                 </tr>
-            </c:forEach>
+                </thead>
+                <c:forEach items="${conference.reports}" var="report">
 
-        </table>
-    </c:forEach>
+                    <tr>
+                        <td>${report.topic}</td>
+                        <td>${report.speaker.name} ${report.speaker.surname}</td>
+                        <td>${report.dateTime}</td>
+                        <c:choose>
+                            <c:when test="${sessionScope.role=='user' || sessionScope.role =='admin'}">
+                                <td>
+
+                                    <c:choose>
+                                        <c:when test="${not fn:contains(requestScope.subscriptions, report.id)}">
+                                            <form method="post"
+                                                  action="${pageContext.request.contextPath}/${sessionScope.role}/subscribe">
+                                                <button class="btn btn-primary" type="submit"
+                                                        name="reportForSubscription"
+                                                        value="${report.id}"><fmt:message
+                                                        key="page.message.subscribe"/></button>
+                                            </form>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <form method="post"
+                                                  action="${pageContext.request.contextPath}/${sessionScope.role}/unsubscribe">
+
+                                                <button class="btn btn-danger" type="submit"
+                                                        name="reportForUnsubscription"
+                                                        value="${report.id}"><fmt:message
+                                                        key="page.message.unsubscribe"/></button>
+                                            </form>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                            </c:when>
+
+                        </c:choose>
+                    </tr>
+                </c:forEach>
+
+            </table>
+        </c:forEach>
+    </div>
 </div>
 <jsp:include page="sections/footer.jsp"/>
 </fmt:bundle>

@@ -1,6 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
+<head>
+    <meta charset="UTF-8" >
+
+</head>
 <body>
 <c:set var="lang" scope="session" value="${ empty sessionScope.lang ? 'en_US' : sessionScope.lang}"/>
 <fmt:setLocale value="${lang}" scope="session"/>

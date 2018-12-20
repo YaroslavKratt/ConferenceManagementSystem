@@ -36,5 +36,11 @@
         <filter-name>EncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    <listener>
+        <listener-class>ua.com.training.controller.listeners.MailSenderExecutor</listener-class>
+    </listener>
+    <listener>
+        <listener-class>ua.com.training.controller.listeners.SessionListener</listener-class>
+    </listener>
 
 </web-app>

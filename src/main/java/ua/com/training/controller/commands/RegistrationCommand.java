@@ -36,7 +36,7 @@ public class RegistrationCommand implements Command {
             request.setAttribute("wrongEmail", messageBundle.getString("info.message.wrong.email.input"));
             return PATH_BUNDLE.getString("page.registration");
         }
-        String password = request.getParameter("password");
+        String password = request.getParameter("mysql.password");
         if (!validationUtil.validate(password, regexpBundle.getString("regexp.password"))) {
             request.setAttribute("wrongPassword", messageBundle.getString("info.message.wrong.password.input"));
             return PATH_BUNDLE.getString("page.registration");

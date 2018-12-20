@@ -40,7 +40,7 @@ public class FrontController extends HttpServlet {
         }
         else {
             LOG.trace(page);
-            request.getRequestDispatcher(page).forward(request,response);
+            request.getRequestDispatcher(request.getContextPath() + "/" + page).forward(request,response);
         }
 
 

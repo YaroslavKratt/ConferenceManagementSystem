@@ -18,7 +18,7 @@ public class LoginCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        String password = request.getParameter("mysql.password");
         LOG.info("email:" + email + " password:" + password);
         Locale locale = request.getLocale();
         HttpSession session = request.getSession();
@@ -81,7 +81,7 @@ public class LoginCommand implements Command {
                 ((HttpSession) request.getSession().getServletContext().getAttribute(email)).invalidate();
             }
         } catch (IllegalStateException ise) {
-
+            LOG.error("Session already invalidated, but email still in context: " + ise);
         }
            }
 }

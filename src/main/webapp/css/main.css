@@ -42,17 +42,25 @@ body {
     float: none;
     text-align: center;
     width: auto;
-    font-size: 14px;
-    margin: 5px;
     color: white;
+}
+.btn-danger {
+    border-radius: 100px;
+    color: white;
+
+}
+.btn-success {
+    border-radius: 100px;
+    color: white;
+
 }
 
 .page-footer {
     position: inherit;
-    left: 0;
+    right: 0;
     bottom: 0;
-    width: 100%;
-    color: white;
+    left: 0;
+    padding: 1rem;
     text-align: center;
 }
 
@@ -87,12 +95,14 @@ em {
 table {
     border-collapse: collapse;
     width: 100%;
+    margin-left: 10%;
+    margin-right: 10%;
     border: 1px solid #ddd;
-    margin-bottom: 6rem;
+    margin-bottom: 6rem;!important;
 }
 
 th, td {
-    width: 500px;
+
     text-align: left;
 }
 th{
