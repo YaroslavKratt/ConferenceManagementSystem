@@ -2,21 +2,26 @@ package ua.com.training.model.services;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.com.training.controller.listeners.SessionListener;
 import ua.com.training.model.dao.ConferenceDao;
 import ua.com.training.model.dao.DaoFactory;
 import ua.com.training.model.dto.SubscriptionDTO;
 
-import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
+import java.util.ResourceBundle;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 
 public class MailSendService implements Runnable {
     private final static Logger LOG = LogManager.getLogger(MailSendService.class);
     private final static ResourceBundle EMAIL_BUNDLE = new ResourceService().getBundle(ResourceService.EMAIL_BUNDLE);
+    private final static ResourceBundle ACCESS = new ResourceService().getBundle(ResourceService.ACCESS_BUNDLE);
     private static ConferenceDao conferenceDao = DaoFactory.getInstance().createConferenceDao();
 
     @Override
@@ -43,7 +48,7 @@ public class MailSendService implements Runnable {
             transport.connect();
             List<Message> messages = buildMessages(session, conferenceDao.getAllSubscriptions());
             for (Message message : messages) {
-                transport.send(message);
+                Transport.send(message);
             }
 
             transport.close();
@@ -59,7 +64,11 @@ public class MailSendService implements Runnable {
     private List<Message> buildMessages(Session session, List<SubscriptionDTO> subscriptions) throws MessagingException {
         List<Message> messages = new ArrayList<>();
         for (SubscriptionDTO subscription : subscriptions) {
-            messages.add(createMessage(session, subscription));
+            LOG.trace("Date time is: " + subscription.getReportDateTime() + " is after 4 days from now:" + checkDate(subscription.getReportDateTime()));
+
+            if (checkDate(subscription.getReportDateTime())) {
+                messages.add(createMessage(session, subscription));
+            }
         }
         return messages;
 
@@ -74,7 +83,7 @@ public class MailSendService implements Runnable {
 
         StringBuilder emailText = new StringBuilder()
                 .append(EMAIL_BUNDLE.getString("email.text.start"))
-                .append(subscription.getUserName()+" ")
+                .append(subscription.getUserName() + " ")
                 .append(subscription.getUserSurname())
                 .append(EMAIL_BUNDLE.getString("email.text.why"))
                 .append(EMAIL_BUNDLE.getString("email.text.conference"))
@@ -87,6 +96,10 @@ public class MailSendService implements Runnable {
 
         message.setText(emailText.toString());
         return message;
+    }
+
+    private boolean checkDate(LocalDateTime reportDateTime) {
+        return DAYS.between(LocalDateTime.now(), reportDateTime) < Long.valueOf(EMAIL_BUNDLE.getString("notificate.before.days"));
     }
 
 
