@@ -1,6 +1,7 @@
 package ua.com.training.model.entity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Report {
     private long id;
@@ -63,6 +64,10 @@ public class Report {
 
     public long getId() {
         return id;
+    }
+    public String getFormatedDateTime(){
+        return dateTime.format(
+                DateTimeFormatter.ofPattern("dd.mm.yyyy HH:MM"));
     }
 
     public void setId(long id) {

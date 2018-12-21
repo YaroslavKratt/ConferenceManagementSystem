@@ -1,6 +1,7 @@
 package ua.com.training.model.entity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,7 +12,6 @@ public class Conference {
     private String location;
     private LocalDateTime dateTime;
     private List<Report> reports = new ArrayList<>();
-
     public void addReport(Report report) {
         reports.add(report);
 
@@ -51,6 +51,11 @@ public class Conference {
 
     public LocalDateTime getDateTime() {
         return dateTime;
+    }
+
+    public String getFormatedDateTime(){
+        return dateTime.format(
+                DateTimeFormatter.ofPattern("dd.mm.yyyy HH:MM"));
     }
 
     public void setDateTime(LocalDateTime dateTime) {

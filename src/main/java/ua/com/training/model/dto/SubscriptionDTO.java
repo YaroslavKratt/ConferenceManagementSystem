@@ -13,6 +13,8 @@ public class SubscriptionDTO {
     private String userName;
     private String userSurname;
     private String userEmail;
+    private long conferenceId;
+    private long reportId;
 
     private SubscriptionDTO(Builder builder) {
         this.reportTopic = builder.reportTopic;
@@ -25,6 +27,8 @@ public class SubscriptionDTO {
         this.userEmail = builder.userEmail;
         this.userSurname = builder.userSurname;
         this.userName = builder.userName;
+        this.reportId = builder.reportId;
+        this.conferenceId = builder.conferenceId;
     }
     public String getReportTopic() {
         return reportTopic;
@@ -75,6 +79,14 @@ public class SubscriptionDTO {
         return userEmail;
     }
 
+    public long getReportId() {
+        return reportId;
+    }
+
+    public long getConferenceId() {
+        return conferenceId;
+    }
+
     public static class Builder {
         private String reportTopic;
         private LocalDateTime reportDateTime;
@@ -86,7 +98,19 @@ public class SubscriptionDTO {
         private String userName;
         private String userSurname;
         private String userEmail;
+        private long reportId;
+        private long conferenceId;
 
+
+        public Builder setConferenceId(long conferenceId) {
+            this.conferenceId = conferenceId;
+            return this;
+        }
+
+        public Builder setReportId(long reportId) {
+            this.reportId = reportId;
+            return this;
+        }
 
         public Builder setReportTopic(String reportTopic) {
             this.reportTopic = reportTopic;

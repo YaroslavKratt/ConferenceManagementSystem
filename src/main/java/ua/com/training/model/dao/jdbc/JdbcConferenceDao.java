@@ -12,9 +12,7 @@ import ua.com.training.model.services.ResourceService;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class JdbcConferenceDao implements ConferenceDao {
     private final static Logger LOG = LogManager.getLogger(JdbcConferenceDao.class);
@@ -25,8 +23,22 @@ public class JdbcConferenceDao implements ConferenceDao {
 
     @Override
     public Conference getById(long id) {
-        return null;
+        Conference conference = null;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sqlRequestBundle.getString("conference.select.by.id"))) {
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                conference = new ConferenceMapper().mapToObject(resultSet);
+            }
+            return conference;
+
+        } catch (SQLException e) {
+            LOG.error("Cant get conference  by id:" + e);
+            throw new RuntimeException();
+        }
     }
+
 
     @Override
     public List<Conference> getAll() {
@@ -71,7 +83,8 @@ public class JdbcConferenceDao implements ConferenceDao {
                      .prepareStatement(sqlRequestBundle.getString("conference.insert"), Statement.RETURN_GENERATED_KEYS);
              PreparedStatement reportQuery = connection
                      .prepareStatement((sqlRequestBundle.getString("report.insert")))) {
-            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED); connection.setAutoCommit(false);
+            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+            connection.setAutoCommit(false);
             conferenceQuery.setString(1, conference.getTopic());
             conferenceQuery.setString(2, conference.getLocation());
             conferenceQuery.setTimestamp(3, Timestamp.valueOf(conference.getDateTime()));
@@ -82,7 +95,7 @@ public class JdbcConferenceDao implements ConferenceDao {
                     reportQuery.setString(1, report.getTopic());
                     reportQuery.setLong(2, idResultSet.getLong(1));
                     reportQuery.setLong(3, report.getSpeakerId());
-                    reportQuery.setTimestamp(4,Timestamp.valueOf(report.getDateTime()));
+                    reportQuery.setTimestamp(4, Timestamp.valueOf(report.getDateTime()));
                     reportQuery.addBatch();
                 }
             }
@@ -95,15 +108,17 @@ public class JdbcConferenceDao implements ConferenceDao {
         return false;
     }
 
-    public List<SubscriptionDTO> getAllSubscriptions() {
+
+    @Override
+    public List<SubscriptionDTO> getSubscriptionsList() {
         List<SubscriptionDTO> subscriptions = new ArrayList<>();
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement statement = connection
-                    .prepareStatement(sqlRequestBundle.getString("subscription.get.all"))
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection
+                     .prepareStatement(sqlRequestBundle.getString("subscription.get.all"))
         ) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                subscriptions.add(new SubscriptionDtoMapper().mapToObject(resultSet));
+                subscriptions.add( new SubscriptionDtoMapper().mapToObject(resultSet));
             }
             return subscriptions;
         } catch (SQLException e) {
@@ -111,4 +126,23 @@ public class JdbcConferenceDao implements ConferenceDao {
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public List<Long> getAllConferenceIdsInSubscriptions() {
+        Set<Long> conferenceIds = new HashSet<>();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement conferenceStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("conferences.get.all.conference.ids.in.subscriptions"))) {
+            ResultSet resultSet = conferenceStatement.executeQuery();
+
+            while (resultSet.next()) {
+                conferenceIds.add(resultSet.getLong("id_conference"));
+            }
+        } catch (SQLException e) {
+            LOG.error("Cant get get All Conference Ids In Subscriptions: " + e);
+        }
+        return new ArrayList<>(conferenceIds);
+
+    }
 }
+

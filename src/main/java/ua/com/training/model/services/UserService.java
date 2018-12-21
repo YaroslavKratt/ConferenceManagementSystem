@@ -5,7 +5,6 @@ import ua.com.training.model.dao.UserDao;
 import ua.com.training.model.entity.User;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UserService {
     private static UserDao userDao = DaoFactory.getInstance().createUserDao();
@@ -49,5 +48,25 @@ public class UserService {
 
     public void changeRole(long id, User.Role role) {
         userDao.changeRole(id,role);
+    }
+
+    public String getNameById(long id) {
+        return userDao.getNameById(id);
+    }
+
+    public String getSurnameById(long id) {
+        return userDao.getSurnameById(id);
+
+    }
+
+    public List<String> getUserSubscriptedEmails() {
+        return userDao.getUserSubscriptedEmails();
+    }
+
+    public String getNameByEmail(String userEmail) {
+        return userDao.getByEmail(userEmail).getName();
+    }
+    public String getSurnameByEmail(String userEmail) {
+        return userDao.getByEmail(userEmail).getSurname();
     }
 }

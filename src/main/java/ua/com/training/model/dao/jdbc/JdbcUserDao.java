@@ -9,13 +9,8 @@ import ua.com.training.model.entity.User;
 import ua.com.training.model.services.ResourceService;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.sql.*;
+import java.util.*;
 
 public class JdbcUserDao implements UserDao {
     private static final Logger LOG = LogManager.getLogger(JdbcUserDao.class);
@@ -31,7 +26,7 @@ public class JdbcUserDao implements UserDao {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                user = extractFromResultSet(resultSet);
+                user = new UserMapper().mapToObject(resultSet);
             }
             return user;
 
@@ -95,7 +90,7 @@ public class JdbcUserDao implements UserDao {
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                user = extractFromResultSet(resultSet);
+                user = new UserMapper().mapToObject(resultSet);
             }
             return user;
 
@@ -161,19 +156,35 @@ public class JdbcUserDao implements UserDao {
         }
     }
 
-
-
-
-    private User extractFromResultSet(ResultSet resultSet) throws SQLException {
-        return new User.Builder()
-                .setId(resultSet.getLong("user_id"))
-                .setEmail(resultSet.getString("user_email"))
-                .setName(resultSet.getString("user_name"))
-                .setSurname(resultSet.getString("user_surname"))
-                .setRole(User.Role.valueOf(resultSet.getString("user_role")))
-                .setPassword(resultSet.getString("user_password"))
-                .build();
+    @Override
+    public String getNameById(long id) {
+        return getById(id).getName();
     }
+
+    @Override
+    public String getSurnameById(long id) {
+        return getById(id).getSurname();
+    }
+
+    @Override
+    public List<String> getUserSubscriptedEmails() {
+
+        ArrayList<String> subscriptedEmails = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection();
+
+             PreparedStatement preparedStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("user.get.subscripted.emails"))) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                subscriptedEmails.add(resultSet.getString("user_email"));
+            }
+            return subscriptedEmails;
+        } catch (SQLException e) {
+            LOG.error("Can`y get list of subscripted emails: " + e);
+            throw new RuntimeException();
+        }    }
+
 
 }
 

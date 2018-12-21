@@ -20,4 +20,8 @@ public class ConferenceService {
     public boolean deleteConference(Long id) {
         return conferenceDao.delete(id);
     }
+
+    public Conference getConferenceById(long conferenceId) {
+        return conferenceDao.getById(conferenceId);
+    }
 }

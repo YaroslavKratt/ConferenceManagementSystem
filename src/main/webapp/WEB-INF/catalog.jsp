@@ -30,18 +30,19 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-5">
-                            <h5 class="card-title">${conference.topic}</h5>
+                           <p class="card-title font-weight-bold"><fmt:message key="page.message.conference"/> ${conference.topic}</p>
                         </div>
                         <div class="col-2">
-                            <h5 class="card-title">${conference.location}</h5>
+                            <p class="card-title font-weight-bold"><fmt:message key="page.message.location"/>${conference.location}</p>
                         </div>
                         <div class="col-2">
-                            <h5 class="card-title"> ${conference.dateTime}</h5>
+                            <p class="card-title font-weight-bold">${conference.getFormatedDateTime()}</p>
                         </div>
+                        <c:choose>
+                        <c:when test="${sessionScope.role == 'admin'}">
                         <div class="col-3">
                             <div class="row">
-                                <c:choose>
-                                    <c:when test="${sessionScope.role == 'admin'}">
+
                                         <div class="col-6">
                                             <form action="${pageContext.request.contextPath}/${sessionScope.role}/deleteconference"
                                                   method="post">
@@ -57,21 +58,24 @@
                                                         key="page.message.edit"/></button>
                                             </form>
                                         </div>
-                                    </c:when>
-                                </c:choose>
+
                             </div>
+
                         </div>
+                    </c:when>
+                    </c:choose>
                     </div> <!--/row> -->
+
                     <c:forEach items="${conference.reports}" var="report">
                         <div class="row">
                             <div class="col-5">
-                                <h7 class="card-title">${report.topic}</h7>
+                                <p class="card-title">${report.topic}</p>
                             </div>
                             <div class="col-2">
-                                <h7 class="card-title">${report.speakerName} ${report.speakerSurname}</h7>
+                                <p class="card-title">${report.speakerName} ${report.speakerSurname}</p>
                             </div>
                             <div class="col-2">
-                                    ${report.dateTime}
+                                 <p> ${report.getFormatedDateTime()}</p>
                             </div>
                             <div class="col-3">
                                 <c:choose>

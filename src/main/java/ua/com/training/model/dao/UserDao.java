@@ -20,4 +20,10 @@ public interface UserDao extends DAO<User> {
     List<Long> getUserSubscriptionsIds(long userId);
 
     void changeRole(long id, User.Role role);
+
+    String getNameById(long id);
+
+    String getSurnameById(long id);
+
+    List<String> getUserSubscriptedEmails();
 }

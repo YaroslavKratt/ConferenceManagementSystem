@@ -23,7 +23,7 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6 col-lg-6 col-sm-12  centered">
-                <h3><fmt:message key="page.message.conference"/></h3>
+                <h5><fmt:message key="page.message.conference"/></h5>
             </div>
         </div>
         <div class="row align-items-center">
@@ -46,7 +46,7 @@
     <div class="container" id="report-inputs">
         <div class="row align-items-center">
             <div class="col-md-6 col-lg-6 col-sm-12  centered">
-                <h3><fmt:message key="page.message.report"/></h3>
+                <h5><fmt:message key="page.message.report"/></h5>
 
             </div>
 
