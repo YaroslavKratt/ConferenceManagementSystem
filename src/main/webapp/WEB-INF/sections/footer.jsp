@@ -7,12 +7,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-</head>
-<body>
-<footer class="page-footer font-small">
-    <div class="footer-copyright" >
+
+<footer class="footer text-center">
         <p>© 2018 Yaroslav Kratt</p>
     </div>
 </footer>
@@ -21,5 +17,3 @@
 <script src=<c:url value="/bootstrap/js/jquery.min.js" />></script>
 <script src=<c:url value="/bootstrap/js/smoothproducts.min.js" />></script>
 <script src=<c:url value="/bootstrap/js/theme.js" />></script>
-</body>
-</html>

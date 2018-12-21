@@ -19,7 +19,7 @@ public class RegistrationCommand implements Command {
     public String execute(HttpServletRequest request) {
         ValidationUtil validationUtil = new ValidationUtil();
         UserService userService = new UserService();
-        Locale locale = Locale.forLanguageTag((String) request.getSession().getAttribute("lang"));
+        Locale locale =  (Locale)request.getSession().getAttribute("lang");
         ResourceBundle regexpBundle = new ResourceService().getBundle(ResourceService.REGEXP_BUNDLE, locale);
         ResourceBundle messageBundle = new ResourceService().getBundle(ResourceService.MESSAGE_BUNDLE, locale);
 

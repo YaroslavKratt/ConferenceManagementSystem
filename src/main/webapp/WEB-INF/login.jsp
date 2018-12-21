@@ -42,8 +42,9 @@
         </div>
     </section>
 </main>
-<jsp:include page="sections/footer.jsp"/>
 </fmt:bundle>
 
 </body>
+
+
 </html>

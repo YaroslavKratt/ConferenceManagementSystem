@@ -48,7 +48,7 @@ public class MailSendService implements Runnable {
             transport.connect();
             List<Message> messages = buildMessages(session, conferenceDao.getAllSubscriptions());
             for (Message message : messages) {
-                Transport.send(message);
+               // Transport.send(message);
             }
 
             transport.close();

@@ -55,14 +55,15 @@ body {
 
 }
 
-.page-footer {
-    position: inherit;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 1rem;
-    text-align: center;
+
+.footer {
+    position: relative;
+    margin-top: -150px; /* negative value of footer height */
+    height: 150px;
+    clear:both;
+    padding-top:20px;
 }
+
 
 .navbar-light .navbar-brand {
     color: black;
@@ -151,5 +152,13 @@ input{
 #new-confernce{
     margin-top: 10rem;
 }
-
+.card {
+    margin-top: 30px;
+}
+.container {
+    margin-top: 3rem;
+}
+#main{
+    padding-bottom:150px;
+}
 

@@ -18,6 +18,7 @@
     <fmt:bundle basename="messages"></head>
 
 <body>
+<div class="container" id="main">
 <form  id="new-confernce"method="post" action="${pageContext.request.contextPath}/${sessionScope.role}/createconference">
     <div class="container">
         <div class="row align-items-center">
@@ -97,6 +98,7 @@
         </div>
     </div>
 </form>
+</div>
 <jsp:include page="sections/footer.jsp"/>
 </fmt:bundle>
 <script src=<c:url value="/js/main.js"/>></script>

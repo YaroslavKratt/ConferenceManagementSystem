@@ -12,17 +12,17 @@ body {
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    color: white;!important;
+    color: black;!important;
     text-align: left;
     background-color: #fff;
     width: 100%;
     overflow-y: hidden;
     overflow-x: hidden;
-    background-image: url("/img/back1.jpg");
+    background-image: url("/img/back1.gif");
     background-size: cover;
 }
 p,h1,h2,h3,h4,h5,h6{
-    color:white;
+    color:black;
 }
 .form {
     display: block;
@@ -36,16 +36,18 @@ p,h1,h2,h3,h4,h5,h6{
 }
 
 .navbar-light .navbar-nav .nav-link {
-    border: 2px solid rgb(255,255,255);
+    border: 2px solid rgb(0, 0, 0);
     border-radius: 100px;
     display: inline-block;
     float: none;
     text-align: center;
     width: 120px;
-    padding: 0px!important;
+    margin-left: 5px;
+    padding: 0px !important;
     font-size: 14px;
-    color: #ffffff;
+    color: #000000;
 }
+
 .navbar-light .navbar-nav .nav-link:hover{
     color:grey;
     border: 2px solid grey;
@@ -59,7 +61,7 @@ p,h1,h2,h3,h4,h5,h6{
 }
 
 #main {
-    background-image: url(/img/back1.jpg);
+    background-image: url(/img/back1.gif);
     background-size: cover;
     height: 100vh;
     width: 100%;
@@ -72,7 +74,7 @@ p,h1,h2,h3,h4,h5,h6{
 #promo .jumbotron {
     text-align: center;
     padding: 300px;
-    background-color: rgba(255,252,252,0);
+    background-color: rgba(255, 252, 252, 0);
 }
 
 .btn-primary {
@@ -86,25 +88,23 @@ p,h1,h2,h3,h4,h5,h6{
     color: white;
 }
 
-.page-footer {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 1rem;
-    width: 100%;
+.footer {
+    position: relative;
+    margin-top: -150px; /* negative value of footer height */
+    height: 150px;
+    clear:both;
+    padding-top:20px;
     color: white;
-    text-align: center;
 }
 
 .navbar-light .navbar-brand{
-    color:white;
+    color:black;
 }
 .navbar-light .navbar-brand:hover {
     color:grey
 }
 .form-horizontal .form-control{
-    border: 2px solid rgb(255,255,255);
+    border: 2px solid rgb(0, 0, 0);
     background-color: transparent;
     border-radius: 100px;
     display: inherit;
@@ -113,7 +113,7 @@ p,h1,h2,h3,h4,h5,h6{
     width: auto;
     padding: 0px!important;
     font-size: 14px;
-    color: #ffffff;
+    color: #000000;
 }
 .form-horizontal .form-control:hover {
     color:grey;
@@ -123,4 +123,7 @@ p,h1,h2,h3,h4,h5,h6{
     float: none;
     text-align: center;
     font-size: 14px;
+}
+.text-info {
+    color: black;!important;
 }
