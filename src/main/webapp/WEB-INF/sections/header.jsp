@@ -52,8 +52,7 @@
                             class="sr-only"></span><span
                             class="navbar-toggler-icon"></span></button>
 
-                    <div
-                            class="collapse navbar-collapse float-right">
+                    <div class="collapse navbar-collapse float-right">
                         <ul class="nav navbar-nav  float-right ml-auto">
 
                             <li class="nav-item" role="presentation"><a class="nav-link nav float-right"
