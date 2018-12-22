@@ -1,4 +1,4 @@
-package ua.com.training.controller.commands;
+package ua.com.training.model.exceptions;
 
 public class NoSuchCommandException extends Throwable {
 }

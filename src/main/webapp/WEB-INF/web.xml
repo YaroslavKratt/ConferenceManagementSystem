@@ -5,7 +5,7 @@
     <display-name>Hello Servlet</display-name>
 
     <welcome-file-list>
-        <welcome-file>/index.jsp</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
     <servlet>
         <servlet-name>Controller</servlet-name>
@@ -42,5 +42,17 @@
     <listener>
         <listener-class>ua.com.training.controller.listeners.SessionListener</listener-class>
     </listener>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/404errorPage.jsp</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/WEB-INF/serverErrorPage.jsp</location>
+    </error-page>
+    <!--<error-page>
+        <exception-type>java.lang.RuntimeException</exception-type>
+        <location>/WEB-INF/view/runtimeError.jsp</location>
+      </error-page>-->
 
 </web-app>
