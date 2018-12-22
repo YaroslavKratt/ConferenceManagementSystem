@@ -67,7 +67,7 @@ public class Report {
     }
     public String getFormatedDateTime(){
         return dateTime.format(
-                DateTimeFormatter.ofPattern("dd.mm.yyyy HH:MM"));
+                DateTimeFormatter.ofPattern("dd.MM.yyyy HH:MM"));
     }
 
     public void setId(long id) {

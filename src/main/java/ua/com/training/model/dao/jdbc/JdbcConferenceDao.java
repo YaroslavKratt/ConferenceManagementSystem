@@ -2,6 +2,7 @@ package ua.com.training.model.dao.jdbc;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import sun.rmi.runtime.Log;
 import ua.com.training.model.dao.ConferenceDao;
 import ua.com.training.model.dao.mappers.ConferenceMapper;
 import ua.com.training.model.dao.mappers.SubscriptionDtoMapper;
@@ -118,7 +119,7 @@ public class JdbcConferenceDao implements ConferenceDao {
         ) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                subscriptions.add( new SubscriptionDtoMapper().mapToObject(resultSet));
+                subscriptions.add(new SubscriptionDtoMapper().mapToObject(resultSet));
             }
             return subscriptions;
         } catch (SQLException e) {
@@ -129,7 +130,7 @@ public class JdbcConferenceDao implements ConferenceDao {
 
     @Override
     public List<Long> getAllConferenceIdsInSubscriptions() {
-        Set<Long> conferenceIds = new HashSet<>();
+        List<Long> conferenceIds = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement conferenceStatement = connection
                      .prepareStatement(sqlRequestBundle.getString("conferences.get.all.conference.ids.in.subscriptions"))) {
@@ -141,8 +142,45 @@ public class JdbcConferenceDao implements ConferenceDao {
         } catch (SQLException e) {
             LOG.error("Cant get get All Conference Ids In Subscriptions: " + e);
         }
-        return new ArrayList<>(conferenceIds);
+        return conferenceIds;
 
+    }
+
+    @Override
+    public List<Conference> getPaginatedList(int begin, int recordsPerPage) {
+        List<Conference> pagenatedList = new ArrayList<>();
+        ConferenceMapper conferenceMapper = new ConferenceMapper();
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection
+                     .prepareStatement(sqlRequestBundle.getString("conferences.select.paginated"))) {
+            statement.setInt(1,begin);
+            statement.setInt(2,recordsPerPage);
+            ResultSet resultSet = statement.executeQuery();
+            LOG.trace("begin " + begin + " recordsperpafe " + recordsPerPage);
+                pagenatedList = conferenceMapper.mapToList(resultSet);
+            return pagenatedList;
+        } catch (SQLException e) {
+            LOG.error("Cant get paginated list: " + e);
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public int getConferencesAmount() {
+        int conferenceAmount = 0;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement conferenceStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("conferences.count"))) {
+            ResultSet resultSet = conferenceStatement.executeQuery();
+            if (resultSet.next()) {
+                conferenceAmount= resultSet.getInt(1);
+            }
+            return  conferenceAmount;
+        } catch (SQLException e) {
+            LOG.error("Cant count conferences: " + e);
+            throw new RuntimeException();
+        }
     }
 }
 

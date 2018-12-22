@@ -24,4 +24,11 @@ public class ConferenceService {
     public Conference getConferenceById(long conferenceId) {
         return conferenceDao.getById(conferenceId);
     }
+    public List<Conference> getPaginatedList(int begin, int recordsPerPage) {
+        return conferenceDao.getPaginatedList(begin,recordsPerPage);
+    }
+
+    public int getConferencesAmount() {
+        return conferenceDao.getConferencesAmount();
+    }
 }

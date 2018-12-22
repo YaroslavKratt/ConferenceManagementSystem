@@ -30,8 +30,11 @@ public class FrontController extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         CommandFactory commandFactory = new CommandFactory();
-        Command command = new DefaultCommand();
+        Command command;
         Optional<Command> commandOptional = commandFactory.getCommand(request, response);
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
 
         if (commandOptional.isPresent()) {
             command = commandOptional.get();

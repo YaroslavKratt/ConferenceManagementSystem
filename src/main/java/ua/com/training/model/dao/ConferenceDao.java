@@ -12,4 +12,8 @@ public interface ConferenceDao extends DAO<Conference> {
      List<SubscriptionDTO> getSubscriptionsList();
 
      List<Long> getAllConferenceIdsInSubscriptions();
+
+    List<Conference> getPaginatedList(int begin, int recordsPerPage);
+
+    int getConferencesAmount();
 }
