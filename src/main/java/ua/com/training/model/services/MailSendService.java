@@ -26,11 +26,12 @@ public class MailSendService implements Runnable {
     private final static ResourceBundle EMAIL_BUNDLE = new ResourceService().getBundle(ResourceService.EMAIL_BUNDLE);
     private static ConferenceDao conferenceDao = DaoFactory.getInstance().createConferenceDao();
     private static UserService userService = new UserService();
+    private final static ResourceBundle ACCESS_BUNDLE = new ResourceService().getBundle(ResourceService.ACCESS_BUNDLE);
 
     @Override
     public void run() {
-        final String username = "all.conferences.mail@gmail.com";
-        final String password = "15935755Zc";
+        final String username = ACCESS_BUNDLE.getString("email.app.address");
+        final String password = ACCESS_BUNDLE.getString("email.password");
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", true);
@@ -40,12 +41,13 @@ public class MailSendService implements Runnable {
         props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 
         Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
+                new Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(username, password);
                     }
                 });
         LOG.trace("Authenticated");
+        //sending emails in one session for better performance
         try {
             Transport transport = session.getTransport("smtp");
             transport.connect();
@@ -58,7 +60,6 @@ public class MailSendService implements Runnable {
 
             transport.close();
             LOG.info("All messages have been sent");
-
         } catch (MessagingException e) {
             LOG.info("Cant send" + e);
             throw new RuntimeException(e);
@@ -73,8 +74,8 @@ public class MailSendService implements Runnable {
 
         for (String email : subscriptedEmails) {
             for (Long id : conferenceIds) {
-                LOG.trace("check:" +checkForAppropriateSubscription(email,id,subscriptions) + " email=" + email+" id ="+ id);
-                if(checkForAppropriateSubscription(email,id,subscriptions)) {
+                LOG.trace("check:" + checkForAppropriateSubscription(email, id, subscriptions) + " email=" + email + " id =" + id);
+                if (checkForAppropriateSubscription(email, id, subscriptions)) {
                     try {
                         messages.add(createMessage(session, email, getAppropriateSubscriptions(email, id, subscriptions)));
                     } catch (TooEarlyDateException ignored) {
@@ -89,7 +90,6 @@ public class MailSendService implements Runnable {
     }
 
 
-
     private Message createMessage(Session session, String userEmail, List<SubscriptionDTO> subscriptions) throws MessagingException, TooEarlyDateException {
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(EMAIL_BUNDLE.getString("app.email.address")));
@@ -97,8 +97,7 @@ public class MailSendService implements Runnable {
         message.setSubject(EMAIL_BUNDLE.getString("email.subject"));
         LOG.trace("subscriptions size " + subscriptions.size());
 
-        if(!checkDate(subscriptions.get(0).getConferenceDateTime()))
-        {
+        if (!checkDate(subscriptions.get(0).getConferenceDateTime())) {
             throw new TooEarlyDateException();
         }
 
@@ -136,16 +135,15 @@ public class MailSendService implements Runnable {
         return DAYS.between(LocalDateTime.now(), dateTime) < Long.valueOf(EMAIL_BUNDLE.getString("notificate.before.days"));
     }
 
-
     private List<SubscriptionDTO> getAppropriateSubscriptions(String email, Long confernceId, List<SubscriptionDTO> subscriptions) {
         return subscriptions.stream()
-                .filter(subscription -> subscription.getUserEmail().equals(email)&&subscription.getConferenceId() == confernceId)
+                .filter(subscription -> subscription.getUserEmail().equals(email))
+                .filter(subscription -> subscription.getConferenceId() == confernceId)
                 .collect(Collectors.toCollection(ArrayList::new));
-
-
     }
+
     private boolean checkForAppropriateSubscription(String email, Long id, List<SubscriptionDTO> subscriptions) {
-        return getAppropriateSubscriptions(email,id,subscriptions).size()>0;
+        return getAppropriateSubscriptions(email, id, subscriptions).size() > 0;
     }
 
 }
