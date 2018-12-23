@@ -114,36 +114,50 @@
                                     <p> ${report.getFormatedDateTime()}</p>
                                 </div>
                                 <div class="col-3">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <c:choose>
+                                                <c:when test="${sessionScope.role!='guest'}">
+                                                    <c:choose>
+                                                        <c:when test="${not fn:contains(requestScope.subscriptions, report.id)}">
+                                                            <form method="post"
+                                                                  action="${pageContext.request.contextPath}/${sessionScope.role}/subscribe">
+                                                                <button class="btn btn-primary" type="submit"
+                                                                        name="reportForSubscription"
+                                                                        value="${report.id}"><fmt:message
+                                                                        key="page.message.subscribe"/></button>
+                                                            </form>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <form method="post"
+                                                                  action="${pageContext.request.contextPath}/${sessionScope.role}/unsubscribe">
+
+                                                                <button class="btn btn-danger" type="submit"
+                                                                        name="reportForUnsubscription"
+                                                                        value="${report.id}"><fmt:message
+                                                                        key="page.message.unsubscribe"/></button>
+                                                            </form>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:when>
+                                            </c:choose>
+                                        </div>
+                                    <div class="col-6">
+
                                     <c:choose>
-                                        <c:when test="${sessionScope.role=='user' || sessionScope.role =='admin' ||sessionScope.role =='speaker'}">
-                                            <td>
-
-                                                <c:choose>
-                                                    <c:when test="${not fn:contains(requestScope.subscriptions, report.id)}">
-                                                        <form method="post"
-                                                              action="${pageContext.request.contextPath}/${sessionScope.role}/subscribe">
-                                                            <button class="btn btn-primary" type="submit"
-                                                                    name="reportForSubscription"
-                                                                    value="${report.id}"><fmt:message
-                                                                    key="page.message.subscribe"/></button>
-                                                        </form>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <form method="post"
-                                                              action="${pageContext.request.contextPath}/${sessionScope.role}/unsubscribe">
-
-                                                            <button class="btn btn-danger" type="submit"
-                                                                    name="reportForUnsubscription"
-                                                                    value="${report.id}"><fmt:message
-                                                                    key="page.message.unsubscribe"/></button>
-                                                        </form>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </td>
+                                        <c:when test="${sessionScope.role=='admin' ||sessionScope.role=='speaker'}">
+                                                <form action="${pageContext.request.contextPath}/${sessionScope.role}/editreport"
+                                                      method="post">
+                                                    <button class="btn btn-primary" type="submit"><fmt:message
+                                                            key="page.message.edit"/></button>
+                                                </form>
                                         </c:when>
-
                                     </c:choose>
+                                    </div>
+
                                 </div>
+                                </div>
+
                             </div>
                             <!--/row-->
 
@@ -175,7 +189,7 @@
                 <ul class="pagination">
                     <c:if test="${paginationParameters.currentPage != 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="/${sessionScope.role}/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage-1}">Previous</a>
+                                                 href="/${sessionScope.role}/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage-1}"><<</a>
                         </li>
                     </c:if>
                     <c:forEach begin="1" end="${paginationParameters.pagesAmount}" var="i">
@@ -194,7 +208,7 @@
                     </c:forEach>
                     <c:if test="${paginationParameters.currentPage lt paginationParameters.pagesAmount}">
                         <li class="page-item"><a class="page-link"
-                                                 href="/${sessionScope.role}/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage+1}">Next</a>
+                                                 href="/${sessionScope.role}/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage+1}">>></a>
                         </li>
                     </c:if>
                 </ul>
