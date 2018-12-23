@@ -9,12 +9,12 @@ import java.util.Optional;
 
 
 public class CommandFactory {
-    private final static Logger LOGGER = LogManager.getLogger(CommandFactory.class);
+    private final static Logger LOG = LogManager.getLogger(CommandFactory.class);
 
     public Optional<Command> getCommand(HttpServletRequest request, HttpServletResponse response) {
         Command currentCommand = new DefaultCommand();
         String command = request.getRequestURI().replaceAll(".*/guest*.|.*/admin*.|.*/speaker*.|.*/user*.|","");
-
+        LOG.debug("Command is: " + command);
         if (command.isEmpty()) {
             return Optional.of(currentCommand);
         }
@@ -22,7 +22,7 @@ public class CommandFactory {
             currentCommand = CommandEnum.valueOf(command.toUpperCase()).getCommand();
             return Optional.of(currentCommand);
         } catch (IllegalArgumentException e) {
-            LOGGER.warn("There is no such command: " + command);
+            LOG.warn("There is no such command: " + command);
             return Optional.empty();
         }
     }

@@ -56,7 +56,7 @@
                     <div class="collapse navbar-collapse float-right">
                         <ul class="nav navbar-nav  float-right ml-auto">
                             <li class="nav-item" role="presentation"><a class="nav-link nav float-right"
-                                                                        href="${pageContext.request.contextPath}/${sessionScope.role}/speakers"><fmt:message
+                                                                        href="${pageContext.request.contextPath}/${sessionScope.role}/catalogofspeakers"><fmt:message
                                     key="page.message.speakers"/></a>
                             </li>
                             <li class="nav-item" role="presentation"><a class="nav-link nav float-right"

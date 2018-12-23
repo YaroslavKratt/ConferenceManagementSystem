@@ -14,9 +14,40 @@
 
 </head>
 <body>
+<div class=" container">
+    <c:forEach items="${requestScope.speakers}" var="speaker">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <h5 class="card-title">${speaker.name} ${speaker.surname}</h5>
+                    </div><!--col-6-->
+                    <div class="col-6 rate">
+                        <input type="radio" id="star5" name="rate${speaker.id}" value="5"/>
+                        <label for="star5" title="text">5 stars</label>
+                        <input type="radio" id="star4" name="rate${speaker.id}" value="4"/>
+                        <label for="star4" title="text">4 stars</label>
+                        <input type="radio" id="star3" name="rate${speaker.id}" value="3"/>
+                        <label for="star3" title="text">3 stars</label>
+                        <input type="radio" id="star2" name="rate${speaker.id}" value="2"/>
+                        <label for="star2" title="text">2 stars</label>
+                        <input type="radio" id="star1" name="rate${speaker.id}" value="1"/>
+                        <label for="star1" title="text">1 star</label>
+                    </div><!--col-6-->
+                </div><!--/row-->
+                <ul class="list-group">
+                <c:forEach items="${speaker.reports}" var="report">
+                        <li class="list-group-item">${report.topic}</li>
+                </c:forEach>
+                </ul>
+
+            </div>
+        </div>
+    </c:forEach>
+</div><!--/container-->
 <div class="container">
     <div class="row">
-        <form action="${pageContext.request.contextPath}/${sessionScope.role}/catalog" onchange="submit()">
+        <form action="${pageContext.request.contextPath}/${sessionScope.role}/catalogofspeakers" onchange="submit()">
             <input type="hidden" name="currentPage" value="1">
             <label for="records"><fmt:message key="page.message.records.per.page"/> </label>
             <select class="form-control" id="records" name="recordsPerPage">
@@ -48,11 +79,6 @@
         </form>
     </div>
 </div><!--container-->
-
-
-
-
-
 
 
 <div class="col-xs-1" align="center">
@@ -87,5 +113,8 @@
 </div>
 
 </body>
+<script>
+
+</script>
 </fmt:bundle>
 </html>

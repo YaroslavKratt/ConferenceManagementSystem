@@ -63,9 +63,9 @@ public enum CommandEnum {
         }
 
     },
-    SPEAKERS {
+    CATALOGOFSPEAKERS {
         {
-            this.command = new SpeakersCommand();
+            this.command = new CatalogOfSpeakersCommand();
         }
     };
     Command command;
