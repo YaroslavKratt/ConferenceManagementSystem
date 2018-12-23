@@ -27,6 +27,15 @@ public class RegistrationCommand implements Command {
             return PATH_BUNDLE.getString("page.registration");
         }
 
+        if(!validationUtil.validate(request.getParameter("name"), regexpBundle.getString("regex.name"))) {
+            request.setAttribute("wrongName", messageBundle.getString("info.message.wrong.name"));
+            return PATH_BUNDLE.getString("page.registration");
+        }
+
+        if(!validationUtil.validate(request.getParameter("surname"), regexpBundle.getString("regex.surname"))) {
+            request.setAttribute("wrongSurname", messageBundle.getString("info.message.wrong.surname"));
+            return PATH_BUNDLE.getString("page.registration");
+        }
         String email = request.getParameter("email");
 
         if (userService.checkUserExist(email)) {

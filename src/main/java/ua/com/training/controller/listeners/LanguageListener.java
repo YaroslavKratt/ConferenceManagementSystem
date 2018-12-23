@@ -23,7 +23,6 @@ public class LanguageListener implements HttpSessionAttributeListener {
     public void attributeReplaced(HttpSessionBindingEvent event) {
 
         if (event.getName().equals("lang")) {
-            LOG.trace("LISTENER LOCALE: " + String.valueOf( event.getSession().getAttribute("lang")));
             String internalizationParameters = String.valueOf(event.getSession().getAttribute("lang"));
             event.getSession().setAttribute("locale",
                     new Locale(internalizationParameters.substring(0, 2), internalizationParameters.substring(3, 5)));
