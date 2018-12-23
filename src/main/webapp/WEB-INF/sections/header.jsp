@@ -55,7 +55,10 @@
 
                     <div class="collapse navbar-collapse float-right">
                         <ul class="nav navbar-nav  float-right ml-auto">
-
+                            <li class="nav-item" role="presentation"><a class="nav-link nav float-right"
+                                                                        href="${pageContext.request.contextPath}/${sessionScope.role}/catalog"><fmt:message
+                                    key="page.message.catalog"/></a>
+                            </li>
                             <li class="nav-item" role="presentation"><a class="nav-link nav float-right"
                                                                         href="${pageContext.request.contextPath}/${sessionScope.role}/logout"><fmt:message
                                     key="page.message.button.logout"/></a>
