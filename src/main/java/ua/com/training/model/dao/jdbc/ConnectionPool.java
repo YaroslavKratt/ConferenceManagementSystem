@@ -1,7 +1,7 @@
 package ua.com.training.model.dao.jdbc;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import ua.com.training.model.services.ResourceService;
+import ua.com.training.model.ResourceEnum;
 
 import javax.sql.DataSource;
 import java.util.ResourceBundle;
@@ -15,7 +15,7 @@ class ConnectionPool {
             synchronized (ConnectionPool.class) {
                 if (dataSource == null) {
                     BasicDataSource basicDataSource = new BasicDataSource();
-                    ResourceBundle dbUtilBundle = new ResourceService().getBundle(ResourceService.ACCESS_BUNDLE);
+                    ResourceBundle dbUtilBundle = ResourceBundle.getBundle(ResourceEnum.ACCESS_BUNDLE.getBundleName());
                     basicDataSource.setDriverClassName(dbUtilBundle.getString("mysql.driver"));
                     basicDataSource.setUrl(dbUtilBundle.getString("mysql.url"));
                     basicDataSource.setUsername(dbUtilBundle.getString("mysql.user"));

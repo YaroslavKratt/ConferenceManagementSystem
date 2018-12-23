@@ -6,13 +6,11 @@ import ua.com.training.model.entity.Conference;
 import ua.com.training.model.entity.Report;
 import ua.com.training.model.entity.User;
 import ua.com.training.model.services.ConferenceService;
-import ua.com.training.model.services.ResourceService;
+import ua.com.training.model.ResourceEnum;
 import ua.com.training.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class CreateConferenceCommand implements Command {
@@ -24,7 +22,7 @@ public class CreateConferenceCommand implements Command {
             List<Report> reports = new ArrayList<>();
             Conference conference = new Conference();
             Locale locale = (Locale)request.getSession().getAttribute("locale");
-            ResourceBundle messages = ResourceBundle.getBundle(ResourceService.MESSAGE_BUNDLE, locale);
+            ResourceBundle messages = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), locale);
             UserService userService = new UserService();
             request.setAttribute("possibleSpeakers", new UserService().getAllUsers());
 

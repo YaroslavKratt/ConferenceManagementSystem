@@ -6,7 +6,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import ua.com.training.model.dao.UserDao;
 import ua.com.training.model.dao.mappers.UserMapper;
 import ua.com.training.model.entity.User;
-import ua.com.training.model.services.ResourceService;
+import ua.com.training.model.ResourceEnum;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -15,7 +15,7 @@ import java.util.*;
 public class JdbcUserDao implements UserDao {
     private static final Logger LOG = LogManager.getLogger(JdbcUserDao.class);
     private DataSource dataSource = ConnectionPool.getDataSource();
-    private ResourceBundle sqlRequestBundle = new ResourceService().getBundle(ResourceService.SQL_REQUESTS_BUNDLE_NAME);
+    private ResourceBundle sqlRequestBundle = ResourceBundle.getBundle(ResourceEnum.SQL_REQUESTS_BUNDLE.getBundleName());
 
 
     @Override

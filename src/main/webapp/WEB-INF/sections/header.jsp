@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="lang" value="${not empty param.lang ? param.lang : not empty lang ? lang: pageContext.request.locale}" scope="session" />
-<fmt:setLocale value="${lang}" />
+<fmt:setLocale value="${lang}" scope="session" />
 <html lang="${lang}">
 <head>
     <meta charset="UTF-8" >

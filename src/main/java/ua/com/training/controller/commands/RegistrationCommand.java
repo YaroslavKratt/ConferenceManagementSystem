@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 import ua.com.training.controller.utils.SecurityUtil;
 import ua.com.training.controller.utils.ValidationUtil;
 import ua.com.training.model.entity.User;
-import ua.com.training.model.services.ResourceService;
+import ua.com.training.model.ResourceEnum;
 import ua.com.training.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,13 +19,14 @@ public class RegistrationCommand implements Command {
     public String execute(HttpServletRequest request) {
         ValidationUtil validationUtil = new ValidationUtil();
         UserService userService = new UserService();
-        Locale locale = (Locale)request.getSession().getAttribute("locale");
-        ResourceBundle regexpBundle = ResourceBundle.getBundle(ResourceService.REGEXP_BUNDLE, locale);
-        ResourceBundle messageBundle = ResourceBundle.getBundle(ResourceService.MESSAGE_BUNDLE, locale);
+        Locale locale = (Locale) request.getSession().getAttribute("locale");
+        ResourceBundle regexpBundle = ResourceBundle.getBundle(ResourceEnum.REGEXP_BUNDLE.getBundleName(), locale);
+        ResourceBundle messageBundle = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), locale);
 
         if (isEmptyRequest(request)) {
             return PATH_BUNDLE.getString("page.registration");
         }
+
         String email = request.getParameter("email");
 
         if (userService.checkUserExist(email)) {

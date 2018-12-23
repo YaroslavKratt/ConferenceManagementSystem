@@ -2,14 +2,13 @@ package ua.com.training.model.dao.jdbc;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sun.rmi.runtime.Log;
 import ua.com.training.model.dao.ConferenceDao;
 import ua.com.training.model.dao.mappers.ConferenceMapper;
 import ua.com.training.model.dao.mappers.SubscriptionDtoMapper;
 import ua.com.training.model.dto.SubscriptionDTO;
 import ua.com.training.model.entity.Conference;
 import ua.com.training.model.entity.Report;
-import ua.com.training.model.services.ResourceService;
+import ua.com.training.model.ResourceEnum;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -18,8 +17,7 @@ import java.util.*;
 public class JdbcConferenceDao implements ConferenceDao {
     private final static Logger LOG = LogManager.getLogger(JdbcConferenceDao.class);
     private DataSource dataSource = ConnectionPool.getDataSource();
-    private ResourceBundle sqlRequestBundle = new ResourceService()
-            .getBundle(ResourceService.SQL_REQUESTS_BUNDLE_NAME);
+    private ResourceBundle sqlRequestBundle = ResourceBundle.getBundle(ResourceEnum.SQL_REQUESTS_BUNDLE.getBundleName());
 
 
     @Override

@@ -6,7 +6,7 @@ import ua.com.training.model.dao.ReportDao;
 import ua.com.training.model.dao.mappers.Mapper;
 import ua.com.training.model.dao.mappers.ReportMapper;
 import ua.com.training.model.entity.Report;
-import ua.com.training.model.services.ResourceService;
+import ua.com.training.model.ResourceEnum;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -19,8 +19,7 @@ import java.util.ResourceBundle;
 public class JdbcReportDao implements ReportDao {
     private static final Logger LOG = LogManager.getLogger(JdbcReportDao.class);
     private DataSource dataSource = ConnectionPool.getDataSource();
-    private ResourceBundle sqlRequestBundle = new ResourceService()
-            .getBundle(ResourceService.SQL_REQUESTS_BUNDLE_NAME);
+    private ResourceBundle sqlRequestBundle =ResourceBundle.getBundle(ResourceEnum.SQL_REQUESTS_BUNDLE.getBundleName());
     private Mapper<Report> reportMapper = new ReportMapper();
 
     @Override

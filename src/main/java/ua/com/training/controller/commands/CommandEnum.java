@@ -62,7 +62,7 @@ public enum CommandEnum {
             this.command = new DeleteConferenceCommand();
         }
 
-    };;
+    };
     Command command;
 
     public Command getCommand() {

@@ -2,6 +2,7 @@ package ua.com.training.model.services;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ua.com.training.model.ResourceEnum;
 import ua.com.training.model.dao.ConferenceDao;
 import ua.com.training.model.dao.DaoFactory;
 import ua.com.training.model.dto.SubscriptionDTO;
@@ -23,10 +24,10 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 public class MailSendService implements Runnable {
     private final static Logger LOG = LogManager.getLogger(MailSendService.class);
-    private final static ResourceBundle EMAIL_BUNDLE = new ResourceService().getBundle(ResourceService.EMAIL_BUNDLE);
+    private final static ResourceBundle EMAIL_BUNDLE = ResourceBundle.getBundle(ResourceEnum.EMAIL_BUNDLE.getBundleName());
     private static ConferenceDao conferenceDao = DaoFactory.getInstance().createConferenceDao();
     private static UserService userService = new UserService();
-    private final static ResourceBundle ACCESS_BUNDLE = new ResourceService().getBundle(ResourceService.ACCESS_BUNDLE);
+    private final static ResourceBundle ACCESS_BUNDLE = ResourceBundle.getBundle(ResourceEnum.ACCESS_BUNDLE.getBundleName());
 
     @Override
     public void run() {

@@ -1,8 +1,7 @@
 package ua.com.training.controller.commands;
 
-import sun.net.ResourceManager;
 import ua.com.training.model.services.ReportService;
-import ua.com.training.model.services.ResourceService;
+import ua.com.training.model.ResourceEnum;
 import ua.com.training.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +14,7 @@ public class UnsubscribeCommand implements Command {
         HttpSession session = request.getSession();
         ReportService reportService = new ReportService();
         UserService userService = new UserService();
-        ResourceBundle messageBundle = new ResourceService().getBundle(ResourceService.MESSAGE_BUNDLE, request.getLocale());
+        ResourceBundle messageBundle =ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), request.getLocale());
         long userId = userService.getUserId((String) session.getAttribute("email"));
         long reportId =  Long.valueOf(request.getParameter("reportForUnsubscription"));
 

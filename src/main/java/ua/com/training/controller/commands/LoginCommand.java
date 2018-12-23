@@ -3,7 +3,7 @@ package ua.com.training.controller.commands;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.com.training.model.entity.User;
-import ua.com.training.model.services.ResourceService;
+import ua.com.training.model.ResourceEnum;
 import ua.com.training.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,14 +19,26 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request) {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        LOG.info("email:" + email + " password:" + password);
         Locale locale = (Locale)request.getSession().getAttribute("locale");
+        LOG.trace("locale " + locale );
         UserService userService = new UserService();
-        LOG.trace("Locale:" + locale);
-        ResourceBundle messageBundle = new ResourceService().getBundle(ResourceService.MESSAGE_BUNDLE, locale);
+        ResourceBundle messageBundle = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), locale);
 
-        if (email == null || password == null) {
-            LOG.info("Empty email or login");
+        if( email==null || password==null)
+        {
+            LOG.trace("Email or password is null");
+            return PATH_BUNDLE.getString("page.login");
+
+        }
+        if (email.isEmpty()) {
+            LOG.info("Empty email ");
+            putMessageInRequest(request, "wrongEmail", messageBundle, "info.message.empty.email");
+            return PATH_BUNDLE.getString("page.login");
+        }
+        if (password.isEmpty()) {
+            LOG.info("Empty password");
+            putMessageInRequest(request, "wrongPassword", messageBundle, "info.message.empty.password");
+
             return PATH_BUNDLE.getString("page.login");
         }
 

@@ -16,7 +16,7 @@ public class LogOutCommand implements Command {
             session.getServletContext().removeAttribute((String) session.getAttribute("email"));
             session.invalidate();
         }
-        return  PATH_BUNDLE.getString("page.index");
+        return  "redirect:" + PATH_BUNDLE.getString("page.index");
 
     }
 }
