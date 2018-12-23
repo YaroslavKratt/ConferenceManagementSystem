@@ -19,8 +19,6 @@ public class UserMapper implements Mapper<User> {
                 .setPassword(resultSet.getString("user_password"))
                 .setEmail(resultSet.getString("user_email"))
                 .setRole(User.Role.valueOf(resultSet.getString("user_role")))
-                .setSpeakerBonus(resultSet.getInt("speakers_bonus"))
-                .setSpeakerRating(resultSet.getDouble("speakers_rating"))
-                .build();
+                 .build();
     }
 }

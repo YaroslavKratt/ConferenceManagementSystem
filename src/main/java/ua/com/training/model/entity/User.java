@@ -4,16 +4,17 @@ package ua.com.training.model.entity;
  *
  */
 public class User {
-    protected long id;
-    protected String name;
-    protected String surname;
-    protected String email;
-    protected Role role;
+    private long id;
+    private String name;
+    private String surname;
+    private String email;
+    private Role role;
 
-    protected String password;
+    private String password;
 
+    User(){}
 
-    protected User(Builder userBuilder) {
+    private User(Builder userBuilder) {
         this.id = userBuilder.id;
         this.name = userBuilder.name;
         this.surname = userBuilder.surname;
@@ -78,12 +79,12 @@ public class User {
     }
 
     public static class Builder {
-        protected long id;
-        protected String name;
-        protected String surname;
-        protected String email;
-        protected Role role;
-        protected String password;
+        private long id;
+        private String name;
+        private String surname;
+        private String email;
+        private Role role;
+        private String password;
 
 
         public Builder setId(long id) {

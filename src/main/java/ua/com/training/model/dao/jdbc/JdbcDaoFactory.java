@@ -23,7 +23,7 @@ public class JdbcDaoFactory extends DaoFactory {
 
     @Override
     public SpeakerDao createSpeakerDao() {
-        return new JdbcDaoSpeaker();
+        return new JdbcSpeakerDao();
     }
 
     @Override

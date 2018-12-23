@@ -16,29 +16,41 @@
 <body>
 <div class=" container">
     <c:forEach items="${requestScope.speakers}" var="speaker">
-        <div class="card" style="width: 18rem;">
+        <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-6">
                         <h5 class="card-title">${speaker.name} ${speaker.surname}</h5>
                     </div><!--col-6-->
-                    <div class="col-6 rate">
-                        <input type="radio" id="star5" name="rate${speaker.id}" value="5"/>
-                        <label for="star5" title="text">5 stars</label>
-                        <input type="radio" id="star4" name="rate${speaker.id}" value="4"/>
-                        <label for="star4" title="text">4 stars</label>
-                        <input type="radio" id="star3" name="rate${speaker.id}" value="3"/>
-                        <label for="star3" title="text">3 stars</label>
-                        <input type="radio" id="star2" name="rate${speaker.id}" value="2"/>
-                        <label for="star2" title="text">2 stars</label>
-                        <input type="radio" id="star1" name="rate${speaker.id}" value="1"/>
-                        <label for="star1" title="text">1 star</label>
+                    <div class="col-6">
+                        <form class="rating ${speaker.id}" >
+                            <input type="hidden" name="speakerId" value="${speaker.id}">
+                                <input type="radio" id="star5${speaker.id}" name="rating" value="5"
+                                       onclick="this.form.submit()"/><label for="star5${i}"><span>&#9733</span></label>
+                                <input type="radio" id="star4${speaker.id}" name="rating${speaker.id}" value="4"
+                                       onclick="this.form.submit()"/>
+                                <label for="star4${speaker.id}"><span>&#9733</span></label>
+                                <input type="radio" id="star3${speaker.id}" name="rating${speaker.id}" value="3"
+                                       onclick="this.form.submit()"/>
+                                <label for="star3${speaker.id}"><span>&#9733</span></label>
+                                <input type="radio" id="star2${speaker.id}" name="rating${speaker.id}" value="2"
+                                       onclick="this.form.submit()"/>
+                                <label for="star2${speaker.id}"><span>&#9733</span></label>
+                                <input type="radio" id="star1${speaker.id}" name="rating${speaker.id}" value="1"
+                                       onclick="this.form.submit()"/>
+                                <label for="star1${speaker.id}"><span>&#9733</span></label>
+                        </form>
+                            <script>
+                                var radiobtn = document.getElementById('star${requestScope.ratings.get(speaker.id)}${speaker.id}');
+                                radiobtn.setAttribute("checked", "");
+                            </script>
+                        </fieldset>
                     </div><!--col-6-->
                 </div><!--/row-->
                 <ul class="list-group">
-                <c:forEach items="${speaker.reports}" var="report">
+                    <c:forEach items="${speaker.speakerReports}" var="report">
                         <li class="list-group-item">${report.topic}</li>
-                </c:forEach>
+                    </c:forEach>
                 </ul>
 
             </div>
@@ -111,10 +123,8 @@
         </ul>
     </nav>
 </div>
-
+<script src=<c:url value="/js/main.js"/>></script>
 </body>
-<script>
 
-</script>
 </fmt:bundle>
 </html>
