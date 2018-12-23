@@ -62,6 +62,11 @@ public enum CommandEnum {
             this.command = new DeleteConferenceCommand();
         }
 
+    },
+    SPEAKERS {
+        {
+            this.command = new SpeakersCommand();
+        }
     };
     Command command;
 
