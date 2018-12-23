@@ -42,6 +42,9 @@
     <listener>
         <listener-class>ua.com.training.controller.listeners.SessionListener</listener-class>
     </listener>
+    <listener>
+        <listener-class>ua.com.training.controller.listeners.LanguageListener</listener-class>
+    </listener>
     <error-page>
         <error-code>404</error-code>
         <location>/WEB-INF/404errorPage.jsp</location>

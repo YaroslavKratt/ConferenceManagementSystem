@@ -20,8 +20,7 @@ public class LoginCommand implements Command {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         LOG.info("email:" + email + " password:" + password);
-        Locale locale = request.getLocale();
-        HttpSession session = request.getSession();
+        Locale locale = (Locale)request.getSession().getAttribute("locale");
         UserService userService = new UserService();
         LOG.trace("Locale:" + locale);
         ResourceBundle messageBundle = new ResourceService().getBundle(ResourceService.MESSAGE_BUNDLE, locale);

@@ -23,8 +23,8 @@ public class CreateConferenceCommand implements Command {
         {
             List<Report> reports = new ArrayList<>();
             Conference conference = new Conference();
-            ResourceBundle messages = new ResourceService()
-                    .getBundle(ResourceService.MESSAGE_BUNDLE, request.getLocale());
+            Locale locale = (Locale)request.getSession().getAttribute("locale");
+            ResourceBundle messages = ResourceBundle.getBundle(ResourceService.MESSAGE_BUNDLE, locale);
             UserService userService = new UserService();
             request.setAttribute("possibleSpeakers", new UserService().getAllUsers());
 

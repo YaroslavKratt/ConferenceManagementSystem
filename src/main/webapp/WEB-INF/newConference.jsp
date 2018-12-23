@@ -14,7 +14,6 @@
     <link href="<c:url value='/bootstrap/css/bootstrap-reboot.css' />" rel="stylesheet">
     <link href="<c:url value='/css/main.css' />" rel="stylesheet">
     <jsp:include page="sections/header.jsp"/>
-    <fmt:setLocale value="${ empty sessionScope.lang ? 'en_US' : sessionScope.lang}" scope="session"/>
     <fmt:bundle basename="messages"></head>
 
 <body>

@@ -11,7 +11,6 @@
     <link href="<c:url value="/css/index.css" />" rel="stylesheet">
     <link href="<c:url value='https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.csss' />"
           rel="stylesheet">
-    <fmt:setLocale value="${ empty sessionScope.lang ? 'en_US' : sessionScope.lang}" scope="session"/>
     <fmt:bundle basename="messages">
 
 </head>
@@ -27,15 +26,15 @@
                 <div class="form-group">
                     <label for="name"><fmt:message key = "page.message.name"/></label>
                     <input class="form-control item" type="text"
-                           id="name" name="name" required>
+                           id="name" name="name" >
                 </div>
                 <div class="form-group">
                     <label for="surname"><fmt:message key="page.message.surname"/> </label>
-                    <input class="form-control" type="text" name="surname" id="surname" required>
+                    <input class="form-control" type="text" name="surname" id="surname" >
                 </div>
                 <div class="form-group">
                     <label for="email"><fmt:message key="page.message.email" /></label>
-                    <input class="form-control item" type="email" id="email" name="email" required>
+                    <input class="form-control item" type="email" id="email" name="email" >
                     <p class="text-danger">
                             ${wrongEmail}
                     </p>

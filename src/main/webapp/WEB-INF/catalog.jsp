@@ -18,7 +18,6 @@
 
 </head>
 <jsp:include page="sections/header.jsp"/>
-<fmt:setLocale value="${ empty sessionScope.lang ? 'en_US' : sessionScope.lang}" scope="session"/>
 <fmt:bundle basename="messages">
 <body>
 <div class="container">

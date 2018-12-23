@@ -19,9 +19,9 @@ public class RegistrationCommand implements Command {
     public String execute(HttpServletRequest request) {
         ValidationUtil validationUtil = new ValidationUtil();
         UserService userService = new UserService();
-        Locale locale =  (Locale)request.getSession().getAttribute("lang");
-        ResourceBundle regexpBundle = new ResourceService().getBundle(ResourceService.REGEXP_BUNDLE, locale);
-        ResourceBundle messageBundle = new ResourceService().getBundle(ResourceService.MESSAGE_BUNDLE, locale);
+        Locale locale = (Locale)request.getSession().getAttribute("locale");
+        ResourceBundle regexpBundle = ResourceBundle.getBundle(ResourceService.REGEXP_BUNDLE, locale);
+        ResourceBundle messageBundle = ResourceBundle.getBundle(ResourceService.MESSAGE_BUNDLE, locale);
 
         if (isEmptyRequest(request)) {
             return PATH_BUNDLE.getString("page.registration");

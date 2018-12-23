@@ -1,13 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<html>
+<c:set var="lang" value="${not empty param.lang ? param.lang : not empty lang ? lang: pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${lang}" />
+<html lang="${lang}">
 <head>
     <meta charset="UTF-8" >
 
 </head>
 <body>
-<c:set var="lang" scope="session" value="${ empty sessionScope.lang ? 'en_US' : sessionScope.lang}"/>
-<fmt:setLocale value="${lang}" scope="session"/>
+
 
 <fmt:bundle basename="messages">
     <c:choose>
