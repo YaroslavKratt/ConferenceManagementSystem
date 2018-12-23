@@ -4,19 +4,16 @@ package ua.com.training.model.entity;
  *
  */
 public class User {
-    private long id;
-    private String name;
-    private String surname;
-    private String email;
-    private Role role;
-    private int speakerBonus;
-    private double speakerRating;
-    private String password;
+    protected long id;
+    protected String name;
+    protected String surname;
+    protected String email;
+    protected Role role;
 
-    User() {
-    }
+    protected String password;
 
-    private User(Builder userBuilder) {
+
+    protected User(Builder userBuilder) {
         this.id = userBuilder.id;
         this.name = userBuilder.name;
         this.surname = userBuilder.surname;
@@ -41,13 +38,7 @@ public class User {
         return role;
     }
 
-    public int getSpeakerBonus() {
-        return speakerBonus;
-    }
 
-    public double getSpeakerRating() {
-        return speakerRating;
-    }
 
     public String getPassword() {
         return password;
@@ -63,9 +54,8 @@ public class User {
                 + " Name: " + name
                 + " Surname: " + surname
                 + " Role: " + role
-                + " Email: " + email
-                + " Speaker bonus: " + speakerBonus
-                + " Speaker rating: " + speakerRating;
+                + " Email: " + email;
+
     }
 
 
@@ -88,14 +78,12 @@ public class User {
     }
 
     public static class Builder {
-        private long id;
-        private String name;
-        private String surname;
-        private String email;
-        private Role role;
-        private int speakerBonus;
-        private double speakerRating;
-        private String password;
+        protected long id;
+        protected String name;
+        protected String surname;
+        protected String email;
+        protected Role role;
+        protected String password;
 
 
         public Builder setId(long id) {
@@ -128,15 +116,7 @@ public class User {
             return this;
         }
 
-        public Builder setSpeakerBonus(int speakerBonus) {
-            this.speakerBonus = speakerBonus;
-            return this;
-        }
 
-        public Builder setSpeakerRating(double speakerRating) {
-            this.speakerRating = speakerRating;
-            return this;
-        }
 
         public User build() {
             return new User(this);
