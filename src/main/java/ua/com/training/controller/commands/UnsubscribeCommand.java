@@ -1,7 +1,7 @@
 package ua.com.training.controller.commands;
 
-import ua.com.training.model.services.ReportService;
 import ua.com.training.model.ResourceEnum;
+import ua.com.training.model.services.ReportService;
 import ua.com.training.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,21 +14,23 @@ public class UnsubscribeCommand implements Command {
         HttpSession session = request.getSession();
         ReportService reportService = new ReportService();
         UserService userService = new UserService();
-        ResourceBundle messageBundle =ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), request.getLocale());
+        ResourceBundle messageBundle = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), request.getLocale());
         long userId = userService.getUserId((String) session.getAttribute("email"));
-        long reportId =  Long.valueOf(request.getParameter("reportForUnsubscription"));
+        long reportId = Long.valueOf(request.getParameter("reportForUnsubscription"));
 
-        if(reportService.checkSubscription(userId, reportId)){
-            reportService.unsubscribeUserFromReport(userId,reportId);
+        if (reportService.checkSubscription(userId, reportId)) {
+            reportService.unsubscribeUserFromReport(userId, reportId);
             request.setAttribute(String.valueOf(reportId), "unsubscribed");
             request.setAttribute("subscriptions", userService.getUserSubscriptionsIds(userId));
-
-
-        }
-        else {
+        } else {
             request.setAttribute("notSubscribed", messageBundle.getString("info.message.not.subscribed"));
         }
-        return "redirect:/" + session.getAttribute("role") + PATH_BUNDLE.getString("path.catalog");
+        return "redirect:/"
+                + session.getAttribute("role")
+                + PATH_BUNDLE.getString("path.catalog")
+                + "?recordsPerPage=" + request.getParameter("recordsPerPage")
+                + "&currentPage=" + request.getParameter("currentPage")
+                + "&scrollPosition=" + request.getParameter("scrollPosition");
 
     }
 }

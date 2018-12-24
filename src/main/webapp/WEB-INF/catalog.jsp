@@ -20,6 +20,8 @@
 <jsp:include page="sections/header.jsp"/>
 <fmt:bundle basename="messages">
 <body>
+<c:if test="${ not empty scrollPosition}">
+</c:if>
 <div class="container">
     <div class="row">
         <form action="${pageContext.request.contextPath}/${sessionScope.role}/catalog" onchange="submit()">
@@ -121,19 +123,37 @@
                                                     <c:choose>
                                                         <c:when test="${not fn:contains(requestScope.subscriptions, report.id)}">
                                                             <form method="post"
+                                                                  onsubmit="getScrollPosition('btn${report.id}','scroll${report.id}')"
                                                                   action="${pageContext.request.contextPath}/${sessionScope.role}/subscribe">
-                                                                <button class="btn btn-primary" type="submit"
+                                                                <input hidden name="currentPage"
+                                                                       value="${paginationParameters.currentPage}">
+                                                                <input hidden name="recordsPerPage"
+                                                                       value="${paginationParameters.recordsPerPage}">
+                                                                <input hidden name="scrollPosition"
+                                                                       id="scroll${report.id}">
+                                                                <button id="btn${report.id}" class="btn btn-primary"
+                                                                        onclick="getScrollPosition('btn${report.id}','scroll${report.id}')"
+                                                                        type="submit"
                                                                         name="reportForSubscription"
                                                                         value="${report.id}"><fmt:message
                                                                         key="page.message.subscribe"/></button>
+
                                                             </form>
                                                         </c:when>
                                                         <c:otherwise>
                                                             <form method="post"
                                                                   action="${pageContext.request.contextPath}/${sessionScope.role}/unsubscribe">
+                                                                <input hidden name="currentPage"
+                                                                       value="${paginationParameters.currentPage}">
+                                                                <input hidden name="recordsPerPage"
+                                                                       value="${paginationParameters.recordsPerPage}">
+                                                                <input hidden name="scrollPosition"
+                                                                       id="scroll${report.id}">
 
                                                                 <button class="btn btn-danger" type="submit"
+                                                                        onclick="getScrollPosition('btn${report.id}','scroll${report.id}')"
                                                                         name="reportForUnsubscription"
+                                                                        id="btn${report.id}"
                                                                         value="${report.id}"><fmt:message
                                                                         key="page.message.unsubscribe"/></button>
                                                             </form>
@@ -142,20 +162,20 @@
                                                 </c:when>
                                             </c:choose>
                                         </div>
-                                    <div class="col-6">
+                                        <div class="col-6">
 
-                                    <c:choose>
-                                        <c:when test="${sessionScope.role=='admin' ||sessionScope.role=='speaker'}">
-                                                <form action="${pageContext.request.contextPath}/${sessionScope.role}/editreport"
-                                                      method="post">
-                                                    <button class="btn btn-primary" type="submit"><fmt:message
-                                                            key="page.message.edit"/></button>
-                                                </form>
-                                        </c:when>
-                                    </c:choose>
+                                            <c:choose>
+                                                <c:when test="${sessionScope.role=='admin' ||sessionScope.role=='speaker'}">
+                                                    <form action="${pageContext.request.contextPath}/${sessionScope.role}/editreport"
+                                                          method="post">
+                                                        <button class="btn btn-primary" type="submit"><fmt:message
+                                                                key="page.message.edit"/></button>
+                                                    </form>
+                                                </c:when>
+                                            </c:choose>
+                                        </div>
+
                                     </div>
-
-                                </div>
                                 </div>
 
                             </div>
@@ -218,5 +238,10 @@
 </div>
 </fmt:bundle>
 <jsp:include page="sections/footer.jsp"/>
+<script src=<c:url value="/js/main.js"/>></script>
+
 </body>
+<script> window.scroll({top:  ${scrollPosition}, left: 0});
+</script>
+
 </html>

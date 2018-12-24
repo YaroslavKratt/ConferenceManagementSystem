@@ -10,12 +10,15 @@
     <link href="<c:url value='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO' />"
           crossorigin="anonymous" rel="stylesheet">
     <link href="<c:url value="/css/error.css" />" rel="stylesheet">
+    <link href="<c:url value="/css/main.css" />" rel="stylesheet">
+
     <link href="<c:url value='https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.csss' />"
           rel="stylesheet">
 
 </head>
 
 <body>
+<jsp:include page="sections/header.jsp"/>
 <div class="container  justify-content-center  vertical-center">
     <div class="jumbotron text-center ">
         <img src="/img/accessDenied.png">

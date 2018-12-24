@@ -25,7 +25,6 @@ public class AuthorizationFilter implements Filter {
         String uri = request.getRequestURI();
         String userRole = (String) session.getAttribute("role");
         SecurityUtil utils = new SecurityUtil();
-        LOG.debug("uri " + uri);
         if (utils.isSecuredPage(uri)) {
             boolean hasPermission = utils.checkPermission(uri, userRole);
             if (!hasPermission) {

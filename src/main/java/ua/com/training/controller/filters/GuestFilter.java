@@ -29,7 +29,8 @@ public class GuestFilter implements Filter {
         if (role==null) {
             session.setAttribute("role", User.Role.GUEST.getStringRole());
             logger.debug("PATH IN FILTER: " + request.getRequestURI());
-            request.getRequestDispatcher(pathBundle.getString("page.index")).forward(request,response);
+            //request.getRequestDispatcher(pathBundle.getString("page.index")).forward(request,response);
+            response.sendRedirect(pathBundle.getString("page.index"));
             return;
         }
 

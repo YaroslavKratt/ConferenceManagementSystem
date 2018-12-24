@@ -23,8 +23,13 @@ public class SubscribeCommand implements Command {
         reportService.subscribeUserOnReport(userId, reportId);
         request.setAttribute(String.valueOf(reportId), "subscribed");
         request.setAttribute("subscriptions", userService.getUserSubscriptionsIds(userId));
-
-        return "redirect:/" + session.getAttribute("role") + PATH_BUNDLE.getString("path.catalog");
+        return "redirect:/"
+                + session.getAttribute("role")
+                + PATH_BUNDLE.getString("path.catalog")
+                + "?recordsPerPage=" + request.getParameter("recordsPerPage")
+                + "&currentPage=" + request.getParameter("currentPage")
+                +"&scrollPosition="+request.getParameter("scrollPosition")
+                +"#report"+reportId;
 
     }
 }

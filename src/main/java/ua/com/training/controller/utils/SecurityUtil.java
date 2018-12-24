@@ -20,25 +20,27 @@ public class SecurityUtil {
     private static void init() {
         List<String> adminCommand = new LinkedList<>();
         adminCommand.add("catalog");
-        adminCommand.add("changeLanguage");
+        adminCommand.add("changelanguage");
         adminCommand.add("default");
         adminCommand.add("logout");
-        adminCommand.add("deleteConference");
-        adminCommand.add("editConference");
-        adminCommand.add("editReport");
+        adminCommand.add("deleteconference");
+        adminCommand.add("editconference");
+        adminCommand.add("editreport");
         adminCommand.add("subscribe");
         adminCommand.add("unsubscribe");
         adminCommand.add("createconference");
+        adminCommand.add("catalogofspeakers");
 
 
         List<String> speakerCommand = new LinkedList<>();
         speakerCommand.add("catalog");
-        speakerCommand.add("changeLanguage");
+        speakerCommand.add("changelanguage");
         speakerCommand.add("default");
         speakerCommand.add("logout");
-        speakerCommand.add("editReport");
+        speakerCommand.add("editreport");
         speakerCommand.add("subscribe");
         speakerCommand.add("unsubscribe");
+        speakerCommand.add("catalogofspeakers");
 
 
 
