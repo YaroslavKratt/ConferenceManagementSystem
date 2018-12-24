@@ -24,7 +24,9 @@ public class SpeakerDTO {
         this.rating = speaker.getSpeakerRating();
         this.speakerReports = reports;
     }
-
+    public long getStringId() {
+        return this.id;
+    }
     public long getId() {
         return id;
     }

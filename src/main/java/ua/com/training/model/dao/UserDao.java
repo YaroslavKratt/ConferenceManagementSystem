@@ -26,4 +26,7 @@ public interface UserDao extends DAO<User> {
     String getSurnameById(long id);
 
     List<String> getUserSubscriptedEmails();
+
+
+    boolean alreadyVoted(long userId, long speakerId);
 }

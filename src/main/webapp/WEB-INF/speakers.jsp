@@ -14,8 +14,10 @@
 
 </head>
 <body>
+
 <div class=" container">
     <c:forEach items="${requestScope.speakers}" var="speaker">
+
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -23,36 +25,49 @@
                         <h5 class="card-title">${speaker.name} ${speaker.surname}</h5>
                     </div><!--col-6-->
                     <div class="col-6">
-                        <form class="rating ${speaker.id}" >
+                        <form class="rating ${speaker.id}" method="post">
                             <input type="hidden" name="speakerId" value="${speaker.id}">
-                                <input type="radio" id="star5${speaker.id}" name="rating" value="5"
-                                       onclick="this.form.submit()"/><label for="star5${i}"><span>&#9733</span></label>
-                                <input type="radio" id="star4${speaker.id}" name="rating${speaker.id}" value="4"
-                                       onclick="this.form.submit()"/>
-                                <label for="star4${speaker.id}"><span>&#9733</span></label>
-                                <input type="radio" id="star3${speaker.id}" name="rating${speaker.id}" value="3"
-                                       onclick="this.form.submit()"/>
-                                <label for="star3${speaker.id}"><span>&#9733</span></label>
-                                <input type="radio" id="star2${speaker.id}" name="rating${speaker.id}" value="2"
-                                       onclick="this.form.submit()"/>
-                                <label for="star2${speaker.id}"><span>&#9733</span></label>
-                                <input type="radio" id="star1${speaker.id}" name="rating${speaker.id}" value="1"
-                                       onclick="this.form.submit()"/>
-                                <label for="star1${speaker.id}"><span>&#9733</span></label>
+                            <input type="radio" id="star5${speaker.id}" name="rating" value="5"
+                                   onclick="this.form.submit()"/><label for="star5${i}"><span>&#9733</span></label>
+                            <input type="radio" id="star4${speaker.id}" name="rating${speaker.id}" value="4"
+                                   onclick="this.form.submit()"/>
+                            <label for="star4${speaker.id}"><span>&#9733</span></label>
+                            <input type="radio" id="star3${speaker.id}" name="rating${speaker.id}" value="3"
+                                   onclick="this.form.submit()"/>
+                            <label for="star3${speaker.id}"><span>&#9733</span></label>
+                            <input type="radio" id="star2${speaker.id}" name="rating${speaker.id}" value="2"
+                                   onclick="this.form.submit()"/>
+                            <label for="star2${speaker.id}"><span>&#9733</span></label>
+                            <input type="radio" id="star1${speaker.id}" name="rating${speaker.id}" value="1"
+                                   onclick="this.form.submit()"/>
+                            <label for="star1${speaker.id}"><span>&#9733</span></label>
                         </form>
-                            <script>
-                                var radiobtn = document.getElementById('star${requestScope.ratings.get(speaker.id)}${speaker.id}');
-                                radiobtn.setAttribute("checked", "");
-                            </script>
+                        <script>
+                            var radiobtn = document.getElementById('star${requestScope.ratings.get(speaker.id)}${speaker.id}');
+                            radiobtn.setAttribute("checked", "");
+                        </script>
                         </fieldset>
-                    </div><!--col-6-->
-                </div><!--/row-->
-                <ul class="list-group">
-                    <c:forEach items="${speaker.speakerReports}" var="report">
-                        <li class="list-group-item">${report.topic}</li>
-                    </c:forEach>
-                </ul>
+                        <!--Danger-->
 
+                        <div class="row">
+                        </div>
+                    </div><!--col-6-->
+
+                </div><!--/row-->
+                <c:set  var="alreadyVoted" value="alreadyVoted${speaker.id}"/>
+                <c:if test="${not empty alreadyVoted}" >
+                <div class="row">
+                    <p class="text-danger text-center">${requestScope.get(alreadyVoted)}</p>
+                </div>
+                </c:if>
+
+                <div class="row">
+                    <ul class="list-group">
+                        <c:forEach items="${speaker.speakerReports}" var="report">
+                            <li class="list-group-item">${report.topic}</li>
+                        </c:forEach>
+                    </ul>
+                </div>
             </div>
         </div>
     </c:forEach>

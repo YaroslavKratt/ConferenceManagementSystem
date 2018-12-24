@@ -3,14 +3,19 @@ package ua.com.training.model.dao.jdbc;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
+import ua.com.training.model.ResourceEnum;
 import ua.com.training.model.dao.UserDao;
 import ua.com.training.model.dao.mappers.UserMapper;
 import ua.com.training.model.entity.User;
-import ua.com.training.model.ResourceEnum;
 
 import javax.sql.DataSource;
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class JdbcUserDao implements UserDao {
     private static final Logger LOG = LogManager.getLogger(JdbcUserDao.class);
@@ -61,7 +66,7 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public boolean delete(long id) {
-    return false;
+        return false;
     }
 
     @Override
@@ -183,9 +188,24 @@ public class JdbcUserDao implements UserDao {
         } catch (SQLException e) {
             LOG.error("Can`y get list of subscripted emails: " + e);
             throw new RuntimeException();
-        }    }
+        }
+    }
 
+    @Override
+    public boolean alreadyVoted(long userId,long speakerId) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("user.check.vote"))) {
+            preparedStatement.setLong(1, userId);
+            preparedStatement.setLong(2, speakerId);
 
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+        } catch (SQLException e) {
+            LOG.error("Cant check vote status: " + e);
+            throw new RuntimeException();
+        }
+    }
 }
 
 

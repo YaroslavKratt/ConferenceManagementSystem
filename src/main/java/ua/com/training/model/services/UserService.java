@@ -69,4 +69,8 @@ public class UserService {
     public String getSurnameByEmail(String userEmail) {
         return userDao.getByEmail(userEmail).getSurname();
     }
+
+    public boolean alreadyVoted(String email,long speakerId) {
+        return userDao.alreadyVoted(getUserId(email), speakerId);
+    }
 }
