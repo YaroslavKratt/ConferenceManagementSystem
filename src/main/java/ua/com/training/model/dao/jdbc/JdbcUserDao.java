@@ -7,6 +7,7 @@ import ua.com.training.model.ResourceEnum;
 import ua.com.training.model.dao.UserDao;
 import ua.com.training.model.dao.mappers.UserMapper;
 import ua.com.training.model.entity.User;
+import ua.com.training.model.services.SpeakerService;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -192,7 +193,7 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public boolean alreadyVoted(long userId,long speakerId) {
+    public boolean alreadyVoted(long userId, long speakerId) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection
                      .prepareStatement(sqlRequestBundle.getString("user.check.vote"))) {
@@ -205,6 +206,41 @@ public class JdbcUserDao implements UserDao {
             LOG.error("Cant check vote status: " + e);
             throw new RuntimeException();
         }
+    }
+
+    @Override
+    public boolean vote(long userId, long speakerId, double newRating) {
+        SpeakerService speakerService = new SpeakerService();
+        try (Connection connection = dataSource.getConnection();
+
+             PreparedStatement ratingStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("speaker.get.speaker.rating"));
+             PreparedStatement updateRatingAndBonus = connection
+                     .prepareStatement(sqlRequestBundle.getString("speaker.update.rating.and.bonus"));
+             PreparedStatement voteStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("user.vote"))) {
+            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+            connection.setAutoCommit(false);
+            ratingStatement.setLong(1, speakerId);
+            ResultSet ratingResultSet = ratingStatement.executeQuery();
+            ratingResultSet.next();
+            double rating = speakerService.calculateRating(ratingResultSet.getDouble(1), newRating);
+
+            updateRatingAndBonus.setDouble(1, rating);
+            updateRatingAndBonus.setDouble(2, speakerService.calculateBonus(rating));
+            updateRatingAndBonus.setLong(3, speakerId);
+            updateRatingAndBonus.executeUpdate();
+
+            voteStatement.setLong(1, userId);
+            voteStatement.setLong(2, speakerId);
+            voteStatement.executeUpdate();
+            connection.commit();
+            return true;
+        } catch (SQLException e) {
+            LOG.error("Cant vote: " + e);
+            throw new RuntimeException();
+        }
+
     }
 }
 

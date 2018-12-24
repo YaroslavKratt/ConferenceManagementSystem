@@ -60,4 +60,39 @@ public class JdbcSpeakerDao implements SpeakerDao {
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public Double getRating(long speakerId) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("speaker.get.speaker.rating"))) {
+            preparedStatement.setLong(1, speakerId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getDouble(1);
+
+        } catch (SQLException e) {
+            LOG.error("Cant get speaker Rating: " + e);
+            throw new RuntimeException();
+        }
+    }
+
+        @Override
+    public boolean updateRatingAndBonus(long speakerId, Double rating, double bonus) {
+            try (Connection connection = dataSource.getConnection();
+                 PreparedStatement preparedStatement = connection
+                         .prepareStatement(sqlRequestBundle.getString("speaker.update.rating.and.bonus"))) {
+                preparedStatement.setDouble(1, rating);
+                preparedStatement.setDouble(2, bonus);
+                preparedStatement.setLong(3,speakerId);
+                preparedStatement.executeUpdate();
+                return true;
+
+            } catch (SQLException e) {
+                LOG.error("Cant get speaker Rating: " + e);
+                throw new RuntimeException();
+            }
+
+    }
 }

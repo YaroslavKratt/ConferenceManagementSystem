@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface SpeakerDao extends DAO<Speaker>{
     List<SpeakerDTO> getAllSpeakersWithReports();
+
+    Double getRating(long speakerId);
+
+    boolean updateRatingAndBonus(long speakerId, Double rating, double calculateBonus);
 }

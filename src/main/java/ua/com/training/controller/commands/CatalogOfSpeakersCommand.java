@@ -19,7 +19,7 @@ public class CatalogOfSpeakersCommand implements Command {
         SpeakerService speakerService = new SpeakerService();
         UserService userService = new UserService();
         Locale locale = (Locale) request.getSession().getAttribute("locale");
-        String userEmail = (String) request.getSession().getAttribute("email");
+        Long userId = userService.getUserId((String) request.getSession().getAttribute("email"));
         List<SpeakerDTO> speakers = speakerService.getAllSpeakersWithReports();
         ResourceBundle messageBundle = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), locale);
 
@@ -31,7 +31,7 @@ public class CatalogOfSpeakersCommand implements Command {
             return PATH_BUNDLE.getString("page.speakers");
         }
         long speakerId = Long.parseLong(request.getParameter("speakerId"));
-        if (userService.alreadyVoted(userEmail, speakerId)) {
+        if (userService.alreadyVoted(userId, speakerId)) {
             LOG.info("User voted already for this speaker  " + messageBundle.getString("info.message.already.voted"));
             Map<String, String> alreadyVotedForSpeaker = new HashMap<>();
 
@@ -40,6 +40,7 @@ public class CatalogOfSpeakersCommand implements Command {
             return PATH_BUNDLE.getString("page.speakers");
 
         }
-        return PATH_BUNDLE.getString("page.speakers");
+        userService.vote(userId,speakerId,Double.valueOf(request.getParameter("rating"+speakerId)));
+        return "redirect:/" +request.getSession().getAttribute("role")+PATH_BUNDLE.getString("path.speakers");
     }
 }

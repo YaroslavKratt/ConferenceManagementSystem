@@ -25,6 +25,7 @@ public class UserService {
     public User.Role getUserRole(String email) {
         return userDao.getUserRole(email);
     }
+
     public User.Role getUserRole(long id) {
         return userDao.getUserRole(id);
     }
@@ -47,7 +48,7 @@ public class UserService {
     }
 
     public void changeRole(long id, User.Role role) {
-        userDao.changeRole(id,role);
+        userDao.changeRole(id, role);
     }
 
     public String getNameById(long id) {
@@ -66,11 +67,16 @@ public class UserService {
     public String getNameByEmail(String userEmail) {
         return userDao.getByEmail(userEmail).getName();
     }
+
     public String getSurnameByEmail(String userEmail) {
         return userDao.getByEmail(userEmail).getSurname();
     }
 
-    public boolean alreadyVoted(String email,long speakerId) {
-        return userDao.alreadyVoted(getUserId(email), speakerId);
+    public boolean alreadyVoted(long userId, long speakerId) {
+        return userDao.alreadyVoted(userId, speakerId);
+    }
+
+    public boolean vote(long userId, long speakerId, double rating) {
+        return userDao.vote(userId, speakerId, rating);
     }
 }

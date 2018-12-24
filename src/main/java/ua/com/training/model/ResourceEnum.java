@@ -33,6 +33,11 @@ public enum ResourceEnum {
         {
             this.bundleName = "email";
         }
+    },
+    BUISNESS_LOGIC {
+        {
+            this.bundleName="business_logic";
+        }
     };
 
     String bundleName;

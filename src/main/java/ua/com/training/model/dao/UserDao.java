@@ -29,4 +29,8 @@ public interface UserDao extends DAO<User> {
 
 
     boolean alreadyVoted(long userId, long speakerId);
+
+
+
+    boolean vote(long userId, long speakerId, double newRating);
 }
