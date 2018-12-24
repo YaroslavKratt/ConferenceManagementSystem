@@ -78,21 +78,51 @@ public class JdbcSpeakerDao implements SpeakerDao {
         }
     }
 
-        @Override
+    @Override
     public boolean updateRatingAndBonus(long speakerId, Double rating, double bonus) {
-            try (Connection connection = dataSource.getConnection();
-                 PreparedStatement preparedStatement = connection
-                         .prepareStatement(sqlRequestBundle.getString("speaker.update.rating.and.bonus"))) {
-                preparedStatement.setDouble(1, rating);
-                preparedStatement.setDouble(2, bonus);
-                preparedStatement.setLong(3,speakerId);
-                preparedStatement.executeUpdate();
-                return true;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("speaker.update.rating.and.bonus"))) {
+            preparedStatement.setDouble(1, rating);
+            preparedStatement.setDouble(2, bonus);
+            preparedStatement.setLong(3, speakerId);
+            preparedStatement.executeUpdate();
+            return true;
 
-            } catch (SQLException e) {
-                LOG.error("Cant get speaker Rating: " + e);
-                throw new RuntimeException();
-            }
+        } catch (SQLException e) {
+            LOG.error("Cant get speaker Rating: " + e);
+            throw new RuntimeException();
+        }
 
+    }
+
+    @Override
+    public int getSpeakersAmount() {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("speaker.count"))) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            LOG.error("Cant count:" + e);
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public List<SpeakerDTO> getPaginatedList(Integer begin, Integer recordsPerPage) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("speaker.get.paginated.speakers"))) {
+            preparedStatement.setInt(1,begin);
+            preparedStatement.setInt(2,recordsPerPage);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            return new SpeakerDtoMapper().mapToSpeakersListWithReports(resultSet);
+        } catch (SQLException e) {
+            LOG.error("Can`t get paginated list of speakers with reports: " + e);
+            throw new RuntimeException();
+        }
     }
 }

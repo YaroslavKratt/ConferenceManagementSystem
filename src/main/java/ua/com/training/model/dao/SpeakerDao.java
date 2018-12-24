@@ -11,4 +11,8 @@ public interface SpeakerDao extends DAO<Speaker>{
     Double getRating(long speakerId);
 
     boolean updateRatingAndBonus(long speakerId, Double rating, double calculateBonus);
+
+    int getSpeakersAmount();
+
+    List<SpeakerDTO> getPaginatedList(Integer begin, Integer recordsPerPage);
 }

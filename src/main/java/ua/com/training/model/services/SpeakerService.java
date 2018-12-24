@@ -37,4 +37,11 @@ public class SpeakerService {
         return  Double.parseDouble(BUISNESS_LOGIC_BUNDLE.getString("bonus." + (int) rating + ".star"));
     }
 
+    public int getSpeakersAmount() {
+        return speakerDao.getSpeakersAmount();
+    }
+
+    public List<SpeakerDTO> getPaginatedList(Integer begin, Integer recordsPerPage) {
+        return speakerDao.getPaginatedList( begin,  recordsPerPage);
+    }
 }

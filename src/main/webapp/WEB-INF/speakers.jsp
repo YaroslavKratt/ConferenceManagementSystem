@@ -59,15 +59,17 @@
                     <div class="col-1">
                         <p class="font-weight-bold">${speaker.rating} </p>
                     </div>
-                    <c:set var="alreadyVoted" value="alreadyVoted${speaker.id}"/>
-                    <c:if test="${not empty requestScope.get(alreadyVoted)}">
-                        <div class="col">
-                            <h5 class="text-danger text-center">${requestScope.get(alreadyVoted)}</h5>
-                        </div>
-                    </c:if>
+
 
                 </div><!--/row-->
-
+                <c:set var="alreadyVoted" value="alreadyVoted${speaker.id}"/>
+                <c:if test="${not empty requestScope.get(alreadyVoted)}">
+                    <div class="row">
+                    <div class="col-lg-12">
+                        <h5 class="text-danger text-center">${requestScope.get(alreadyVoted)}</h5>
+                    </div>
+                    </div>
+                </c:if>
                 <div class="row">
                     <div class="col-6">
                         <ul class="list-group">

@@ -146,7 +146,7 @@ public class JdbcConferenceDao implements ConferenceDao {
 
     @Override
     public List<Conference> getPaginatedList(int begin, int recordsPerPage) {
-        List<Conference> pagenatedList = new ArrayList<>();
+        List<Conference> pagenatedList;
         ConferenceMapper conferenceMapper = new ConferenceMapper();
 
         try (Connection connection = dataSource.getConnection();
