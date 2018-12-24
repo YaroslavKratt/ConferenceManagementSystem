@@ -28,8 +28,7 @@ public class SubscribeCommand implements Command {
                 + PATH_BUNDLE.getString("path.catalog")
                 + "?recordsPerPage=" + request.getParameter("recordsPerPage")
                 + "&currentPage=" + request.getParameter("currentPage")
-                +"&scrollPosition="+request.getParameter("scrollPosition")
-                +"#report"+reportId;
+                +"&scrollPosition="+request.getParameter("scrollPosition");
 
     }
 }
