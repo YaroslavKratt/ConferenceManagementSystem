@@ -38,6 +38,11 @@ public class CatalogOfSpeakersCommand implements Command {
             return PATH_BUNDLE.getString("page.speakers");
         }
         long speakerId = Long.parseLong(request.getParameter("speakerId"));
+        if(speakerId==userId) {
+            request.setAttribute("alreadyVoted" + speakerId, messageBundle.getString("info.message.cant.vote.for.yourself"));
+            return PATH_BUNDLE.getString("page.speakers");
+
+        }
         if (userService.alreadyVoted(userId, speakerId)) {
             LOG.info("User voted already for this speaker  " + messageBundle.getString("info.message.already.voted"));
             request.setAttribute("alreadyVoted" + speakerId, messageBundle.getString("info.message.already.voted"));
