@@ -14,7 +14,7 @@ public class SubscriptionDTO {
     private String userSurname;
     private String userEmail;
     private long conferenceId;
-    private long reportId;
+    private long reportId   ;
 
     private SubscriptionDTO(Builder builder) {
         this.reportTopic = builder.reportTopic;

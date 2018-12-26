@@ -21,7 +21,7 @@ public class AuthorizationFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         final HttpServletRequest request = (HttpServletRequest) servletRequest;
         final HttpSession session = request.getSession();
-
+        LOG.trace("Authorization Filter");
         String uri = request.getRequestURI();
         String userRole = (String) session.getAttribute("role");
         SecurityUtil utils = new SecurityUtil();

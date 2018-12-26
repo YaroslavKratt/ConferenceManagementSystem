@@ -3,14 +3,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <fmt:setLocale value="${ empty sessionScope.lang ? 'en_US' : sessionScope.lang}" scope="session"/>
+    <fmt:bundle basename="messages">
     <meta charset="UTF-8">
-    <title>${speaker.name} ${speaker.surname}</title>
+    <title><fmt:message key="page.message.speakers"/></title>
     <link href="<c:url value='/bootstrap/css/bootstrap.css' />" rel="stylesheet">
     <link href="<c:url value='/bootstrap/css/bootstrap-grid.css' />" rel="stylesheet">
     <link href="<c:url value='/bootstrap/css/bootstrap-reboot.css' />" rel="stylesheet">
     <link href="<c:url value='/css/main.css' />" rel="stylesheet">
-    <fmt:setLocale value="${ empty sessionScope.lang ? 'en_US' : sessionScope.lang}" scope="session"/>
-    <fmt:bundle basename="messages">
+
 
 </head>
 <jsp:include page="sections/header.jsp"/>
@@ -155,9 +156,9 @@
         </div>
     </div>
 </div>
-    </fmt:bundle>
-    <jsp:include page="sections/footer.jsp"/>
-    <script src=<c:url value="/js/main.js"/>></script>
-    </body>
+</fmt:bundle>
+<jsp:include page="sections/footer.jsp"/>
+<script src=<c:url value="/js/main.js"/>></script>
+</body>
 
 </html>

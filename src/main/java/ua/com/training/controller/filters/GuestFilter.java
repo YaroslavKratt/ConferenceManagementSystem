@@ -14,13 +14,16 @@ import java.util.ResourceBundle;
 
 
 public class GuestFilter implements Filter {
-    private final static Logger logger =  LogManager.getLogger(GuestFilter.class);
+    private final static Logger LOG =  LogManager.getLogger(GuestFilter.class);
     @Override
     public void init(FilterConfig filterConfig) {
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+
+        LOG.trace("Guest Filter");
+
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
@@ -28,9 +31,9 @@ public class GuestFilter implements Filter {
         String role = (String) session.getAttribute("role");
         if (role==null) {
             session.setAttribute("role", User.Role.GUEST.getStringRole());
-            logger.debug("PATH IN FILTER: " + request.getRequestURI());
-            //request.getRequestDispatcher(pathBundle.getString("page.index")).forward(request,response);
-            response.sendRedirect(pathBundle.getString("page.index"));
+            LOG.debug("PATH IN FILTER: " + request.getRequestURI());
+          //  response.sendRedirect(pathBundle.getString("page.index"));
+            response.sendRedirect(request.getRequestURI());
             return;
         }
 

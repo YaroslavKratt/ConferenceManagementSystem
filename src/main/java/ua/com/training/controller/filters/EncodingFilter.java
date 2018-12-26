@@ -18,6 +18,8 @@ public class EncodingFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
+        LOG.trace("Encoding Filter");
+
         servletResponse.setContentType("text/html");
         servletResponse.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");

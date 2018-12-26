@@ -20,8 +20,7 @@
 <jsp:include page="sections/header.jsp"/>
 <fmt:bundle basename="messages">
 <body>
-<c:if test="${ not empty scrollPosition}">
-</c:if>
+
 <div class="container">
     <div class="row">
         <form action="${pageContext.request.contextPath}/${sessionScope.role}/catalog" onchange="submit()">
@@ -92,6 +91,8 @@
                                             <div class="col-6">
                                                 <form action="${pageContext.request.contextPath}/${sessionScope.role}/editconference"
                                                       method="post">
+                                                    <input type="hidden" name="editConference"
+                                                    value="${conference.id}">
                                                     <button class="btn btn-primary" type="submit"><fmt:message
                                                             key="page.message.edit"/></button>
                                                 </form>

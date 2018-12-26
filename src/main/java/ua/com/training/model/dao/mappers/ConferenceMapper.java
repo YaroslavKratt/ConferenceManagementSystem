@@ -11,9 +11,20 @@ import java.util.*;
 
 public class ConferenceMapper implements Mapper<Conference> {
     private static final Logger LOG = LogManager.getLogger(ConferenceMapper.class);
+    private ReportMapper reportMapper = new ReportMapper();
 
     @Override
     public Conference mapToObject(ResultSet resultSet) throws SQLException {
+        Conference conference = null;
+
+        while (resultSet.next()){
+        conference = mapToConferenceWithoutReports(resultSet);
+        conference.addReport(reportMapper.mapToObject(resultSet));
+        }
+        return conference;
+    }
+
+    public Conference mapToConferenceWithoutReports(ResultSet resultSet) throws SQLException {
         Conference conference = new Conference();
 
         conference.setId(resultSet.getLong("id_conference"));
@@ -25,11 +36,10 @@ public class ConferenceMapper implements Mapper<Conference> {
 
     public List<Conference> mapToList(ResultSet conferencesWithReports) throws SQLException {
         Set<Conference> conferences = new HashSet<>();
-        ReportMapper reportMapper = new ReportMapper();
         Map<Long, List<Report>> conferenceReports = new HashMap<>();
 
         while (conferencesWithReports.next()) {
-            conferences.add(mapToObject(conferencesWithReports));
+            conferences.add(mapToConferenceWithoutReports(conferencesWithReports));
             conferenceReports.putIfAbsent(conferencesWithReports.getLong("id_conference"), new ArrayList<>());
             conferenceReports.get(conferencesWithReports.getLong("id_conference"))
                              .add(reportMapper.mapToObject(conferencesWithReports));

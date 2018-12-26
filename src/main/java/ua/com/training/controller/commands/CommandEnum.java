@@ -67,6 +67,11 @@ public enum CommandEnum {
         {
             this.command = new CatalogOfSpeakersCommand();
         }
+    },
+    EDITCONFERENCE {
+        {
+            this.command = new EditConference();
+        }
     };
     Command command;
 

@@ -18,6 +18,11 @@
         <url-pattern>/guest/*</url-pattern>
         <url-pattern>/speaker/*</url-pattern>
     </servlet-mapping>
+    <absolute-ordering>
+        <name>RoleFilter</name>
+        <name>EncodingFilter</name>
+        <name>AuthorizationFilter</name>
+    </absolute-ordering>
     <filter>
         <filter-name>RoleFilter</filter-name>
         <filter-class>ua.com.training.controller.filters.GuestFilter</filter-class>
@@ -37,11 +42,11 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 <filter>
-    <filter-name>AthorizationFilter</filter-name>
+    <filter-name>AuthorizationFilter</filter-name>
     <filter-class>ua.com.training.controller.filters.AuthorizationFilter</filter-class>
 </filter>
     <filter-mapping>
-        <filter-name>AthorizationFilter</filter-name>
+        <filter-name>AuthorizationFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 

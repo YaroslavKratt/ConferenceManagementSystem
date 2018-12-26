@@ -2,17 +2,19 @@ package ua.com.training.model.dao.jdbc;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ua.com.training.model.ResourceEnum;
 import ua.com.training.model.dao.ConferenceDao;
 import ua.com.training.model.dao.mappers.ConferenceMapper;
 import ua.com.training.model.dao.mappers.SubscriptionDtoMapper;
 import ua.com.training.model.dto.SubscriptionDTO;
 import ua.com.training.model.entity.Conference;
 import ua.com.training.model.entity.Report;
-import ua.com.training.model.ResourceEnum;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class JdbcConferenceDao implements ConferenceDao {
     private final static Logger LOG = LogManager.getLogger(JdbcConferenceDao.class);
@@ -27,9 +29,9 @@ public class JdbcConferenceDao implements ConferenceDao {
              PreparedStatement preparedStatement = connection.prepareStatement(sqlRequestBundle.getString("conference.select.by.id"))) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                conference = new ConferenceMapper().mapToObject(resultSet);
-            }
+
+            conference = new ConferenceMapper().mapToObject(resultSet);
+
             return conference;
 
         } catch (SQLException e) {
@@ -152,11 +154,11 @@ public class JdbcConferenceDao implements ConferenceDao {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection
                      .prepareStatement(sqlRequestBundle.getString("conferences.select.paginated"))) {
-            statement.setInt(1,begin);
-            statement.setInt(2,recordsPerPage);
+            statement.setInt(1, begin);
+            statement.setInt(2, recordsPerPage);
             ResultSet resultSet = statement.executeQuery();
             LOG.trace("begin " + begin + " recordsperpafe " + recordsPerPage);
-                pagenatedList = conferenceMapper.mapToList(resultSet);
+            pagenatedList = conferenceMapper.mapToList(resultSet);
             return pagenatedList;
         } catch (SQLException e) {
             LOG.error("Cant get paginated list: " + e);
@@ -172,9 +174,9 @@ public class JdbcConferenceDao implements ConferenceDao {
                      .prepareStatement(sqlRequestBundle.getString("conferences.count"))) {
             ResultSet resultSet = conferenceStatement.executeQuery();
             if (resultSet.next()) {
-                conferenceAmount= resultSet.getInt(1);
+                conferenceAmount = resultSet.getInt(1);
             }
-            return  conferenceAmount;
+            return conferenceAmount;
         } catch (SQLException e) {
             LOG.error("Cant count conferences: " + e);
             throw new RuntimeException();
