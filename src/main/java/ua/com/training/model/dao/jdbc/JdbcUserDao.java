@@ -209,31 +209,33 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public boolean vote(long userId, long speakerId, double newRating) {
+    public boolean vote(long userId, long speakerId, int mark) {
         SpeakerService speakerService = new SpeakerService();
+        double rating;
         try (Connection connection = dataSource.getConnection();
-
-             PreparedStatement ratingStatement = connection
-                     .prepareStatement(sqlRequestBundle.getString("speaker.get.speaker.rating"));
-             PreparedStatement updateRatingAndBonus = connection
-                     .prepareStatement(sqlRequestBundle.getString("speaker.update.rating.and.bonus"));
              PreparedStatement voteStatement = connection
-                     .prepareStatement(sqlRequestBundle.getString("user.vote"))) {
+                     .prepareStatement(sqlRequestBundle.getString("user.vote"));
+             PreparedStatement newRatingStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("speaker.get.new.rating"));
+             PreparedStatement updateRatingAndBonus = connection
+                     .prepareStatement(sqlRequestBundle.getString("speaker.update.rating.and.bonus"))) {
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             connection.setAutoCommit(false);
-            ratingStatement.setLong(1, speakerId);
-            ResultSet ratingResultSet = ratingStatement.executeQuery();
-            ratingResultSet.next();
-            double rating = speakerService.calculateRating(ratingResultSet.getDouble(1), newRating);
+
+            voteStatement.setLong(1, userId);
+            voteStatement.setLong(2, speakerId);
+            voteStatement.setInt(3, mark);
+            voteStatement.executeUpdate();
+
+            ResultSet newRatingResultSet = newRatingStatement.executeQuery();
+            newRatingResultSet.next();
+            rating = newRatingResultSet.getDouble(1);
 
             updateRatingAndBonus.setDouble(1, rating);
             updateRatingAndBonus.setDouble(2, speakerService.calculateBonus(rating));
             updateRatingAndBonus.setLong(3, speakerId);
             updateRatingAndBonus.executeUpdate();
 
-            voteStatement.setLong(1, userId);
-            voteStatement.setLong(2, speakerId);
-            voteStatement.executeUpdate();
             connection.commit();
             return true;
         } catch (SQLException e) {

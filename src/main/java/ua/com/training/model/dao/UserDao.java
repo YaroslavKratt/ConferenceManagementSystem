@@ -32,5 +32,6 @@ public interface UserDao extends DAO<User> {
 
 
 
-    boolean vote(long userId, long speakerId, double newRating);
+    boolean vote(long userId, long speakerId, int newMark);
+
 }
