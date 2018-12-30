@@ -98,11 +98,19 @@
 
 
                     </div><!--/row-->
+                    <c:set var="voteForYourself" value="voteForYourself${speaker.id}"/>
+                    <c:if test="${not empty requestScope.get(voteForYourself)}">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h5 class="text-danger text-center">${requestScope.get(voteForYourself)}</h5>
+                            </div>
+                        </div>
+                    </c:if>
                     <c:set var="alreadyVoted" value="alreadyVoted${speaker.id}"/>
                     <c:if test="${not empty requestScope.get(alreadyVoted)}">
                         <div class="row">
                             <div class="col-lg-12">
-                                <h5 class="text-danger text-center">${requestScope.get(alreadyVoted)}</h5>
+                                <h5 class="text-info text-center">${requestScope.get(alreadyVoted)}</h5>
                             </div>
                         </div>
                     </c:if>

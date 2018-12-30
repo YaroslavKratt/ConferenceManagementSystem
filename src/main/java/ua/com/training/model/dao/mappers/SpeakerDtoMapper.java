@@ -30,7 +30,8 @@ public class SpeakerDtoMapper {
         }
          speakers.forEach(currentSpeaker->{speakersDto.add(new SpeakerDTO(currentSpeaker,speakerReports.get(currentSpeaker)
          ));
-         LOG.trace("Current speaker: " + currentSpeaker.getName());});
+         //LOG.trace("Current speaker: " + currentSpeaker.getName());
+         });
         return speakersDto;
     }
 }

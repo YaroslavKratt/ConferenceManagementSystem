@@ -76,7 +76,7 @@ public class UserService {
         return userDao.alreadyVoted(userId, speakerId);
     }
 
-    public boolean vote(long userId, long speakerId, double rating) {
+    public boolean vote(long userId, long speakerId, int rating) {
         return userDao.vote(userId, speakerId, rating);
     }
 }

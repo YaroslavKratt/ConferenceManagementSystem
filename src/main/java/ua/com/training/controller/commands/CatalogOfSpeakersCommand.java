@@ -39,17 +39,13 @@ public class CatalogOfSpeakersCommand implements Command {
         }
         long speakerId = Long.parseLong(request.getParameter("speakerId"));
         if(speakerId==userId) {
-            request.setAttribute("alreadyVoted" + speakerId, messageBundle.getString("info.message.cant.vote.for.yourself"));
+            request.setAttribute("voteForYourself" + speakerId, messageBundle.getString("info.message.cant.vote.for.yourself"));
             return PATH_BUNDLE.getString("page.speakers");
 
         }
-        if (userService.alreadyVoted(userId, speakerId)) {
-            LOG.info("User voted already for this speaker  " + messageBundle.getString("info.message.already.voted"));
-            request.setAttribute("alreadyVoted" + speakerId, messageBundle.getString("info.message.already.voted"));
-            return PATH_BUNDLE.getString("page.speakers");
 
-        }
-        userService.vote(userId, speakerId, Double.valueOf(request.getParameter("rating" + speakerId)));
+        userService.vote(userId, speakerId, Integer.valueOf(request.getParameter("rating" + speakerId)));
         return "redirect:/" + request.getSession().getAttribute("role") + PATH_BUNDLE.getString("path.speakers");
+        //return PATH_BUNDLE.getString("page.speakers");
     }
 }

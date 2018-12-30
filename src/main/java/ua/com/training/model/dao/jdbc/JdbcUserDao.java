@@ -225,8 +225,11 @@ public class JdbcUserDao implements UserDao {
             voteStatement.setLong(1, userId);
             voteStatement.setLong(2, speakerId);
             voteStatement.setInt(3, mark);
+            //on duplicate key update
+            voteStatement.setInt(4, mark);
             voteStatement.executeUpdate();
 
+            newRatingStatement.setLong(1,speakerId);
             ResultSet newRatingResultSet = newRatingStatement.executeQuery();
             newRatingResultSet.next();
             rating = newRatingResultSet.getDouble(1);
