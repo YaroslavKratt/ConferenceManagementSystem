@@ -91,7 +91,7 @@
                                             <div class="col-6">
                                                 <form action="${pageContext.request.contextPath}/${sessionScope.role}/editconference"
                                                       method="post">
-                                                    <input type="hidden" name="editConference"
+                                                    <input type="hidden" name="conference"
                                                     value="${conference.id}">
                                                     <button class="btn btn-primary" type="submit"><fmt:message
                                                             key="page.message.edit"/></button>

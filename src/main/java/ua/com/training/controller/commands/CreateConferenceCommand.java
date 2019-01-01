@@ -42,13 +42,11 @@ public class CreateConferenceCommand implements Command {
             List<String> reportsTime = Arrays.asList(request.getParameterValues("report-date-time"));
             List<String> reportsSpeaker = Arrays.asList(request.getParameterValues("report-speaker"));
 
-            Iterator<String> topicsIterator = reportsTopic.iterator();
-            Iterator<String> timesIterator = reportsTime.iterator();
-            Iterator<String> speakersIterator = reportsSpeaker.iterator();
 
-            while (topicsIterator.hasNext() && timesIterator.hasNext() && speakersIterator.hasNext()) {
-                LocalDateTime reportDateTime = LocalDateTime.parse(timesIterator.next());
-                long speakerId = Long.valueOf(speakersIterator.next());
+            for (int i = 0; i <reportsTopic.size() ; i++) {
+
+                LocalDateTime reportDateTime = LocalDateTime.parse(reportsTime.get(i));
+                long speakerId = Long.valueOf(reportsSpeaker.get(i));
 
                 if (reportDateTime.compareTo(conferenceDateTime) < 0) {
                     request.setAttribute("erlierThanConference", messages.getString("info.message.earlier.than.conference"));
@@ -59,7 +57,7 @@ public class CreateConferenceCommand implements Command {
                 }
                 LOG.trace(userService.getUserRole(speakerId));
                 reports.add(new Report.Builder()
-                        .setTopic(topicsIterator.next())
+                        .setTopic(reportsTopic.get(i))
                         .setDateTime(reportDateTime)
                         .setSpeakerId(speakerId)
                         .setSpeakerName(new UserService().getNameById(speakerId))

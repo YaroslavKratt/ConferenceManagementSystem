@@ -3,6 +3,7 @@ package ua.com.training.model.services;
 import ua.com.training.model.dao.ConferenceDao;
 import ua.com.training.model.dao.DaoFactory;
 import ua.com.training.model.entity.Conference;
+import ua.com.training.model.entity.Report;
 
 import java.util.List;
 
@@ -31,4 +32,10 @@ public class ConferenceService {
     public int getConferencesAmount() {
         return conferenceDao.getConferencesAmount();
     }
+
+    public void update(Conference conference) {
+         conferenceDao.update(conference);
+    }
+
+
 }

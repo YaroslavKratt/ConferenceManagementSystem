@@ -24,14 +24,13 @@ public class JdbcConferenceDao implements ConferenceDao {
 
     @Override
     public Conference getById(long id) {
-        Conference conference = null;
+        Conference conference;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sqlRequestBundle.getString("conference.select.by.id"))) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             conference = new ConferenceMapper().mapToObject(resultSet);
-
             return conference;
 
         } catch (SQLException e) {
@@ -59,8 +58,38 @@ public class JdbcConferenceDao implements ConferenceDao {
     }
 
     @Override
-    public void update(Conference item) {
+    public void update(Conference conference) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement conferenceQuery = connection
+                     .prepareStatement(sqlRequestBundle.getString("conference.update"), Statement.RETURN_GENERATED_KEYS);
+             PreparedStatement reportQuery = connection
+                     .prepareStatement((sqlRequestBundle.getString("report.update")))) {
+            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+            connection.setAutoCommit(false);
+            LOG.debug("topic of conf" + conference.getTopic());
+            conferenceQuery.setString(1, conference.getTopic());
+            conferenceQuery.setString(2, conference.getLocation());
+            conferenceQuery.setTimestamp(3, Timestamp.valueOf(conference.getDateTime()));
+            conferenceQuery.setLong(4, conference.getId());
+            conferenceQuery.executeUpdate();
+            LOG.debug("amount of reports: " + conference.getReports().size());
+            for (Report report : conference.getReports()) {
+                reportQuery.setString(1, report.getTopic());
+                LOG.debug("report id:" +report.getId());
 
+                reportQuery.setTimestamp(2, Timestamp.valueOf(report.getDateTime()));
+                reportQuery.setString(3,report.getSpeakerName());
+                reportQuery.setString(4,report.getSpeakerSurname());
+                reportQuery.setLong(5, report.getSpeakerId());
+                reportQuery.setLong(6,report.getId());
+                reportQuery.addBatch();
+            }
+            reportQuery.executeBatch();
+            connection.commit();
+        } catch (SQLException e) {
+            LOG.error("Conference update failed: " + e);
+            throw new RuntimeException();
+        }
     }
 
     @Override
@@ -73,7 +102,7 @@ public class JdbcConferenceDao implements ConferenceDao {
             return true;
         } catch (SQLException e) {
             LOG.error("Delete conference failed: " + e);
-            return false;
+            throw new RuntimeException();
         }
     }
 

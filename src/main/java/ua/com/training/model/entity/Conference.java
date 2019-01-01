@@ -93,4 +93,7 @@ public class Conference {
         return Objects.hash(id, topic, location, dateTime);
     }
 
+    public void dropReports() {
+        this.reports = new ArrayList<>();
+    }
 }

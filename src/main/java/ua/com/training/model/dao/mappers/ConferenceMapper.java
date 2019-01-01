@@ -16,15 +16,17 @@ public class ConferenceMapper implements Mapper<Conference> {
     @Override
     public Conference mapToObject(ResultSet resultSet) throws SQLException {
         Conference conference = null;
-
         while (resultSet.next()){
-        conference = mapToConferenceWithoutReports(resultSet);
+            if (conference==null){
+                conference = mapToConferenceWithoutReports(resultSet);
+                }
         conference.addReport(reportMapper.mapToObject(resultSet));
         }
+
         return conference;
     }
 
-    public Conference mapToConferenceWithoutReports(ResultSet resultSet) throws SQLException {
+    private Conference mapToConferenceWithoutReports(ResultSet resultSet) throws SQLException {
         Conference conference = new Conference();
 
         conference.setId(resultSet.getLong("id_conference"));

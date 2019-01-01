@@ -9,10 +9,7 @@ import ua.com.training.model.entity.Report;
 import ua.com.training.model.ResourceEnum;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -97,6 +94,22 @@ public class JdbcReportDao implements ReportDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             LOG.error("Unsubscription failed: " + e);
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public void addNew(long conferenceId, Report report) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("report.add.new.to.conference"))) {
+            preparedStatement.setString(1, report.getTopic());
+            preparedStatement.setLong(2, conferenceId);
+            preparedStatement.setLong(3,report.getSpeakerId());
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(report.getDateTime()));
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            LOG.error("Add new report to conference failed: " + e);
             throw new RuntimeException();
         }
     }

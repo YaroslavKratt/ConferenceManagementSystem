@@ -77,6 +77,7 @@ public class Report {
     @Override
     public String toString() {
         return "Report: "
+                + " id: " + id
                 + " Topic: " + topic
                 + " Speaker: " + speakerName + " " + speakerSurname + "\n"
                 + " Registrated amount: " + regestratedAmount
