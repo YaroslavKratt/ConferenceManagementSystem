@@ -8,12 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 
 public class DeleteReportCommand implements Command {
     private final static Logger LOG = LogManager.getLogger(DeleteReportCommand.class);
+
     @Override
     public String execute(HttpServletRequest request) {
-        LOG.debug(request.getRequestURI());
-        LOG.debug(request.getRequestURL());
         long id = Long.parseLong(request.getParameter("reportIdForRemoving"));
+
         new ReportService().deleteReport(id);
-        return "redirect:" + request.getParameter("uri");
+        return "redirect:" + request.getParameter("uri")
+                + "?recordsPerPage=" + request.getParameter("recordsPerPage")
+                + "&currentPage=" + request.getParameter("currentPage");
     }
 }

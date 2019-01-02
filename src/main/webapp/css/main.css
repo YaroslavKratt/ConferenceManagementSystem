@@ -41,6 +41,7 @@ body {
     text-align: center;
     width: auto;
     color: white;
+    margin-left: 5px;
 }
 .btn-danger {
     border-radius: 100px;
@@ -153,13 +154,13 @@ input{
 .card {
     margin-top: 30px;
 }
-.container {
-    margin-top: 3rem;
-}
+
 #main{
     padding-bottom:150px;
 }
-
+.col .col-4 .col-6{
+   box-sizing: content-box;!important;
+}
 
 /*---*/
 .rating {

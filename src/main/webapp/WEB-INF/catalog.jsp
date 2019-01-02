@@ -60,124 +60,142 @@
     <c:forEach items="${requestScope.conferences}" var="conference">
         <div class="row">
             <div class="col-12">
+
+                <div class="row" style="padding-top: 100px">
+                    <div class="col-4">
+                        <h5 class="font-weight-bold"><fmt:message
+                                key="page.message.conference"/> ${conference.topic}</h5>
+                    </div>
+                    <div class="col-4">
+                        <h5 class=" font-weight-bold"><fmt:message
+                                key="page.message.location"/>${conference.location}</h5>
+                    </div>
+                    <div class="col-2">
+                        <h5 class=" font-weight-bold">${conference.getFormatedDateTime()}</h5>
+                    </div>
+                    <c:choose>
+                        <c:when test="${sessionScope.role == 'admin'}">
+                            <div class="col-2">
+                                <div class="row">
+
+
+                                    <div class="col-6">
+                                        <form action="${pageContext.request.contextPath}/${sessionScope.role}/editconference"
+                                              method="post">
+                                            <input type="hidden" name="conference"
+                                                   value="${conference.id}">
+                                            <button class="btn btn-primary" type="submit"><fmt:message
+                                                    key="page.message.edit"/></button>
+                                        </form>
+                                    </div>
+                                    <div class="col-6">
+                                        <form action="${pageContext.request.contextPath}/${sessionScope.role}/deleteconference"
+                                              method="post">
+                                            <input type="hidden" name="deleteConference"
+                                                   value="${conference.id}">
+                                            <button class="btn btn-danger" type="submit"><fmt:message
+                                                    key="page.message.delete"/></button>
+                                        </form>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </c:when>
+                    </c:choose>
+                </div> <!--/row> -->
                 <div class="card">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-5">
-                                <p class="card-title font-weight-bold"><fmt:message
-                                        key="page.message.conference"/> ${conference.topic}</p>
-                            </div>
-                            <div class="col-2">
-                                <p class="card-title font-weight-bold"><fmt:message
-                                        key="page.message.location"/>${conference.location}</p>
-                            </div>
-                            <div class="col-2">
-                                <p class="card-title font-weight-bold">${conference.getFormatedDateTime()}</p>
-                            </div>
-                            <c:choose>
-                                <c:when test="${sessionScope.role == 'admin'}">
-                                    <div class="col-3">
-                                        <div class="row">
-
-                                            <div class="col-6">
-                                                <form action="${pageContext.request.contextPath}/${sessionScope.role}/deleteconference"
-                                                      method="post">
-                                                    <input type="hidden" name="deleteConference"
-                                                           value="${conference.id}">
-                                                    <button class="btn btn-danger" type="submit"><fmt:message
-                                                            key="page.message.delete"/></button>
-                                                </form>
-                                            </div>
-                                            <div class="col-6">
-                                                <form action="${pageContext.request.contextPath}/${sessionScope.role}/editconference"
-                                                      method="post">
-                                                    <input type="hidden" name="conference"
-                                                    value="${conference.id}">
-                                                    <button class="btn btn-primary" type="submit"><fmt:message
-                                                            key="page.message.edit"/></button>
-                                                </form>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </c:when>
-                            </c:choose>
-                        </div> <!--/row> -->
-
+                        <div class="row ">
+                            <div class="col-4 "><h5><fmt:message key="page.message.topic.of.report"/></h5></div>
+                            <div class="col-4"><h5><fmt:message key="page.message.speaker.of.report"/></h5></div>
+                            <div class="col-4"><h5><fmt:message key="page.message.begin.of.report"/></h5></div>
+                        </div>
                         <c:forEach items="${conference.reports}" var="report">
-                            <div class="row">
-                                <div class="col-5">
+                            <div class="row" id="report${report.id}">
+                                <div class="col-4">
                                     <p class="card-title">${report.topic}</p>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-4">
                                     <p class="card-title">${report.speakerName} ${report.speakerSurname}</p>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-4">
                                     <p> ${report.getFormatedDateTime()}</p>
                                 </div>
-                                <div class="col-3">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <c:choose>
-                                                <c:when test="${sessionScope.role!='guest'}">
-                                                    <c:choose>
-                                                        <c:when test="${not fn:contains(requestScope.subscriptions, report.id)}">
-                                                            <form method="post"
-                                                                  onsubmit="getScrollPosition('btn${report.id}','scroll${report.id}')"
-                                                                  action="${pageContext.request.contextPath}/${sessionScope.role}/subscribe">
-                                                                <input hidden name="currentPage"
-                                                                       value="${paginationParameters.currentPage}">
-                                                                <input hidden name="recordsPerPage"
-                                                                       value="${paginationParameters.recordsPerPage}">
-                                                                <input hidden name="scrollPosition"
-                                                                       id="scroll${report.id}">
-                                                                <button id="btn${report.id}" class="btn btn-primary"
-                                                                        onclick="getScrollPosition('btn${report.id}','scroll${report.id}')"
-                                                                        type="submit"
-                                                                        name="reportForSubscription"
-                                                                        value="${report.id}"><fmt:message
-                                                                        key="page.message.subscribe"/></button>
+                            </div>
+                            <div class="row justify-content-center">
+                                <c:choose>
+                                    <c:when test="${sessionScope.role!='guest'}">
+                                        <c:choose>
+                                            <c:when test="${not fn:contains(requestScope.subscriptions, report.id)}">
+                                                <form method="post"
+                                                      onsubmit="getScrollPosition('btn${report.id}','scroll${report.id}')"
+                                                      action="${pageContext.request.contextPath}/${sessionScope.role}/subscribe">
+                                                    <input hidden name="currentPage"
+                                                           value="${paginationParameters.currentPage}">
+                                                    <input hidden name="recordsPerPage"
+                                                           value="${paginationParameters.recordsPerPage}">
+                                                    <input hidden name="scrollPosition"
+                                                           id="scroll${report.id}">
+                                                    <button id="btn${report.id}" class="btn btn-primary"
+                                                            type="submit"
+                                                            onclick="getScrollPosition('btn${report.id}','scroll${report.id}')"
+                                                            name="reportForSubscription"
+                                                            value="${report.id}">
+                                                        <fmt:message key="page.message.subscribe"/>
+                                                    </button>
 
-                                                            </form>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <form method="post"
-                                                                  action="${pageContext.request.contextPath}/${sessionScope.role}/unsubscribe">
-                                                                <input hidden name="currentPage"
-                                                                       value="${paginationParameters.currentPage}">
-                                                                <input hidden name="recordsPerPage"
-                                                                       value="${paginationParameters.recordsPerPage}">
-                                                                <input hidden name="scrollPosition"
-                                                                       id="scroll${report.id}">
+                                                </form>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <form method="post"
+                                                      action="${pageContext.request.contextPath}/${sessionScope.role}/unsubscribe">
+                                                    <input hidden name="currentPage"
+                                                           value="${paginationParameters.currentPage}">
+                                                    <input hidden name="recordsPerPage"
+                                                           value="${paginationParameters.recordsPerPage}">
+                                                    <input hidden name="scrollPosition"
+                                                           id="scroll${report.id}">
 
-                                                                <button class="btn btn-danger" type="submit"
-                                                                        onclick="getScrollPosition('btn${report.id}','scroll${report.id}')"
-                                                                        name="reportForUnsubscription"
-                                                                        id="btn${report.id}"
-                                                                        value="${report.id}"><fmt:message
-                                                                        key="page.message.unsubscribe"/></button>
-                                                            </form>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </c:when>
-                                            </c:choose>
-                                        </div>
-                                        <div class="col-6">
+                                                    <button class="btn btn-danger" type="submit"
+                                                            onclick="getScrollPosition('btn${report.id}','scroll${report.id}')"
+                                                            name="reportForUnsubscription"
+                                                            id="btn${report.id}"
+                                                            value="${report.id}"><fmt:message
+                                                            key="page.message.unsubscribe"/></button>
+                                                </form>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:when>
+                                </c:choose>
+                                <c:choose>
+                                    <c:when test="${sessionScope.role=='admin' ||sessionScope.role=='speaker'}">
 
-                                            <c:choose>
-                                                <c:when test="${sessionScope.role=='admin' ||sessionScope.role=='speaker'}">
-                                                    <form action="${pageContext.request.contextPath}/${sessionScope.role}/editreport"
-                                                          method="post">
-                                                        <button class="btn btn-primary" type="submit"><fmt:message
-                                                                key="page.message.edit"/></button>
-                                                    </form>
-                                                </c:when>
-                                            </c:choose>
-                                        </div>
 
-                                    </div>
-                                </div>
+                                        <form action="${pageContext.request.contextPath}/${sessionScope.role}/editreport"
+                                              method="post">
+                                            <button class="btn btn-primary" type="submit"><fmt:message
+                                                    key="page.message.edit"/></button>
+                                        </form>
+
+
+                                        <form method="post"
+                                              action="${pageContext.request.contextPath}/${sessionScope.role}/deletereport">
+                                            <input hidden name="currentPage"
+                                                   value="${paginationParameters.currentPage}">
+                                            <input hidden name="recordsPerPage"
+                                                   value="${paginationParameters.recordsPerPage}">
+
+                                            <input type="hidden" name="uri"
+                                                   value="${pageContext.request.contextPath}/${sessionScope.role}/catalog">
+                                            <button class="btn btn-danger" type="submit"
+                                                    name="reportIdForRemoving"
+                                                    value="${report.id}"><fmt:message
+                                                    key="page.message.delete"/></button>
+                                        </form>
+                                    </c:when>
+                                </c:choose>
+
 
                             </div>
                             <!--/row-->
