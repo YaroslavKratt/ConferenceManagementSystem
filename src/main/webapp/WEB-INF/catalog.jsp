@@ -215,7 +215,10 @@
                 <div class="col-12 text-center">
                     <form action="${pageContext.request.contextPath}/${sessionScope.role}/addreport">
                         <input type="hidden" name="conferenceId" value="${conference.id}">
-
+                        <input hidden name="currentPage"
+                               value="${paginationParameters.currentPage}">
+                        <input hidden name="recordsPerPage"
+                               value="${paginationParameters.recordsPerPage}">
                         <button class="btn btn-primary" type="submit"><fmt:message
                                 key="page.message.add.report"/></button>
                     </form>
