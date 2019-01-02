@@ -3,13 +3,11 @@ package ua.com.training.controller.commands;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.com.training.controller.utils.PaginationUtil;
-import ua.com.training.model.entity.Conference;
 import ua.com.training.model.entity.User;
 import ua.com.training.model.services.ConferenceService;
 import ua.com.training.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 public class CatalogCommand implements Command {
@@ -24,11 +22,10 @@ public class CatalogCommand implements Command {
         request.setAttribute("paginationParameters", paginationParameters);
         request.setAttribute("conferences", conferenceService.getPaginatedList(paginationParameters.get("begin"),
                 paginationParameters.get("recordsPerPage")));
-       request.setAttribute("scrollPosition",request.getParameter("scrollPosition"));
-
+        request.setAttribute("scrollPosition", request.getParameter("scrollPosition"));
         if (!isGuest(request)) {
             long userId = userService.getUserId((String) request.getSession().getAttribute("email"));
-            LOG.trace("List of subscriptions: " + userService.getUserSubscriptionsIds(userId));
+            request.setAttribute("userId", userId);
             request.setAttribute("subscriptions", userService.getUserSubscriptionsIds(userId));
         }
         return PATH_BUNDLE.getString("page.catalog");

@@ -93,6 +93,10 @@
                                               method="post">
                                             <input type="hidden" name="deleteConference"
                                                    value="${conference.id}">
+                                            <input hidden name="currentPage"
+                                                   value="${paginationParameters.currentPage}">
+                                            <input hidden name="recordsPerPage"
+                                                   value="${paginationParameters.recordsPerPage}">
                                             <button class="btn btn-danger" type="submit"><fmt:message
                                                     key="page.message.delete"/></button>
                                         </form>
@@ -169,7 +173,7 @@
                                     </c:when>
                                 </c:choose>
                                 <c:choose>
-                                    <c:when test="${sessionScope.role=='admin' ||sessionScope.role=='speaker'}">
+                                    <c:when test="${sessionScope.role=='admin' ||(sessionScope.role=='speaker' && requestScope.userId==report.speakerId)}">
 
 
                                         <form action="${pageContext.request.contextPath}/${sessionScope.role}/editreport"
