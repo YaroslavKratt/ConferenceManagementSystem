@@ -75,15 +75,17 @@
                     </div>
                     <c:choose>
                         <c:when test="${sessionScope.role == 'admin'}">
-                            <div class="col-2">
+                            <div class="col">
                                 <div class="row">
-
-
                                     <div class="col-6">
                                         <form action="${pageContext.request.contextPath}/${sessionScope.role}/editconference"
                                               method="post">
                                             <input type="hidden" name="conference"
                                                    value="${conference.id}">
+                                            <input hidden name="currentPage"
+                                                   value="${paginationParameters.currentPage}">
+                                            <input hidden name="recordsPerPage"
+                                                   value="${paginationParameters.recordsPerPage}">
                                             <button class="btn btn-primary" type="submit"><fmt:message
                                                     key="page.message.edit"/></button>
                                         </form>
@@ -101,12 +103,12 @@
                                                     key="page.message.delete"/></button>
                                         </form>
                                     </div>
-
                                 </div>
-
                             </div>
                         </c:when>
+
                     </c:choose>
+
                 </div> <!--/row> -->
                 <div class="card">
                     <div class="card-body">
@@ -199,22 +201,32 @@
                                         </form>
                                     </c:when>
                                 </c:choose>
-
-
                             </div>
                             <!--/row-->
-
                         </c:forEach>
                     </div>
                 </div>
+
             </div>
+
         </div>
+        <c:if test="${sessionScope.role == 'admin'|| sessionScope.role == 'speaker'}">
+            <div class="row" style="margin-top: 10px">
+                <div class="col-12 text-center">
+                    <form action="${pageContext.request.contextPath}/${sessionScope.role}/addreport">
+                        <input type="hidden" name="conferenceId" value="${conference.id}">
+
+                        <button class="btn btn-primary" type="submit"><fmt:message
+                                key="page.message.add.report"/></button>
+                    </form>
+                </div>
+            </div>
+        </c:if>
+
     </c:forEach>
-
-
     <div class="container">
         <div class="row">
-            <div class="col-12 text-center">
+            <div class="col text-center">
                 <c:choose>
                     <c:when test="${sessionScope.role == 'admin'}">
                         <form

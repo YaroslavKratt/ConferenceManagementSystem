@@ -96,7 +96,11 @@ public class EditConference implements Command {
 
         conferenceService.update(conference);
 
-        return "redirect:/" + request.getSession().getAttribute("role") + PATH_BUNDLE.getString("path.catalog");
+        return "redirect:/"
+                + request.getSession().getAttribute("role")
+                + PATH_BUNDLE.getString("path.catalog")
+                + "?recordsPerPage=" + request.getParameter("recordsPerPage")
+                + "&currentPage=" + request.getParameter("currentPage");
     }
 
 }
