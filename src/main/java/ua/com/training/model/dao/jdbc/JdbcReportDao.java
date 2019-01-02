@@ -45,8 +45,17 @@ public class JdbcReportDao implements ReportDao {
 
     @Override
     public boolean delete(long id) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("report.delete"))) {
+            preparedStatement.setLong(1, id);
+            return preparedStatement.execute();
+        } catch (SQLException e) {
+            LOG.error("Removing of report has failed:  " + e);
+        }
         return false;
     }
+
 
     @Override
     public boolean addNew(Report item) {

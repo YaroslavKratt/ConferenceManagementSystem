@@ -24,4 +24,8 @@ public class ReportService {
     public void addNewReportToConference(long conferenceId, Report report){
         reportDao.addNew(conferenceId,report);
     }
+
+    public void deleteReport(long id) {
+        reportDao.delete(id);
+    }
 }

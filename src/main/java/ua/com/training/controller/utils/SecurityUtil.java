@@ -30,6 +30,8 @@ public class SecurityUtil {
         adminCommand.add("unsubscribe");
         adminCommand.add("createconference");
         adminCommand.add("catalogofspeakers");
+        adminCommand.add("deletereport");
+
 
 
         List<String> speakerCommand = new LinkedList<>();
@@ -41,6 +43,7 @@ public class SecurityUtil {
         speakerCommand.add("subscribe");
         speakerCommand.add("unsubscribe");
         speakerCommand.add("catalogofspeakers");
+        speakerCommand.add("deletereport");
 
 
 
