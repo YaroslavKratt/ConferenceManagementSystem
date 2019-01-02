@@ -186,7 +186,6 @@ public class JdbcConferenceDao implements ConferenceDao {
             statement.setInt(1, begin);
             statement.setInt(2, recordsPerPage);
             ResultSet resultSet = statement.executeQuery();
-            LOG.trace("begin " + begin + " recordsperpafe " + recordsPerPage);
             pagenatedList = conferenceMapper.mapToList(resultSet);
             return pagenatedList;
         } catch (SQLException e) {

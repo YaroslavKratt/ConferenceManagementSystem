@@ -35,7 +35,7 @@ public class ConferenceMapper implements Mapper<Conference> {
         conference.setDateTime(resultSet.getTimestamp("conference_timestamp").toLocalDateTime());
         return conference;
     }
-
+//todo
     public List<Conference> mapToList(ResultSet conferencesWithReports) throws SQLException {
         Set<Conference> conferences = new HashSet<>();
         Map<Long, List<Report>> conferenceReports = new HashMap<>();

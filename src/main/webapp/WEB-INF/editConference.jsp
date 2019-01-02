@@ -44,8 +44,8 @@
                                value="${conference.dateTime}">
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col  right">
+                <div class="row justify-content-end">
+                    <div class="col-md-4 col-lg-4 col-sm-12 ">
 
                         <c:if test="${not empty wrongDate }">
                             <p class="text-danger"> ${wrongDate}</p>
@@ -94,6 +94,7 @@
 
                                         </c:forEach>
                                     </select>
+
                                 </div>
                             </div>
                             <div class="row">
@@ -103,6 +104,24 @@
                                     <c:if test="${not empty dateError }">
                                         <p class="text-danger"> ${requestScope.get(dateError)}</p>
                                     </c:if>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-md-4 col-lg-4 col-sm-12  centered">
+                                    <form method="post"
+                                          action="${pageContext.request.contextPath}/${sessionScope.role}/deletereport">
+                                        <input hidden name="currentPage"
+                                               value="${paginationParameters.currentPage}">
+                                        <input hidden name="recordsPerPage"
+                                               value="${paginationParameters.recordsPerPage}">
+                                        <input type="hidden" name="conference" value="${conference.id}">
+                                        <input type="hidden" name="uri"
+                                               value="${pageContext.request.contextPath}/${sessionScope.role}/editconference">
+                                        <button class="btn btn-danger" type="submit"
+                                                name="reportIdForRemoving"
+                                                value="${report.id}"><fmt:message
+                                                key="page.message.delete"/></button>
+                                    </form>
                                 </div>
                             </div>
                         </c:forEach>
