@@ -1,7 +1,6 @@
 package ua.com.training.controller.utils;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import org.mindrot.jbcrypt.BCrypt;
 import ua.com.training.model.entity.User;
 
@@ -75,9 +74,7 @@ public class SecurityUtil {
 
     public boolean isSecuredPage(String urlPattern) {
         for (User.Role role : User.Role.values()) {
-            if (urlPattern.contains(role.getStringRole())) {
-                return true;
-            }
+            return urlPattern.contains(role.getStringRole());
         }
         return false;
     }
