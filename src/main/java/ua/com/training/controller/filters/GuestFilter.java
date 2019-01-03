@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 
@@ -22,21 +23,18 @@ public class GuestFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
-        //LOG.trace("Guest Filter");
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
-        ResourceBundle pathBundle = ResourceBundle.getBundle(ResourceEnum.PATHS_BUNDLE.getBundleName());
         String role = (String) session.getAttribute("role");
-        if (role==null) {
+
+        if (Objects.isNull(role)) {
             session.setAttribute("role", User.Role.GUEST.getStringRole());
             LOG.debug("PATH IN FILTER: " + request.getRequestURI());
-          //  response.sendRedirect(pathBundle.getString("page.index"));
             response.sendRedirect(request.getRequestURI());
             return;
         }
-
 
         filterChain.doFilter(request, response);
     }

@@ -10,16 +10,15 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class MailSenderExecutor implements ServletContextListener {
+public class ContextListener implements ServletContextListener {
     private ScheduledExecutorService executorService;
     private Logger LOG = LogManager.getLogger(MailSendService.class);
     @Override
     public void contextInitialized(ServletContextEvent event) {
         executorService = Executors.newSingleThreadScheduledExecutor();
 
-       // LOG.info("Sending emails...");
-        //executorService.scheduleAtFixedRate(new MailSendService(),0,120, TimeUnit.SECONDS);
-
+        LOG.info("Sending emails...");
+        executorService.scheduleAtFixedRate(new MailSendService(),0,1, TimeUnit.DAYS);
     }
 
     @Override

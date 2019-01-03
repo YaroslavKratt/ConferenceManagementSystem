@@ -9,6 +9,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+
 public class AuthorizationFilter implements Filter {
     private final static Logger LOG = LogManager.getLogger(SecurityUtil.class);
 
@@ -21,10 +22,10 @@ public class AuthorizationFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         final HttpServletRequest request = (HttpServletRequest) servletRequest;
         final HttpSession session = request.getSession();
-       // LOG.trace("Authorization Filter");
         String uri = request.getRequestURI();
         String userRole = (String) session.getAttribute("role");
         SecurityUtil utils = new SecurityUtil();
+
         if (utils.isSecuredPage(uri)) {
             boolean hasPermission = utils.checkPermission(uri, userRole);
             if (!hasPermission) {

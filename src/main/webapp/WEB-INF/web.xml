@@ -51,7 +51,7 @@
     </filter-mapping>
 
     <listener>
-        <listener-class>ua.com.training.controller.listeners.MailSenderExecutor</listener-class>
+        <listener-class>ua.com.training.controller.listeners.ContextListener</listener-class>
     </listener>
     <listener>
         <listener-class>ua.com.training.controller.listeners.SessionListener</listener-class>

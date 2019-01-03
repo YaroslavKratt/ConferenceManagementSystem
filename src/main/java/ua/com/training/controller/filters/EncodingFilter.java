@@ -8,7 +8,6 @@ import javax.servlet.*;
 import java.io.IOException;
 
 public class EncodingFilter implements Filter {
-    private final static Logger LOG = LogManager.getLogger(LanguageListener.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -18,7 +17,6 @@ public class EncodingFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
-     //   LOG.trace("Encoding Filter");
 
         servletResponse.setContentType("text/html");
         servletResponse.setCharacterEncoding("UTF-8");
