@@ -4,8 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.com.training.controller.utils.SecurityUtil;
 import ua.com.training.controller.utils.ValidationUtil;
-import ua.com.training.model.entity.User;
 import ua.com.training.model.ResourceEnum;
+import ua.com.training.model.entity.User;
 import ua.com.training.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,11 +14,12 @@ import java.util.ResourceBundle;
 
 public class RegistrationCommand implements Command {
     private final static Logger LOG = LogManager.getLogger(RegistrationCommand.class);
+    private ValidationUtil validationUtil = new ValidationUtil();
+    private UserService userService = new UserService();
 
     @Override
     public String execute(HttpServletRequest request) {
-        ValidationUtil validationUtil = new ValidationUtil();
-        UserService userService = new UserService();
+
         Locale locale = (Locale) request.getSession().getAttribute("locale");
         ResourceBundle regexpBundle = ResourceBundle.getBundle(ResourceEnum.REGEXP_BUNDLE.getBundleName(), locale);
         ResourceBundle messageBundle = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), locale);
@@ -27,12 +28,12 @@ public class RegistrationCommand implements Command {
             return PATH_BUNDLE.getString("page.registration");
         }
 
-        if(!validationUtil.validate(request.getParameter("name"), regexpBundle.getString("regex.name"))) {
+        if (!validationUtil.validate(request.getParameter("name"), regexpBundle.getString("regex.name"))) {
             request.setAttribute("wrongName", messageBundle.getString("info.message.wrong.name"));
             return PATH_BUNDLE.getString("page.registration");
         }
 
-        if(!validationUtil.validate(request.getParameter("surname"), regexpBundle.getString("regex.surname"))) {
+        if (!validationUtil.validate(request.getParameter("surname"), regexpBundle.getString("regex.surname"))) {
             request.setAttribute("wrongSurname", messageBundle.getString("info.message.wrong.surname"));
             return PATH_BUNDLE.getString("page.registration");
         }

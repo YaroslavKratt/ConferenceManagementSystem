@@ -33,7 +33,7 @@ public class EditConference implements Command {
         request.setAttribute("recordsPerPage",request.getParameter("recordsPerPage") );
 
 
-        if (request.getParameter("submitted") == null) {
+        if (Objects.isNull(request.getParameter("submitted"))) {
             LOG.trace("Not Submitted");
             return PATH_BUNDLE.getString("page.edit.conference");
         }
@@ -58,11 +58,8 @@ public class EditConference implements Command {
         conference.setDateTime(LocalDateTime.parse(request.getParameter("conference-date-time")));
         conference.setLocation(request.getParameter("conference-location"));
         List<Report> reports = conference.getReports();
-        LOG.debug("conference before db:" + conference) ;
         for (int i = 0; i <  reports.size(); i++) {
             long reportId =  reports.get(i).getId();
-            LOG.debug("report id "+reportId);
-            LOG.debug("bug:" + request.getParameter("report-date-time" + reportId));
             LocalDateTime reportDateTime = LocalDateTime.parse(request.getParameter("report-date-time" + reportId));
 
             if (reportDateTime.compareTo(conferenceDateTime) < 0) {
@@ -82,12 +79,14 @@ public class EditConference implements Command {
         }
 
         request.setAttribute("conference", conference);
-       LOG.debug("null  present:" +requestParamUtil.nullReportParametersPresent(request, "-new"));
+
         if (!requestParamUtil.nullReportParametersPresent(request, "-new")) {
             if (LocalDateTime.parse(request.getParameter("report-date-time-new")).compareTo(conferenceDateTime) < 0) {
+
                 request.setAttribute("report-name-new",request.getParameter("report-name-new"));
                 request.setAttribute("report-date-time-new",request.getParameter("report-date-time-new"));
                 request.setAttribute("earlierThanConference-new", messages.getString("info.message.earlier.than.conference"));
+
                 return PATH_BUNDLE.getString("page.edit.conference");
             }
             reportService.addNewReportToConference(conference.getId(), new Report.Builder()
@@ -96,8 +95,6 @@ public class EditConference implements Command {
                     .setSpeakerId(Long.parseLong(request.getParameter("report-speaker-new")))
                     .build());
         }
-
-
         conferenceService.update(conference);
 
         return "redirect:/"

@@ -31,14 +31,4 @@ public class JdbcDaoFactory extends DaoFactory {
         return new JdbcConferenceDao();
     }
 
-    Connection getConnection(){
-        try{
-            return dataSource.getConnection();
-        } catch (SQLException e) {
-            logger.warn("No connection returned: " + e);
-            throw  new RuntimeException();
-        }
-
-    }
-
 }

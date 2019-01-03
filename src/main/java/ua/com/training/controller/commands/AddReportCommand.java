@@ -23,6 +23,7 @@ public class AddReportCommand implements Command {
         Locale locale = (Locale) request.getSession().getAttribute("locale");
         ResourceBundle messages = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), locale);
         Conference conference = new ConferenceService().getConferenceById(Long.parseLong(request.getParameter("conferenceId")));
+
         request.setAttribute("possibleSpeakers", new UserService().getAllUsers());
         request.setAttribute("conferenceId", request.getParameter("conferenceId"));
         request.setAttribute("recordsPerPage", request.getParameter("recordsPerPage"));

@@ -9,11 +9,13 @@ import javax.servlet.http.HttpSession;
 import java.util.ResourceBundle;
 
 public class UnsubscribeCommand implements Command {
+    private ReportService reportService = new ReportService();
+    private UserService userService = new UserService();
+
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        ReportService reportService = new ReportService();
-        UserService userService = new UserService();
+
         ResourceBundle messageBundle = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), request.getLocale());
         long userId = userService.getUserId((String) session.getAttribute("email"));
         long reportId = Long.valueOf(request.getParameter("reportForUnsubscription"));

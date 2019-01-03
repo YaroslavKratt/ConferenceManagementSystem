@@ -2,11 +2,11 @@ package ua.com.training.controller.commands;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ua.com.training.model.ResourceEnum;
 import ua.com.training.model.entity.Conference;
 import ua.com.training.model.entity.Report;
 import ua.com.training.model.entity.User;
 import ua.com.training.model.services.ConferenceService;
-import ua.com.training.model.ResourceEnum;
 import ua.com.training.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,15 +15,14 @@ import java.util.*;
 
 public class CreateConferenceCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(CreateConferenceCommand.class);
+    private UserService userService = new UserService();
 
     @Override
     public String execute(HttpServletRequest request) {
-        {
             List<Report> reports = new ArrayList<>();
             Conference conference = new Conference();
-            Locale locale = (Locale)request.getSession().getAttribute("locale");
+            Locale locale = (Locale) request.getSession().getAttribute("locale");
             ResourceBundle messages = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), locale);
-            UserService userService = new UserService();
             request.setAttribute("possibleSpeakers", new UserService().getAllUsers());
 
             if (request.getParameter("conference-name") == null) {
@@ -43,8 +42,7 @@ public class CreateConferenceCommand implements Command {
             List<String> reportsSpeaker = Arrays.asList(request.getParameterValues("report-speaker"));
 
 
-            for (int i = 0; i <reportsTopic.size() ; i++) {
-
+            for (int i = 0; i < reportsTopic.size(); i++) {
                 LocalDateTime reportDateTime = LocalDateTime.parse(reportsTime.get(i));
                 long speakerId = Long.valueOf(reportsSpeaker.get(i));
 
@@ -52,10 +50,9 @@ public class CreateConferenceCommand implements Command {
                     request.setAttribute("erlierThanConference", messages.getString("info.message.earlier.than.conference"));
                     return PATH_BUNDLE.getString("page.conference");
                 }
-                if (userService.getUserRole(speakerId) == User.Role.USER) {
-                    userService.changeRole(speakerId, User.Role.SPEAKER);
-                }
-                LOG.trace(userService.getUserRole(speakerId));
+
+                ifUserChangeRole(speakerId);
+
                 reports.add(new Report.Builder()
                         .setTopic(reportsTopic.get(i))
                         .setDateTime(reportDateTime)
@@ -67,11 +64,18 @@ public class CreateConferenceCommand implements Command {
             }
 
             conference.setReports(reports);
+
             if (!new ConferenceService().addConference(conference)) {
                 LOG.error("Can't save new conference");
                 throw new RuntimeException(messages.getString("error.message.not.saved"));
             }
-             return "redirect:/" +  request.getSession().getAttribute("role") + PATH_BUNDLE.getString("path.catalog");
+            return "redirect:/" + request.getSession().getAttribute("role") + PATH_BUNDLE.getString("path.catalog");
+        }
+
+
+   private void ifUserChangeRole(long speakerId) {
+        if (userService.getUserRole(speakerId) == User.Role.USER) {
+            userService.changeRole(speakerId, User.Role.SPEAKER);
         }
     }
 

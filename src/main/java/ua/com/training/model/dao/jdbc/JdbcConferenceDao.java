@@ -64,24 +64,24 @@ public class JdbcConferenceDao implements ConferenceDao {
                      .prepareStatement(sqlRequestBundle.getString("conference.update"), Statement.RETURN_GENERATED_KEYS);
              PreparedStatement reportQuery = connection
                      .prepareStatement((sqlRequestBundle.getString("report.update")))) {
+
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             connection.setAutoCommit(false);
-            LOG.debug("topic of conf" + conference.getTopic());
             conferenceQuery.setString(1, conference.getTopic());
             conferenceQuery.setString(2, conference.getLocation());
             conferenceQuery.setTimestamp(3, Timestamp.valueOf(conference.getDateTime()));
             conferenceQuery.setLong(4, conference.getId());
             conferenceQuery.executeUpdate();
-            LOG.debug("amount of reports: " + conference.getReports().size());
+
             for (Report report : conference.getReports()) {
                 reportQuery.setString(1, report.getTopic());
-                LOG.debug("report id:" +report.getId());
+                LOG.debug("report id:" + report.getId());
 
                 reportQuery.setTimestamp(2, Timestamp.valueOf(report.getDateTime()));
-                reportQuery.setString(3,report.getSpeakerName());
-                reportQuery.setString(4,report.getSpeakerSurname());
+                reportQuery.setString(3, report.getSpeakerName());
+                reportQuery.setString(4, report.getSpeakerSurname());
                 reportQuery.setLong(5, report.getSpeakerId());
-                reportQuery.setLong(6,report.getId());
+                reportQuery.setLong(6, report.getId());
                 reportQuery.addBatch();
             }
             reportQuery.executeBatch();

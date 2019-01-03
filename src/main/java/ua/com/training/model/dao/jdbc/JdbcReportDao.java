@@ -2,11 +2,11 @@ package ua.com.training.model.dao.jdbc;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ua.com.training.model.ResourceEnum;
 import ua.com.training.model.dao.ReportDao;
 import ua.com.training.model.dao.mappers.Mapper;
 import ua.com.training.model.dao.mappers.ReportMapper;
 import ua.com.training.model.entity.Report;
-import ua.com.training.model.ResourceEnum;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 public class JdbcReportDao implements ReportDao {
     private static final Logger LOG = LogManager.getLogger(JdbcReportDao.class);
     private DataSource dataSource = ConnectionPool.getDataSource();
-    private ResourceBundle sqlRequestBundle =ResourceBundle
+    private ResourceBundle sqlRequestBundle = ResourceBundle
             .getBundle(ResourceEnum.SQL_REQUESTS_BUNDLE.getBundleName());
     private Mapper<Report> reportMapper = new ReportMapper();
 
@@ -36,6 +36,7 @@ public class JdbcReportDao implements ReportDao {
         }
     }
 
+
     @Override
     public List<Report> getAll() {
         throw new UnsupportedOperationException();
@@ -45,6 +46,7 @@ public class JdbcReportDao implements ReportDao {
     public void update(Report item) {
 
     }
+
 
     @Override
     public boolean delete(long id) {
@@ -67,6 +69,7 @@ public class JdbcReportDao implements ReportDao {
         return false;
     }
 
+
     @Override
     public boolean subscribe(long userId, long reportId) {
         try (Connection connection = dataSource.getConnection();
@@ -84,6 +87,7 @@ public class JdbcReportDao implements ReportDao {
         return false;
     }
 
+
     @Override
     public boolean checkSubscription(long userId, long reportId) {
         try (Connection connection = dataSource.getConnection();
@@ -99,6 +103,7 @@ public class JdbcReportDao implements ReportDao {
             throw new RuntimeException();
         }
     }
+
 
     @Override
     public void unsubscribe(long userId, long reportId) {
@@ -116,6 +121,7 @@ public class JdbcReportDao implements ReportDao {
         }
     }
 
+
     @Override
     public void addNew(long conferenceId, Report report) {
         try (Connection connection = dataSource.getConnection();
@@ -123,7 +129,7 @@ public class JdbcReportDao implements ReportDao {
                      .prepareStatement(sqlRequestBundle.getString("report.add.new.to.conference"))) {
             preparedStatement.setString(1, report.getTopic());
             preparedStatement.setLong(2, conferenceId);
-            preparedStatement.setLong(3,report.getSpeakerId());
+            preparedStatement.setLong(3, report.getSpeakerId());
             preparedStatement.setTimestamp(4, Timestamp.valueOf(report.getDateTime()));
             preparedStatement.execute();
         } catch (SQLException e) {
@@ -131,6 +137,7 @@ public class JdbcReportDao implements ReportDao {
             throw new RuntimeException();
         }
     }
+
 
     @Override
     public int getAmountOfSubscribedUsers(long reportId) {
@@ -149,12 +156,13 @@ public class JdbcReportDao implements ReportDao {
         }
     }
 
+
     @Override
     public void setAmountOfSubscribedUsers(long reportId, int amount) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection
                      .prepareStatement(sqlRequestBundle.getString("report.set.amount.of.subscribed.users"))) {
-            preparedStatement.setInt(1,amount);
+            preparedStatement.setInt(1, amount);
             preparedStatement.setLong(2, reportId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -163,12 +171,13 @@ public class JdbcReportDao implements ReportDao {
         }
     }
 
+
     @Override
     public void setComersAmount(long reportId, int amount) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection
                      .prepareStatement(sqlRequestBundle.getString("report.set.amount.of.incoming.users"))) {
-            preparedStatement.setInt(1,amount);
+            preparedStatement.setInt(1, amount);
             preparedStatement.setLong(2, reportId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -176,6 +185,7 @@ public class JdbcReportDao implements ReportDao {
             throw new RuntimeException();
         }
     }
+
 
     @Override
     public int getComersAmount(long reportId) {

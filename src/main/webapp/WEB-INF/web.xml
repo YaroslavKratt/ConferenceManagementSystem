@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-    version="3.1">
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
     <display-name>Hello Servlet</display-name>
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+
     <servlet>
         <servlet-name>Controller</servlet-name>
-        <servlet-class> ua.com.training.controller.FrontController</servlet-class>
+        <servlet-class>ua.com.training.controller.FrontController</servlet-class>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/user/*</url-pattern>
@@ -18,55 +20,72 @@
         <url-pattern>/guest/*</url-pattern>
         <url-pattern>/speaker/*</url-pattern>
     </servlet-mapping>
+
     <absolute-ordering>
         <name>RoleFilter</name>
         <name>EncodingFilter</name>
         <name>AuthorizationFilter</name>
     </absolute-ordering>
+
     <filter>
         <filter-name>RoleFilter</filter-name>
         <filter-class>ua.com.training.controller.filters.GuestFilter</filter-class>
     </filter>
-   <filter-mapping>
-       <filter-name>RoleFilter</filter-name>
-       <servlet-name>Controller</servlet-name>
-       <url-pattern>/*</url-pattern>
-   </filter-mapping>
+        <filter-mapping>
+        <filter-name>RoleFilter</filter-name>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <filter>
         <filter-name>EncodingFilter</filter-name>
         <filter-class>ua.com.training.controller.filters.EncodingFilter</filter-class>
     </filter>
-
     <filter-mapping>
         <filter-name>EncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-<filter>
-    <filter-name>AuthorizationFilter</filter-name>
-    <filter-class>ua.com.training.controller.filters.AuthorizationFilter</filter-class>
-</filter>
+
+    <filter>
+        <filter-name>AuthorizationFilter</filter-name>
+        <filter-class>ua.com.training.controller.filters.AuthorizationFilter</filter-class>
+    </filter>
     <filter-mapping>
         <filter-name>AuthorizationFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>CacheFilter</filter-name>
+        <filter-class>ua.com.training.controller.filters.CacheFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CacheFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
     <listener>
         <listener-class>ua.com.training.controller.listeners.ContextListener</listener-class>
     </listener>
+
     <listener>
         <listener-class>ua.com.training.controller.listeners.SessionListener</listener-class>
     </listener>
+
     <listener>
         <listener-class>ua.com.training.controller.listeners.LanguageListener</listener-class>
     </listener>
+
     <error-page>
         <error-code>404</error-code>
         <location>/WEB-INF/404errorPage.jsp</location>
     </error-page>
+
     <error-page>
         <exception-type>ua.com.training.model.exceptions.AccessDeniedException</exception-type>
         <location>/WEB-INF/permissionDenied.jsp</location>
     </error-page>
+
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
         <location>/WEB-INF/serverErrorPage.jsp</location>

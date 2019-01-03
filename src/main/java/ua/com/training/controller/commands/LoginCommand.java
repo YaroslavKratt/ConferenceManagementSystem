@@ -2,30 +2,30 @@ package ua.com.training.controller.commands;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.com.training.model.entity.User;
 import ua.com.training.model.ResourceEnum;
+import ua.com.training.model.entity.User;
 import ua.com.training.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 
 public class LoginCommand implements Command {
     private final static Logger LOG = LogManager.getLogger(LoginCommand.class);
+    private UserService userService = new UserService();
 
     @Override
     public String execute(HttpServletRequest request) {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        Locale locale = (Locale)request.getSession().getAttribute("locale");
-        LOG.trace("locale " + locale );
-        UserService userService = new UserService();
+        Locale locale = (Locale) request.getSession().getAttribute("locale");
+        LOG.trace("locale " + locale);
         ResourceBundle messageBundle = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), locale);
 
-        if( email==null || password==null)
-        {
+        if (Objects.isNull(email) || Objects.isNull(password)) {
             LOG.trace("Email or password is null");
             return PATH_BUNDLE.getString("page.login");
 
@@ -58,8 +58,7 @@ public class LoginCommand implements Command {
             logInUser(request, email, password);
             LOG.info("User " + email + " signed in");
             return "redirect:/" + UserService.getRoleString(email) + PATH_BUNDLE.getString("path.catalog");
-        }
-        else {
+        } else {
             putMessageInRequest(request, "wrongPassword", messageBundle, "info.message.wrong.password");
             LOG.warn("Wrong password");
 
@@ -93,5 +92,5 @@ public class LoginCommand implements Command {
         } catch (IllegalStateException ise) {
             LOG.error("Session already invalidated, but email still in context: " + ise);
         }
-           }
+    }
 }

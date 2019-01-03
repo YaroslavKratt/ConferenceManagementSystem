@@ -13,8 +13,9 @@ public class CommandFactory {
 
     public Optional<Command> getCommand(HttpServletRequest request, HttpServletResponse response) {
         Command currentCommand = new DefaultCommand();
-        String command = request.getRequestURI().replaceAll(".*/guest*.|.*/admin*.|.*/speaker*.|.*/user*.|","");
+        String command = request.getRequestURI().replaceAll(".*/guest*.|.*/admin*.|.*/speaker*.|.*/user*.|", "");
         LOG.debug("Command is: " + command);
+
         if (command.isEmpty()) {
             return Optional.of(currentCommand);
         }

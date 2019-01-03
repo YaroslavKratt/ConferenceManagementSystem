@@ -47,6 +47,7 @@ public class JdbcSpeakerDao implements SpeakerDao {
         return false;
     }
 
+
     @Override
     public List<SpeakerDTO> getAllSpeakersWithReports() {
         try (Connection connection = dataSource.getConnection();
@@ -60,6 +61,7 @@ public class JdbcSpeakerDao implements SpeakerDao {
             throw new RuntimeException();
         }
     }
+
 
     @Override
     public Double getRating(long speakerId) {
@@ -77,6 +79,7 @@ public class JdbcSpeakerDao implements SpeakerDao {
             throw new RuntimeException();
         }
     }
+
 
     @Override
     public boolean updateRatingAndBonus(long speakerId, Double rating, double bonus) {
@@ -96,6 +99,7 @@ public class JdbcSpeakerDao implements SpeakerDao {
 
     }
 
+
     @Override
     public int getSpeakersAmount() {
         try (Connection connection = dataSource.getConnection();
@@ -109,6 +113,7 @@ public class JdbcSpeakerDao implements SpeakerDao {
             throw new RuntimeException();
         }
     }
+
 
     @Override
     public List<SpeakerDTO> getPaginatedList(Integer begin, Integer recordsPerPage) {

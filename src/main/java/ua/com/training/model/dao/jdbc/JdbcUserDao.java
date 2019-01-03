@@ -42,6 +42,7 @@ public class JdbcUserDao implements UserDao {
         }
     }
 
+
     @Override
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
@@ -60,15 +61,18 @@ public class JdbcUserDao implements UserDao {
 
     }
 
+
     @Override
     public void update(User item) {
 
     }
 
+
     @Override
     public boolean delete(long id) {
         return false;
     }
+
 
     @Override
     public boolean addNew(User user) throws RuntimeException {
@@ -87,6 +91,7 @@ public class JdbcUserDao implements UserDao {
             return false;
         }
     }
+
 
     @Override
     public User getByEmail(String email) {
@@ -107,10 +112,12 @@ public class JdbcUserDao implements UserDao {
 
     }
 
+
     @Override
     public boolean checkUserExist(String email) {
         return getByEmail(email) != null;
     }
+
 
     @Override
     public boolean checkUserPassword(String email, String password) {
@@ -118,15 +125,18 @@ public class JdbcUserDao implements UserDao {
 
     }
 
+
     @Override
     public User.Role getUserRole(String email) {
         return getByEmail(email).getRole();
     }
 
+
     @Override
     public User.Role getUserRole(long id) {
         return getById(id).getRole();
     }
+
 
     @Override
     public List<Long> getUserSubscriptionsIds(long userId) {
@@ -162,15 +172,18 @@ public class JdbcUserDao implements UserDao {
         }
     }
 
+
     @Override
     public String getNameById(long id) {
         return getById(id).getName();
     }
 
+
     @Override
     public String getSurnameById(long id) {
         return getById(id).getSurname();
     }
+
 
     @Override
     public List<String> getUserSubscriptedEmails() {
@@ -192,6 +205,7 @@ public class JdbcUserDao implements UserDao {
         }
     }
 
+
     @Override
     public boolean alreadyVoted(long userId, long speakerId) {
         try (Connection connection = dataSource.getConnection();
@@ -207,6 +221,7 @@ public class JdbcUserDao implements UserDao {
             throw new RuntimeException();
         }
     }
+
 
     @Override
     public boolean vote(long userId, long speakerId, int mark) {

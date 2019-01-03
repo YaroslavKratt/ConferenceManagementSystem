@@ -11,10 +11,10 @@ import javax.servlet.http.HttpSession;
 
 public class SubscribeCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(SubscribeCommand.class);
+    private ReportService reportService = new ReportService();
 
     @Override
     public String execute(HttpServletRequest request) {
-        ReportService reportService = new ReportService();
         UserService userService = new UserService();
         HttpSession session = request.getSession();
         long reportId = Long.valueOf(request.getParameter("reportForSubscription"));
