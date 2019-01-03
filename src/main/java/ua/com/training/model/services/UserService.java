@@ -60,7 +60,7 @@ public class UserService {
 
     }
 
-    public List<String> getUserSubscriptedEmails() {
+    public List<String> getUserSubscribedEmails() {
         return userDao.getUserSubscriptedEmails();
     }
 

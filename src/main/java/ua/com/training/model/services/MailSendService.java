@@ -25,14 +25,15 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class MailSendService implements Runnable {
     private final static Logger LOG = LogManager.getLogger(MailSendService.class);
     private final static ResourceBundle EMAIL_BUNDLE = ResourceBundle.getBundle(ResourceEnum.EMAIL_BUNDLE.getBundleName());
+    private final static ResourceBundle ACCESS_BUNDLE = ResourceBundle.getBundle(ResourceEnum.ACCESS_BUNDLE.getBundleName());
     private static ConferenceDao conferenceDao = DaoFactory.getInstance().createConferenceDao();
     private static UserService userService = new UserService();
-    private final static ResourceBundle ACCESS_BUNDLE = ResourceBundle.getBundle(ResourceEnum.ACCESS_BUNDLE.getBundleName());
+    private final String username = ACCESS_BUNDLE.getString("email.app.address");
+    private final String password = ACCESS_BUNDLE.getString("email.password");
 
     @Override
     public void run() {
-        final String username = ACCESS_BUNDLE.getString("email.app.address");
-        final String password = ACCESS_BUNDLE.getString("email.password");
+
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", true);
@@ -68,14 +69,14 @@ public class MailSendService implements Runnable {
 
     }
 
+
     private List<Message> buildMessages(Session session, List<SubscriptionDTO> subscriptions) throws MessagingException {
         List<Message> messages = new ArrayList<>();
-        List<String> subscriptedEmails = userService.getUserSubscriptedEmails();
+        List<String> subscribedEmails = userService.getUserSubscribedEmails();
         List<Long> conferenceIds = conferenceDao.getAllConferenceIdsInSubscriptions();
 
-        for (String email : subscriptedEmails) {
+        for (String email : subscribedEmails) {
             for (Long id : conferenceIds) {
-                LOG.trace("check:" + checkForAppropriateSubscription(email, id, subscriptions) + " email=" + email + " id =" + id);
                 if (checkForAppropriateSubscription(email, id, subscriptions)) {
                     try {
                         messages.add(createMessage(session, email, getAppropriateSubscriptions(email, id, subscriptions)));
@@ -93,10 +94,10 @@ public class MailSendService implements Runnable {
 
     private Message createMessage(Session session, String userEmail, List<SubscriptionDTO> subscriptions) throws MessagingException, TooEarlyDateException {
         Message message = new MimeMessage(session);
+
         message.setFrom(new InternetAddress(EMAIL_BUNDLE.getString("app.email.address")));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userEmail));
         message.setSubject(EMAIL_BUNDLE.getString("email.subject"));
-        LOG.trace("subscriptions size " + subscriptions.size());
 
         if (!checkDate(subscriptions.get(0).getConferenceDateTime())) {
             throw new TooEarlyDateException();
@@ -113,12 +114,13 @@ public class MailSendService implements Runnable {
                 .append(EMAIL_BUNDLE.getString("email.text.location"))
                 .append(subscriptions.get(0).getConferenceLocation())
                 .append(EMAIL_BUNDLE.getString("email.text.reports"));
-        LOG.trace("Starting puting reports in email");
+        LOG.trace("Starting to put reports in email");
+
         subscriptions.forEach(subscription -> {
             if (checkDate(subscription.getReportDateTime())) {
                 emailText.append(EMAIL_BUNDLE.getString("email.text.report.date.time"))
                         .append(subscription.getReportDateTime().format(
-                                DateTimeFormatter.ofPattern("dd LLLL yyyy HH:MM")))
+                                DateTimeFormatter.ofPattern("dd.MM.yyyy HH:MM")))
                         .append(EMAIL_BUNDLE.getString("email.text.report.topic"))
                         .append(subscription.getReportTopic())
                         .append(EMAIL_BUNDLE.getString("email.text.speaker"))
@@ -129,19 +131,22 @@ public class MailSendService implements Runnable {
         });
         emailText.append(EMAIL_BUNDLE.getString("email.text.thanks"));
         message.setText(emailText.toString());
+
         return message;
     }
+
 
     private boolean checkDate(LocalDateTime dateTime) {
         return DAYS.between(LocalDateTime.now(), dateTime) < Long.valueOf(EMAIL_BUNDLE.getString("notificate.before.days"));
     }
 
-    private List<SubscriptionDTO> getAppropriateSubscriptions(String email, Long confernceId, List<SubscriptionDTO> subscriptions) {
+
+    private List<SubscriptionDTO> getAppropriateSubscriptions(String email, Long conferenceId, List<SubscriptionDTO> subscriptions) {
         return subscriptions.stream()
-                .filter(subscription -> subscription.getUserEmail().equals(email))
-                .filter(subscription -> subscription.getConferenceId() == confernceId)
+                .filter(subscription -> subscription.getUserEmail().equals(email) && subscription.getConferenceId() == conferenceId)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
+
 
     private boolean checkForAppropriateSubscription(String email, Long id, List<SubscriptionDTO> subscriptions) {
         return getAppropriateSubscriptions(email, id, subscriptions).size() > 0;
