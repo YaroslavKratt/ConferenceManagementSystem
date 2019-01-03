@@ -28,6 +28,7 @@ public class JdbcReportDao implements ReportDao {
 
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
+
             return reportMapper.mapToObject(resultSet);
         } catch (SQLException e) {
             LOG.error("getById failed: " + e);
@@ -50,7 +51,9 @@ public class JdbcReportDao implements ReportDao {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection
                      .prepareStatement(sqlRequestBundle.getString("report.delete"))) {
+
             preparedStatement.setLong(1, id);
+
             return preparedStatement.execute();
         } catch (SQLException e) {
             LOG.error("Removing of report has failed:  " + e);
@@ -69,8 +72,10 @@ public class JdbcReportDao implements ReportDao {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection
                      .prepareStatement(sqlRequestBundle.getString("report.subscribe.user"))) {
+
             preparedStatement.setLong(1, userId);
             preparedStatement.setLong(2, reportId);
+
             return preparedStatement.execute();
         } catch (SQLException e) {
             LOG.error("SubscriptionDTO failed:  " + e);
@@ -87,8 +92,8 @@ public class JdbcReportDao implements ReportDao {
 
             preparedStatement.setLong(1, userId);
             preparedStatement.setLong(2, reportId);
-            return preparedStatement.executeQuery().next();
 
+            return preparedStatement.executeQuery().next();
         } catch (SQLException e) {
             LOG.error("Check subscription failed: " + e);
             throw new RuntimeException();
@@ -100,9 +105,11 @@ public class JdbcReportDao implements ReportDao {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection
                      .prepareStatement(sqlRequestBundle.getString("report.unsubscribe.user"))) {
+
             preparedStatement.setLong(1, userId);
             preparedStatement.setLong(2, reportId);
             preparedStatement.execute();
+
         } catch (SQLException e) {
             LOG.error("Unsubscription failed: " + e);
             throw new RuntimeException();
@@ -134,6 +141,7 @@ public class JdbcReportDao implements ReportDao {
             preparedStatement.setLong(1, reportId);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
+
             return resultSet.getInt(1);
         } catch (SQLException e) {
             LOG.error("Get amount of subscribed users failed: " + e);
@@ -153,5 +161,37 @@ public class JdbcReportDao implements ReportDao {
             LOG.error("Can`t set  amount of subscribed users : " + e);
             throw new RuntimeException();
         }
+    }
+
+    @Override
+    public void setComersAmount(long reportId, int amount) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("report.set.amount.of.incoming.users"))) {
+            preparedStatement.setInt(1,amount);
+            preparedStatement.setLong(2, reportId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOG.error("Can`t set  amount of incoming users : " + e);
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public int getComersAmount(long reportId) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("report.get.amount.of.incoming.users"))) {
+
+            preparedStatement.setLong(1, reportId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            LOG.error("Get amount of subscribed users failed: " + e);
+            throw new RuntimeException();
+        }
+
     }
 }

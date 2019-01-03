@@ -111,9 +111,9 @@
                                     <form method="post"
                                           action="${pageContext.request.contextPath}/${sessionScope.role}/deletereport">
                                         <input hidden name="currentPage"
-                                               value="${paginationParameters.currentPage}">
+                                               value="${currentPage}">
                                         <input hidden name="recordsPerPage"
-                                               value="${paginationParameters.recordsPerPage}">
+                                               value="${recordsPerPage}">
                                         <input type="hidden" name="conference" value="${conference.id}">
                                         <input type="hidden" name="uri"
                                                value="${pageContext.request.contextPath}/${sessionScope.role}/editconference">

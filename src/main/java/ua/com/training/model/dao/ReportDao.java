@@ -14,4 +14,8 @@ public interface ReportDao extends DAO<Report>{
     int getAmountOfSubscribedUsers(long reportId);
 
     void setAmountOfSubscribedUsers(long reportId, int amount);
+
+    void setComersAmount(long reportId, int amount);
+
+    int getComersAmount(long reportId);
 }

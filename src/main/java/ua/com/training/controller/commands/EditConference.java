@@ -29,6 +29,10 @@ public class EditConference implements Command {
 
         request.setAttribute("possibleSpeakers", new UserService().getAllUsers());
         request.setAttribute("conference", conference);
+        request.setAttribute("currentPage",request.getParameter("currentPage") );
+        request.setAttribute("recordsPerPage",request.getParameter("recordsPerPage") );
+
+
         if (request.getParameter("submitted") == null) {
             LOG.trace("Not Submitted");
             return PATH_BUNDLE.getString("page.edit.conference");

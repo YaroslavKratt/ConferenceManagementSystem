@@ -81,6 +81,7 @@
                             </div>
                             <form method="post"   action="${pageContext.request.contextPath}/${sessionScope.role}/statistics" onsubmit="getScrollPosition('scroll${conference.id}')" >
                             <c:forEach items="${conference.reports}" var="report">
+                                <input type="hidden" name="report-id" value="${report.id}">
                                 <div class="row" id="report${report.id}">
                                     <div class="col-4">
                                         <p class="card-title">${report.topic}</p>
@@ -95,7 +96,7 @@
                                         <p> ${report.regestratedAmount}</p>
                                     </div>
                                     <div class="col-2">
-                                        <input type="number"  class="comers-amount" name="comers-amount${report.id}" value="${report.comersAmount}" min="0" required >
+                                        <input type="number"  class="comers-amount" name="visitors-amount${report.id}" value="${report.comersAmount}" min="0" required >
                                     </div>
 
                                 </div>
@@ -113,6 +114,7 @@
                                            value="${paginationParameters.recordsPerPage}">
                                     <input hidden name="scrollPosition"
                                            id="scroll${conference.id}" value="" >
+                                    <input hidden name="submitted" value="true">
                                     <button id="btn${conference.id}" class="btn btn-primary"
                                             type="submit"
                                             name="reportForSubscription"
@@ -142,7 +144,7 @@
                     <ul class="pagination">
                         <c:if test="${paginationParameters.currentPage != 1}">
                             <li class="page-item"><a class="page-link"
-                                                     href="/${sessionScope.role}/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage-1}"><<</a>
+                                                     href="/${sessionScope.role}/statistics?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage-1}"><<</a>
                             </li>
                         </c:if>
                         <c:forEach begin="1" end="${paginationParameters.pagesAmount}" var="i">
@@ -154,14 +156,14 @@
                                 </c:when>
                                 <c:otherwise>
                                     <li class="page-item"><a class="page-link"
-                                                             href="/${sessionScope.role}/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${i}">${i}</a>
+                                                             href="/${sessionScope.role}/statistics?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${i}">${i}</a>
                                     </li>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
                         <c:if test="${paginationParameters.currentPage lt paginationParameters.pagesAmount}">
                             <li class="page-item"><a class="page-link"
-                                                     href="/${sessionScope.role}/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage+1}">>></a>
+                                                     href="/${sessionScope.role}/statistics?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage+1}">>></a>
                             </li>
                         </c:if>
                     </ul>
