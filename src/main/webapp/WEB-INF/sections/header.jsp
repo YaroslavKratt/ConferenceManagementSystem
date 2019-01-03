@@ -55,6 +55,12 @@
 
                     <div class="collapse navbar-collapse float-right">
                         <ul class="nav navbar-nav  float-right ml-auto">
+                            <c:if test="${sessionScope.role == 'admin'}">
+                            <li class="nav-item" role="presentation"><a class="nav-link nav float-right"
+                                                                        href="${pageContext.request.contextPath}/${sessionScope.role}/statistics"><fmt:message
+                                    key="page.message.statistic"/></a>
+                            </li>
+                            </c:if>
                             <li class="nav-item" role="presentation"><a class="nav-link nav float-right"
                                                                         href="${pageContext.request.contextPath}/${sessionScope.role}/catalogofspeakers"><fmt:message
                                     key="page.message.speakers"/></a>

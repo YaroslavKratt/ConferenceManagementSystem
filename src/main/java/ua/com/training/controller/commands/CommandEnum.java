@@ -82,6 +82,11 @@ public enum CommandEnum {
         {
             this.command = new AddReportCommand();
         }
+    },
+    STATISTICS{
+        {
+            this.command = new StatisticsCommand();
+        }
     };
     Command command;
 

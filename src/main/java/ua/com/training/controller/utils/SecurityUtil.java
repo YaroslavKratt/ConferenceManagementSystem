@@ -31,6 +31,7 @@ public class SecurityUtil {
         adminCommand.add("createconference");
         adminCommand.add("catalogofspeakers");
         adminCommand.add("deletereport");
+        adminCommand.add("statistics");
         adminCommand.add("addreport");
 
 

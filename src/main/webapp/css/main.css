@@ -162,8 +162,11 @@ input{
 .col .col-4 .col-6{
    box-sizing: content-box;!important;
 }
+.comers-amount {
+    width: 60px;
+}
 
-/*---*/
+    /*---*/
 .rating {
     float:left;
 }

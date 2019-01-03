@@ -24,10 +24,13 @@ public class AddReportCommand implements Command {
         ResourceBundle messages = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), locale);
         Conference conference = new ConferenceService().getConferenceById(Long.parseLong(request.getParameter("conferenceId")));
         request.setAttribute("possibleSpeakers", new UserService().getAllUsers());
-        request.setAttribute("conferenceId",request.getParameter("conferenceId"));
-        request.setAttribute("recordsPerPage",request.getParameter("recordsPerPage"));
-        request.setAttribute("currentPage",request.getParameter("currentPage"));
+        request.setAttribute("conferenceId", request.getParameter("conferenceId"));
+        request.setAttribute("recordsPerPage", request.getParameter("recordsPerPage"));
+        request.setAttribute("currentPage", request.getParameter("currentPage"));
+        request.setAttribute("scrollPosition",request.getParameter("scrollPosition"));
         LOG.debug(request.getParameter("recordsPerPage"));
+        LOG.debug("SCROLL:" + request.getParameter("scrollPosition"));
+
         if (request.getParameter("submitted") == null) {
             LOG.trace("Not Submitted");
             return PATH_BUNDLE.getString("page.add.report");
@@ -35,8 +38,8 @@ public class AddReportCommand implements Command {
 
         if (!new RequestParamUtil().nullReportParametersPresent(request, "-new")) {
             if (LocalDateTime.parse(request.getParameter("report-date-time-new")).compareTo(conference.getDateTime()) < 0) {
-                request.setAttribute("report-name-new",request.getParameter("report-name-new"));
-                request.setAttribute("report-date-time-new",request.getParameter("report-date-time-new"));
+                request.setAttribute("report-name-new", request.getParameter("report-name-new"));
+                request.setAttribute("report-date-time-new", request.getParameter("report-date-time-new"));
                 request.setAttribute("earlierThanConference", messages.getString("info.message.earlier.than.conference"));
                 return PATH_BUNDLE.getString("page.add.report");
             }
@@ -50,6 +53,7 @@ public class AddReportCommand implements Command {
                 + request.getSession().getAttribute("role")
                 + PATH_BUNDLE.getString("path.catalog")
                 + "?recordsPerPage=" + request.getParameter("recordsPerPage")
+                + "&scrollPosition=" + request.getParameter("scrollPosition")
                 + "&currentPage=" + request.getParameter("currentPage");
     }
 }

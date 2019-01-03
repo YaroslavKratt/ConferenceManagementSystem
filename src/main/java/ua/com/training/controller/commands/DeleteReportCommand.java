@@ -2,8 +2,6 @@ package ua.com.training.controller.commands;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.com.training.model.entity.Conference;
-import ua.com.training.model.services.ConferenceService;
 import ua.com.training.model.services.ReportService;
 import ua.com.training.model.services.UserService;
 
@@ -26,6 +24,7 @@ public class DeleteReportCommand implements Command {
         return "redirect:" + request.getParameter("uri")
                 + "?recordsPerPage=" + request.getParameter("recordsPerPage")
                 + "&currentPage=" + request.getParameter("currentPage")
+                + "&scrollPosition=" + request.getParameter("scrollPosition")
                 +conferenceIdParameter;
     }
 }

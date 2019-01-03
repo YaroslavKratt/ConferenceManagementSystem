@@ -135,7 +135,7 @@
                                         <c:choose>
                                             <c:when test="${not fn:contains(requestScope.subscriptions, report.id)}">
                                                 <form method="post"
-                                                      onsubmit="getScrollPosition('btn${report.id}','scroll${report.id}')"
+                                                      onsubmit="getScrollPosition('scroll${report.id}')"
                                                       action="${pageContext.request.contextPath}/${sessionScope.role}/subscribe">
                                                     <input hidden name="currentPage"
                                                            value="${paginationParameters.currentPage}">
@@ -164,7 +164,7 @@
                                                            id="scroll${report.id}">
 
                                                     <button class="btn btn-danger" type="submit"
-                                                            onclick="getScrollPosition('btn${report.id}','scroll${report.id}')"
+                                                            onclick="getScrollPosition('scroll${report.id}')"
                                                             name="reportForUnsubscription"
                                                             id="btn${report.id}"
                                                             value="${report.id}"><fmt:message
@@ -179,19 +179,21 @@
 
 
                                         <form action="${pageContext.request.contextPath}/${sessionScope.role}/editreport"
+                                              onsubmit="getScrollPosition('scroll-edit${report.id}')"
                                               method="post">
                                             <button class="btn btn-primary" type="submit"><fmt:message
                                                     key="page.message.edit"/></button>
                                         </form>
 
 
-                                        <form method="post"
+                                        <form method="post"  onsubmit="getScrollPosition('scroll-delete${report.id}')"
                                               action="${pageContext.request.contextPath}/${sessionScope.role}/deletereport">
                                             <input hidden name="currentPage"
                                                    value="${paginationParameters.currentPage}">
                                             <input hidden name="recordsPerPage"
                                                    value="${paginationParameters.recordsPerPage}">
-
+                                            <input hidden name="scrollPosition"
+                                                   id="scroll-delete${report.id}" value="" >
                                             <input type="hidden" name="uri"
                                                    value="${pageContext.request.contextPath}/${sessionScope.role}/catalog">
                                             <button class="btn btn-danger" type="submit"
@@ -213,12 +215,14 @@
         <c:if test="${sessionScope.role == 'admin'|| sessionScope.role == 'speaker'}">
             <div class="row" style="margin-top: 10px">
                 <div class="col-12 text-center">
-                    <form action="${pageContext.request.contextPath}/${sessionScope.role}/addreport">
+                    <form action="${pageContext.request.contextPath}/${sessionScope.role}/addreport" onsubmit="getScrollPosition('scroll-add-report${conference.id}')">
                         <input type="hidden" name="conferenceId" value="${conference.id}">
                         <input hidden name="currentPage"
                                value="${paginationParameters.currentPage}">
                         <input hidden name="recordsPerPage"
                                value="${paginationParameters.recordsPerPage}">
+                        <input hidden name="scrollPosition"
+                               id="scroll-add-report${conference.id}" value="" >
                         <button class="btn btn-primary" type="submit"><fmt:message
                                 key="page.message.add.report"/></button>
                     </form>

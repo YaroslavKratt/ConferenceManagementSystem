@@ -8,7 +8,7 @@ public class Report {
     private String topic;
     private User speaker;
     private int regestratedAmount;
-    private int visitorsAmount;
+    private int comersAmount;
     private LocalDateTime dateTime;
     private String speakerName;
     private String speakerSurname;
@@ -22,7 +22,7 @@ public class Report {
         this.speakerSurname = builder.speakerSurname;
         this.dateTime = builder.dateTime;
         this.regestratedAmount = builder.registratedAmount;
-        this.visitorsAmount = builder.visitorsAmount;
+        this.comersAmount = builder.comersAmount;
         this.speakerId = builder.speakerId;
     }
 
@@ -46,8 +46,8 @@ public class Report {
         return regestratedAmount;
     }
 
-    public int getVisitorsAmount() {
-        return visitorsAmount;
+    public int getComersAmount() {
+        return comersAmount;
     }
 
     public LocalDateTime getDateTime() {
@@ -81,7 +81,7 @@ public class Report {
                 + " Topic: " + topic
                 + " Speaker: " + speakerName + " " + speakerSurname + "\n"
                 + " Registrated amount: " + regestratedAmount
-                + " Visitors amount: " + visitorsAmount + "\n";
+                + " Visitors amount: " + comersAmount + "\n";
     }
 
     public static class Builder {
@@ -89,7 +89,7 @@ public class Report {
         private String topic;
         private User speaker;
         private int registratedAmount;
-        private int visitorsAmount;
+        private int comersAmount;
         private LocalDateTime dateTime;
         private String speakerName;
         private String speakerSurname;
@@ -140,8 +140,8 @@ public class Report {
 
         }
 
-        public Builder setVisitorsAmount(int visitorsAmount) {
-            this.visitorsAmount = visitorsAmount;
+        public Builder setComersAmount(int comersAmount) {
+            this.comersAmount = comersAmount;
             return this;
         }
 

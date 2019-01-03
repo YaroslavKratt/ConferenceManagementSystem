@@ -76,6 +76,8 @@
                        value="${recordsPerPage}">
                 <input type="hidden" name="submitted" value="true">
                 <input type="hidden" name="conferenceId" value="${conferenceId}">
+                <input hidden name="scrollPosition"
+                        value="${scrollPosition}" >
                 <button class="btn btn-primary  center-block" type="submit"><fmt:message
                         key="page.message.add.report"/>
                 </button>
