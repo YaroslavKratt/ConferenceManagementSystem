@@ -55,7 +55,7 @@ public class Conference {
 
     public String getFormatedDateTime(){
         return dateTime.format(
-                DateTimeFormatter.ofPattern("dd.mm.yyyy HH:MM"));
+                DateTimeFormatter.ofPattern("dd.MM.yyyy HH:MM"));
     }
 
     public void setDateTime(LocalDateTime dateTime) {
