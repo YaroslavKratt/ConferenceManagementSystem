@@ -22,8 +22,6 @@ public class StatisticsCommand implements Command {
         request.setAttribute("conferences", conferenceService.getPaginatedList(paginationParameters.get("begin"),
                 paginationParameters.get("recordsPerPage")));
         request.setAttribute("scrollPosition", request.getParameter("scrollPosition"));
-        LOG.debug("scroll pos: " +request.getParameter("scrollPosition"));
-        LOG.debug("page: " +request.getParameter("currentPage"));
 
         long userId = userService.getUserId((String) request.getSession().getAttribute("email"));
         request.setAttribute("userId", userId);

@@ -10,4 +10,8 @@ public interface ReportDao extends DAO<Report>{
     void unsubscribe(long userId, long reportId);
 
     void addNew(long conferenceId, Report report);
+
+    int getAmountOfSubscribedUsers(long reportId);
+
+    void setAmountOfSubscribedUsers(long reportId, int amount);
 }

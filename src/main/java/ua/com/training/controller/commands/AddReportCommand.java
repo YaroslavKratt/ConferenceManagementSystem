@@ -28,8 +28,6 @@ public class AddReportCommand implements Command {
         request.setAttribute("recordsPerPage", request.getParameter("recordsPerPage"));
         request.setAttribute("currentPage", request.getParameter("currentPage"));
         request.setAttribute("scrollPosition",request.getParameter("scrollPosition"));
-        LOG.debug(request.getParameter("recordsPerPage"));
-        LOG.debug("SCROLL:" + request.getParameter("scrollPosition"));
 
         if (request.getParameter("submitted") == null) {
             LOG.trace("Not Submitted");

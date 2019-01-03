@@ -16,13 +16,15 @@ import java.util.ResourceBundle;
 public class JdbcReportDao implements ReportDao {
     private static final Logger LOG = LogManager.getLogger(JdbcReportDao.class);
     private DataSource dataSource = ConnectionPool.getDataSource();
-    private ResourceBundle sqlRequestBundle =ResourceBundle.getBundle(ResourceEnum.SQL_REQUESTS_BUNDLE.getBundleName());
+    private ResourceBundle sqlRequestBundle =ResourceBundle
+            .getBundle(ResourceEnum.SQL_REQUESTS_BUNDLE.getBundleName());
     private Mapper<Report> reportMapper = new ReportMapper();
 
     @Override
     public Report getById(long id) {
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sqlRequestBundle.getString("report.select.by.id"))) {
+             PreparedStatement preparedStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("report.select.by.id"))) {
 
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -35,7 +37,7 @@ public class JdbcReportDao implements ReportDao {
 
     @Override
     public List<Report> getAll() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -119,6 +121,36 @@ public class JdbcReportDao implements ReportDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             LOG.error("Add new report to conference failed: " + e);
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public int getAmountOfSubscribedUsers(long reportId) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("report.get.amount.of.subscribed.users"))) {
+
+            preparedStatement.setLong(1, reportId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            LOG.error("Get amount of subscribed users failed: " + e);
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public void setAmountOfSubscribedUsers(long reportId, int amount) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("report.set.amount.of.subscribed.users"))) {
+            preparedStatement.setInt(1,amount);
+            preparedStatement.setLong(2, reportId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOG.error("Can`t set  amount of subscribed users : " + e);
             throw new RuntimeException();
         }
     }

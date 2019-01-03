@@ -135,17 +135,16 @@
                                         <c:choose>
                                             <c:when test="${not fn:contains(requestScope.subscriptions, report.id)}">
                                                 <form method="post"
-                                                      onsubmit="getScrollPosition('scroll${report.id}')"
+                                                      onsubmit="getScrollPosition('scroll-subs${report.id}')"
                                                       action="${pageContext.request.contextPath}/${sessionScope.role}/subscribe">
                                                     <input hidden name="currentPage"
                                                            value="${paginationParameters.currentPage}">
                                                     <input hidden name="recordsPerPage"
                                                            value="${paginationParameters.recordsPerPage}">
                                                     <input hidden name="scrollPosition"
-                                                           id="scroll${report.id}">
+                                                           id="scroll-subs${report.id}">
                                                     <button id="btn${report.id}" class="btn btn-primary"
                                                             type="submit"
-                                                            onclick="getScrollPosition('btn${report.id}','scroll${report.id}')"
                                                             name="reportForSubscription"
                                                             value="${report.id}">
                                                         <fmt:message key="page.message.subscribe"/>
@@ -154,17 +153,16 @@
                                                 </form>
                                             </c:when>
                                             <c:otherwise>
-                                                <form method="post"
+                                                <form method="post" onsubmit="getScrollPosition('scroll-uns${report.id}')"
                                                       action="${pageContext.request.contextPath}/${sessionScope.role}/unsubscribe">
                                                     <input hidden name="currentPage"
                                                            value="${paginationParameters.currentPage}">
                                                     <input hidden name="recordsPerPage"
                                                            value="${paginationParameters.recordsPerPage}">
                                                     <input hidden name="scrollPosition"
-                                                           id="scroll${report.id}">
+                                                           id="scroll-uns${report.id}">
 
                                                     <button class="btn btn-danger" type="submit"
-                                                            onclick="getScrollPosition('scroll${report.id}')"
                                                             name="reportForUnsubscription"
                                                             id="btn${report.id}"
                                                             value="${report.id}"><fmt:message

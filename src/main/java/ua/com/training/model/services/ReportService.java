@@ -9,6 +9,7 @@ import ua.com.training.model.entity.Report;
 public class ReportService {
     private ReportDao reportDao = new JdbcDaoFactory().createReportDao();
     public boolean subscribeUserOnReport(long userId, long reportId){
+        setAmountOfSubscribedUsers(reportId,getAmountOfSubscribedUsers(reportId)+1);
         return reportDao.subscribe(userId, reportId);
 
     }
@@ -18,6 +19,7 @@ public class ReportService {
     }
 
     public void unsubscribeUserFromReport(long userId, long reportId) {
+        setAmountOfSubscribedUsers(reportId,getAmountOfSubscribedUsers(reportId)-1);
         reportDao.unsubscribe(userId, reportId);
     }
 
@@ -27,5 +29,12 @@ public class ReportService {
 
     public void deleteReport(long id) {
         reportDao.delete(id);
+    }
+
+    public int getAmountOfSubscribedUsers(long reportId){
+        return reportDao.getAmountOfSubscribedUsers(reportId);
+    }
+    public void setAmountOfSubscribedUsers(long reportId, int amount) {
+        reportDao.setAmountOfSubscribedUsers(reportId,amount);
     }
 }
