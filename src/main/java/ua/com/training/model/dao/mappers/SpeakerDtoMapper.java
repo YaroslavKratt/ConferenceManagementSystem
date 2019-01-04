@@ -28,10 +28,7 @@ public class SpeakerDtoMapper {
             speakerReports.putIfAbsent(speaker, new ArrayList<>());
             speakerReports.get(speaker).add(reportMapper.mapToObject(resultSet));
         }
-         speakers.forEach(currentSpeaker->{speakersDto.add(new SpeakerDTO(currentSpeaker,speakerReports.get(currentSpeaker)
-         ));
-         //LOG.trace("Current speaker: " + currentSpeaker.getName());
-         });
+         speakers.forEach(currentSpeaker-> speakersDto.add(new SpeakerDTO(currentSpeaker,speakerReports.get(currentSpeaker))));
         return speakersDto;
     }
 }

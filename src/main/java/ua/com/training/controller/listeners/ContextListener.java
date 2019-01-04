@@ -18,7 +18,7 @@ public class ContextListener implements ServletContextListener {
         executorService = Executors.newSingleThreadScheduledExecutor();
 
         LOG.info("Sending emails...");
-        executorService.scheduleAtFixedRate(new MailSendService(),0,1, TimeUnit.DAYS);
+       // executorService.scheduleAtFixedRate(new MailSendService(),0,1, TimeUnit.DAYS);
     }
 
     @Override

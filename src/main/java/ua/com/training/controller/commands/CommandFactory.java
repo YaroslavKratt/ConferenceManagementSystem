@@ -11,7 +11,7 @@ import java.util.Optional;
 public class CommandFactory {
     private final static Logger LOG = LogManager.getLogger(CommandFactory.class);
 
-    public Optional<Command> getCommand(HttpServletRequest request, HttpServletResponse response) {
+    public Optional<Command> getCommand(HttpServletRequest request) {
         Command currentCommand = new DefaultCommand();
         String command = request.getRequestURI().replaceAll(".*/guest*.|.*/admin*.|.*/speaker*.|.*/user*.|", "");
         LOG.debug("Command is: " + command);

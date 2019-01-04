@@ -55,25 +55,11 @@ public class UserService {
         return userDao.getNameById(id);
     }
 
-    public String getSurnameById(long id) {
-        return userDao.getSurnameById(id);
-
+    public String getSurnameById(long id) {   return userDao.getSurnameById(id);
     }
 
     public List<String> getUserSubscribedEmails() {
         return userDao.getUserSubscriptedEmails();
-    }
-
-    public String getNameByEmail(String userEmail) {
-        return userDao.getByEmail(userEmail).getName();
-    }
-
-    public String getSurnameByEmail(String userEmail) {
-        return userDao.getByEmail(userEmail).getSurname();
-    }
-
-    public boolean alreadyVoted(long userId, long speakerId) {
-        return userDao.alreadyVoted(userId, speakerId);
     }
 
     public boolean vote(long userId, long speakerId, int rating) {

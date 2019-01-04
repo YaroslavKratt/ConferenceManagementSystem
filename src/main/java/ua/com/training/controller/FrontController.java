@@ -31,7 +31,7 @@ public class FrontController extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         CommandFactory commandFactory = new CommandFactory();
         Command command;
-        Optional<Command> commandOptional = commandFactory.getCommand(request, response);
+        Optional<Command> commandOptional = commandFactory.getCommand(request);
 
         if (commandOptional.isPresent()) {
             command = commandOptional.get();

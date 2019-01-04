@@ -174,16 +174,6 @@
                                 </c:choose>
                                 <c:choose>
                                     <c:when test="${sessionScope.role=='admin' ||(sessionScope.role=='speaker' && requestScope.userId==report.speakerId)}">
-
-
-                                        <form action="${pageContext.request.contextPath}/${sessionScope.role}/editreport"
-                                              onsubmit="getScrollPosition('scroll-edit${report.id}')"
-                                              method="post">
-                                            <button class="btn btn-primary" type="submit"><fmt:message
-                                                    key="page.message.edit"/></button>
-                                        </form>
-
-
                                         <form method="post"  onsubmit="getScrollPosition('scroll-delete${report.id}')"
                                               action="${pageContext.request.contextPath}/${sessionScope.role}/deletereport">
                                             <input hidden name="currentPage"
