@@ -27,12 +27,7 @@ public enum CommandEnum {
             this.command = new CatalogCommand();
         }
     },
-    CONFERENCE {
-        {
-            this.command = new ConferenceCommand();
-        }
 
-    },
     SUBSCRIBE {
         {
             this.command = new SubscribeCommand();
