@@ -32,21 +32,27 @@ public class RegistrationCommand implements Command {
             request.setAttribute("wrongName", messageBundle.getString("info.message.wrong.name"));
             return PATH_BUNDLE.getString("page.registration");
         }
+        request.setAttribute("name", request.getParameter("name"));
 
         if (!validationUtil.validate(request.getParameter("surname"), regexpBundle.getString("regex.surname"))) {
             request.setAttribute("wrongSurname", messageBundle.getString("info.message.wrong.surname"));
             return PATH_BUNDLE.getString("page.registration");
         }
+        request.setAttribute("surname", request.getParameter("surname"));
+
         String email = request.getParameter("email");
 
         if (userService.checkUserExist(email)) {
             request.setAttribute("wrongEmail", messageBundle.getString("info.message.user.already.exist"));
             return PATH_BUNDLE.getString("page.registration");
         }
+
         if (!validationUtil.validate(email, regexpBundle.getString("regexp.email"))) {
             request.setAttribute("wrongEmail", messageBundle.getString("info.message.wrong.email.input"));
             return PATH_BUNDLE.getString("page.registration");
         }
+        request.setAttribute("email", email);
+
         String password = request.getParameter("password");
         if (!validationUtil.validate(password, regexpBundle.getString("regexp.password"))) {
             request.setAttribute("wrongPassword", messageBundle.getString("info.message.wrong.password.input"));

@@ -25,21 +25,21 @@
                 <div class="form-group">
                     <label for="name"><fmt:message key = "page.message.name"/></label>
                     <input class="form-control item" type="text"
-                           id="name" name="name" >
+                           id="name" name="name" value="${name}" >
                     <p class="text-danger">
                             ${wrongName}
                     </p>
                 </div>
                 <div class="form-group">
                     <label for="surname"><fmt:message key="page.message.surname"/> </label>
-                    <input class="form-control" type="text" name="surname" id="surname" >
+                    <input class="form-control" type="text" name="surname" id="surname" value="${surname}" >
                     <p class="text-danger">
                             ${wrongSurname}
                     </p>
                 </div>
                 <div class="form-group">
                     <label for="email"><fmt:message key="page.message.email" /></label>
-                    <input class="form-control item" type="email" id="email" name="email" >
+                    <input class="form-control item" type="email" id="email" name="email" value="${email}" }>
                     <p class="text-danger">
                             ${wrongEmail}
                     </p>
