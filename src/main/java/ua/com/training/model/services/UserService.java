@@ -30,9 +30,8 @@ public class UserService {
         return userDao.getUserRole(id);
     }
 
-    public boolean signUpUser(User user) {
-
-        return userDao.addNew(user);
+    public void signUpUser(User user) {
+        userDao.addNew(user);
     }
 
     public long getUserId(String email) {
@@ -55,7 +54,8 @@ public class UserService {
         return userDao.getNameById(id);
     }
 
-    public String getSurnameById(long id) {   return userDao.getSurnameById(id);
+    public String getSurnameById(long id) {
+        return userDao.getSurnameById(id);
     }
 
     public List<String> getUserSubscribedEmails() {
