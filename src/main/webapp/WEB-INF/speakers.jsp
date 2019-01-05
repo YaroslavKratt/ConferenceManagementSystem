@@ -66,8 +66,15 @@
                                     <h5><fmt:message key="page.message.rate.me"/></h5>
                                 </div>
                                 <div class="col-8">
-                                    <form class="rating ${speaker.id}" method="post">
+                                    <form class="rating ${speaker.id}" method="post"
+                                          onsubmit="getScrollPosition('scroll-speaker${speaker.id}')">
                                         <input type="hidden" name="speakerId" value="${speaker.id}">
+                                        <input type="hidden" name="currentPage"
+                                               value="${paginationParameters.currentPage}">
+                                        <input type="hidden" name="recordsPerPage"
+                                               value="${paginationParameters.recordsPerPage}">
+                                        <input type="hidden" name="scrollPosition"
+                                               id="scroll-speaker${speaker.id}" >
                                         <input type="radio" id="star5${speaker.id}" name="rating${speaker.id}" value="5"
                                                onclick="this.form.submit()"/><label
                                             for="star5${speaker.id}"><span>&#9733</span></label>
@@ -83,12 +90,12 @@
                                         <input type="radio" id="star1${speaker.id}" name="rating${speaker.id}" value="1"
                                                onclick="this.form.submit()"/>
                                         <label for="star1${speaker.id}"><span>&#9733</span></label>
+
                                     </form>
                                     <script>
                                         var radiobtn = document.getElementById('star${requestScope.ratings.get(speaker.id)}${speaker.id}');
                                         radiobtn.setAttribute("checked", "");
                                     </script>
-                                    </fieldset>
                                 </div><!--col-6-->
                             </div><!--row-->
                         </div><!--col-->
@@ -136,7 +143,7 @@
                     <ul class="pagination">
                         <c:if test="${paginationParameters.currentPage != 1}">
                             <li class="page-item"><a class="page-link"
-                                                     href="/${sessionScope.role}/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage-1}"><<</a>
+                                                     href="/${sessionScope.role}/catalogofspeakers?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage-1}"><<</a>
                             </li>
                         </c:if>
                         <c:forEach begin="1" end="${paginationParameters.pagesAmount}" var="i">
@@ -148,14 +155,14 @@
                                 </c:when>
                                 <c:otherwise>
                                     <li class="page-item"><a class="page-link"
-                                                             href="/${sessionScope.role}/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${i}">${i}</a>
+                                                             href="/${sessionScope.role}/catalogofspeakers?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${i}">${i}</a>
                                     </li>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
                         <c:if test="${paginationParameters.currentPage lt paginationParameters.pagesAmount}">
                             <li class="page-item"><a class="page-link"
-                                                     href="/${sessionScope.role}/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage+1}">>></a>
+                                                     href="/${sessionScope.role}/catalogofspeakers?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage+1}">>></a>
                             </li>
                         </c:if>
                     </ul>
@@ -167,6 +174,8 @@
 </fmt:bundle>
 <jsp:include page="sections/footer.jsp"/>
 <script src=<c:url value="/js/main.js"/>></script>
+
 </body>
+<script> window.scroll({top:  ${scrollPosition}, left: 0});</script>
 
 </html>

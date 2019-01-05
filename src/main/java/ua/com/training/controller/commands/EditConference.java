@@ -6,6 +6,7 @@ import ua.com.training.controller.utils.RequestParamUtil;
 import ua.com.training.model.ResourceEnum;
 import ua.com.training.model.entity.Conference;
 import ua.com.training.model.entity.Report;
+import ua.com.training.model.entity.User;
 import ua.com.training.model.services.ConferenceService;
 import ua.com.training.model.services.ReportService;
 import ua.com.training.model.services.UserService;
@@ -60,6 +61,8 @@ public class EditConference implements Command {
         List<Report> reports = conference.getReports();
         for (int i = 0; i <  reports.size(); i++) {
             long reportId =  reports.get(i).getId();
+            long speakerId = Long.parseLong(request.getParameter("report-speaker" + reportId));
+
             LocalDateTime reportDateTime = LocalDateTime.parse(request.getParameter("report-date-time" + reportId));
 
             if (reportDateTime.compareTo(conferenceDateTime) < 0) {
@@ -67,12 +70,13 @@ public class EditConference implements Command {
                 request.setAttribute("earlierThanConference" + reportId, messages.getString("info.message.earlier.than.conference"));
                 return PATH_BUNDLE.getString("page.edit.conference");
             }
+            ifUserChangeRole(speakerId);
             reports.set(i, new Report.Builder()
                     .setId(reportId)
                     .setTopic(request.getParameter("report-name" + reportId))
                     .setDateTime(reportDateTime)
                     .setSpeakerId(Long.parseLong(request.getParameter("report-speaker" + reportId)))
-                    .setSpeakerName(userService.getNameById(Long.parseLong(request.getParameter("report-speaker" + reportId))))
+                    .setSpeakerName(userService.getNameById(speakerId))
                     .setSpeakerSurname(userService.getSurnameById(Long.parseLong(request.getParameter("report-speaker" + reportId))))
                     .build());
             LOG.debug(Arrays.toString(reports.toArray()));
@@ -102,6 +106,12 @@ public class EditConference implements Command {
                 + PATH_BUNDLE.getString("path.catalog")
                 + "?recordsPerPage=" + request.getParameter("recordsPerPage")
                 + "&currentPage=" + request.getParameter("currentPage");
+    }
+
+    private void ifUserChangeRole(long speakerId) {
+        if (userService.getUserRole(speakerId) == User.Role.USER) {
+            userService.changeRole(speakerId, User.Role.SPEAKER);
+        }
     }
 
 }
