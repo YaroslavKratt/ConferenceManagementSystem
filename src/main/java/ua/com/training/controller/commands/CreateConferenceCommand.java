@@ -57,8 +57,6 @@ public class CreateConferenceCommand implements Command {
                         .setTopic(reportsTopic.get(i))
                         .setDateTime(reportDateTime)
                         .setSpeakerId(speakerId)
-                        .setSpeakerName(new UserService().getNameById(speakerId))
-                        .setSpeakerSurname(new UserService().getSurnameById(speakerId))
                         .build());
 
             }

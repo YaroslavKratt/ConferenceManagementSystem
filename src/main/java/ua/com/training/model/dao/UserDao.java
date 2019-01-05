@@ -7,7 +7,8 @@ import java.util.List;
 public interface UserDao extends DAO<User> {
 
 
-    User getByEmail(String email);
+
+    User getByEmail(String email, String language);
 
     boolean checkUserExist(String email);
 
@@ -21,9 +22,11 @@ public interface UserDao extends DAO<User> {
 
     void changeRole(long id, User.Role role);
 
-    String getNameById(long id);
 
-    String getSurnameById(long id);
+
+    String getNameById(long id, String language);
+
+    String getSurnameById(long id, String language);
 
     List<String> getUserSubscriptedEmails();
 

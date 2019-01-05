@@ -6,7 +6,8 @@ import ua.com.training.model.entity.Speaker;
 import java.util.List;
 
 public interface SpeakerDao extends DAO<Speaker>{
-    List<SpeakerDTO> getAllSpeakersWithReports();
+
+    List<SpeakerDTO> getAllSpeakersWithReports(String language);
 
     Double getRating(long speakerId);
 
@@ -14,5 +15,6 @@ public interface SpeakerDao extends DAO<Speaker>{
 
     int getSpeakersAmount();
 
-    List<SpeakerDTO> getPaginatedList(Integer begin, Integer recordsPerPage);
+
+    List<SpeakerDTO> getPaginatedList(Integer begin, Integer recordsPerPage, String language);
 }

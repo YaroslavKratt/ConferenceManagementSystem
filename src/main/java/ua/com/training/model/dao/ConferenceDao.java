@@ -9,11 +9,15 @@ import java.util.Map;
 
 public interface ConferenceDao extends DAO<Conference> {
 
-     List<SubscriptionDTO> getSubscriptionsList();
+    List<Conference> getAll(String language);
 
-     List<Long> getAllConferenceIdsInSubscriptions();
 
-    List<Conference> getPaginatedList(int begin, int recordsPerPage);
+    List<SubscriptionDTO> getSubscriptionsList(String language);
+
+    List<Long> getAllConferenceIdsInSubscriptions();
+
+
+    List<Conference> getPaginatedList(int begin, int recordsPerPage, String language);
 
     int getConferencesAmount();
 }

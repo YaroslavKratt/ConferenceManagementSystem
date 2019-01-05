@@ -21,7 +21,7 @@ public class JdbcReportDao implements ReportDao {
     private Mapper<Report> reportMapper = new ReportMapper();
 
     @Override
-    public Report getById(long id) {
+    public Report getById(long id, String language) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection
                      .prepareStatement(sqlRequestBundle.getString("report.select.by.id"))) {
@@ -38,7 +38,7 @@ public class JdbcReportDao implements ReportDao {
 
 
     @Override
-    public List<Report> getAll() {
+    public List<Report> getAll( String language) {
         throw new UnsupportedOperationException();
     }
 

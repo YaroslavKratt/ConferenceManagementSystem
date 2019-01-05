@@ -23,12 +23,12 @@ public class JdbcSpeakerDao implements SpeakerDao {
 
 
     @Override
-    public Speaker getById(long id) {
+    public Speaker getById(long id,  String language) {
         return null;
     }
 
     @Override
-    public List<Speaker> getAll() {
+    public List<Speaker> getAll( String language) {
         return null;
     }
 
@@ -49,7 +49,7 @@ public class JdbcSpeakerDao implements SpeakerDao {
 
 
     @Override
-    public List<SpeakerDTO> getAllSpeakersWithReports() {
+    public List<SpeakerDTO> getAllSpeakersWithReports(  String language) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection
                      .prepareStatement(sqlRequestBundle.getString("speaker.get.all.with.reports"))) {
@@ -116,7 +116,7 @@ public class JdbcSpeakerDao implements SpeakerDao {
 
 
     @Override
-    public List<SpeakerDTO> getPaginatedList(Integer begin, Integer recordsPerPage) {
+    public List<SpeakerDTO> getPaginatedList(Integer begin, Integer recordsPerPage, String language) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection
                      .prepareStatement(sqlRequestBundle.getString("speaker.get.paginated.speakers"))) {

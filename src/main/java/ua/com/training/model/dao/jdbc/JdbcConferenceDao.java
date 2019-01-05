@@ -23,7 +23,7 @@ public class JdbcConferenceDao implements ConferenceDao {
 
 
     @Override
-    public Conference getById(long id) {
+    public Conference getById(long id,String language) {
         Conference conference;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sqlRequestBundle.getString("conference.select.by.id"))) {
@@ -41,7 +41,7 @@ public class JdbcConferenceDao implements ConferenceDao {
 
 
     @Override
-    public List<Conference> getAll() {
+    public List<Conference> getAll(String language) {
         List<Conference> conferences = null;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement conferenceStatement = connection
@@ -140,7 +140,7 @@ public class JdbcConferenceDao implements ConferenceDao {
 
 
     @Override
-    public List<SubscriptionDTO> getSubscriptionsList() {
+    public List<SubscriptionDTO> getSubscriptionsList(String language) {
         List<SubscriptionDTO> subscriptions = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection
@@ -176,8 +176,8 @@ public class JdbcConferenceDao implements ConferenceDao {
     }
 
     @Override
-    public List<Conference> getPaginatedList(int begin, int recordsPerPage) {
-        List<Conference> pagenatedList;
+    public List<Conference> getPaginatedList(int begin, int recordsPerPage,String language) {
+        List<Conference> paginatedList;
         ConferenceMapper conferenceMapper = new ConferenceMapper();
 
         try (Connection connection = dataSource.getConnection();
@@ -186,8 +186,8 @@ public class JdbcConferenceDao implements ConferenceDao {
             statement.setInt(1, begin);
             statement.setInt(2, recordsPerPage);
             ResultSet resultSet = statement.executeQuery();
-            pagenatedList = conferenceMapper.mapToList(resultSet);
-            return pagenatedList;
+            paginatedList = conferenceMapper.mapToList(resultSet);
+            return paginatedList;
         } catch (SQLException e) {
             LOG.error("Cant get paginated list: " + e);
             throw new RuntimeException();

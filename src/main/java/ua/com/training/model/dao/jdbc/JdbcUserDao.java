@@ -25,7 +25,7 @@ public class JdbcUserDao implements UserDao {
 
 
     @Override
-    public User getById(long id) {
+    public User getById(long id, String language) {
         User user = null;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sqlRequestBundle.getString("user.select.by.id"))) {
@@ -44,7 +44,7 @@ public class JdbcUserDao implements UserDao {
 
 
     @Override
-    public List<User> getAll() {
+    public List<User> getAll(String language) {
         List<User> users = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection
@@ -94,7 +94,7 @@ public class JdbcUserDao implements UserDao {
 
 
     @Override
-    public User getByEmail(String email) {
+    public User getByEmail(String email, String language) {
         User user = null;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sqlRequestBundle.getString("user.select.by.email"))) {
@@ -115,26 +115,26 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public boolean checkUserExist(String email) {
-        return getByEmail(email) != null;
+        return getByEmail(email,"en_US") != null;
     }
 
 
     @Override
     public boolean checkUserPassword(String email, String password) {
-        return BCrypt.checkpw(password, getByEmail(email).getPassword());
+        return BCrypt.checkpw(password, getByEmail(email,"en_US").getPassword());
 
     }
 
 
     @Override
     public User.Role getUserRole(String email) {
-        return getByEmail(email).getRole();
+        return getByEmail(email,"en_US").getRole();
     }
 
 
     @Override
     public User.Role getUserRole(long id) {
-        return getById(id).getRole();
+        return getById(id,"en_US").getRole();
     }
 
 
@@ -174,14 +174,14 @@ public class JdbcUserDao implements UserDao {
 
 
     @Override
-    public String getNameById(long id) {
-        return getById(id).getName();
+    public String getNameById(long id, String language) {
+        return getById(id,  language).getName();
     }
 
 
     @Override
-    public String getSurnameById(long id) {
-        return getById(id).getSurname();
+    public String getSurnameById(long id, String language) {
+        return getById(id,language).getSurname();
     }
 
 
@@ -192,7 +192,7 @@ public class JdbcUserDao implements UserDao {
         try (Connection connection = dataSource.getConnection();
 
              PreparedStatement preparedStatement = connection
-                     .prepareStatement(sqlRequestBundle.getString("user.get.subscripted.emails"))) {
+                     .prepareStatement(sqlRequestBundle.getString("user.get.subscribed.emails"))) {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
