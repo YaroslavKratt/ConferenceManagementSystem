@@ -7,18 +7,20 @@ import ua.com.training.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Locale;
 
 
 public class SubscribeCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(SubscribeCommand.class);
     private ReportService reportService = new ReportService();
+    private UserService userService = new UserService();
 
     @Override
     public String execute(HttpServletRequest request) {
-        UserService userService = new UserService();
+        Locale locale = (Locale) request.getSession().getAttribute("locale");
         HttpSession session = request.getSession();
         long reportId = Long.valueOf(request.getParameter("reportForSubscription"));
-        long userId = userService.getUserId((String) session.getAttribute("email"));
+        long userId = userService.getUserId((String) session.getAttribute("email"),locale.toLanguageTag());
 
         reportService.subscribeUserOnReport(userId, reportId);
         request.setAttribute(String.valueOf(reportId), "subscribed");

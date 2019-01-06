@@ -6,6 +6,7 @@ import ua.com.training.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class UnsubscribeCommand implements Command {
@@ -15,9 +16,9 @@ public class UnsubscribeCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-
+        Locale locale = (Locale) request.getSession().getAttribute("locale");
         ResourceBundle messageBundle = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), request.getLocale());
-        long userId = userService.getUserId((String) session.getAttribute("email"));
+        long userId = userService.getUserId((String) session.getAttribute("email"),locale.toLanguageTag());
         long reportId = Long.valueOf(request.getParameter("reportForUnsubscription"));
 
         if (reportService.checkSubscription(userId, reportId)) {

@@ -16,6 +16,9 @@ public class ConferenceDTO {
     private LocalDateTime dateTime;
     private List<ReportDTO> reports = new ArrayList<>();
 
+    public ConferenceDTO() {
+    }
+
     public ConferenceDTO(Conference conferenceEn_us, Conference conferenceUk_ua) {
         this.id = conferenceEn_us.getId();
         this.locationEn = conferenceEn_us.getTopic();

@@ -27,7 +27,7 @@ public class RegistrationCommand implements Command {
         Locale locale = (Locale) request.getSession().getAttribute("locale");
         ResourceBundle regexpBundle = ResourceBundle.getBundle(ResourceEnum.REGEXP_BUNDLE.getBundleName(), locale);
         ResourceBundle messageBundle = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), locale);
-
+        LOG.debug("locale: " + locale.toString());
         if (isEmptyRequest(request)) {
             return PATH_BUNDLE.getString("page.registration");
         }
@@ -64,15 +64,15 @@ public class RegistrationCommand implements Command {
 
         }
         UserDTO user = new UserDTO.Builder()
-                .setNameEn(transliterateIfUa(request.getParameter("name"),locale.toLanguageTag()).get("en"))
-                .setNameUa(transliterateIfUa(request.getParameter("name"),locale.toLanguageTag()).get("en"))
-                .setSurnameEn(request.getParameter("surname-en"))
-                .setSurnameUa(request.getParameter("surname-ua"))
+                .setNameEn(transliterateIfUa(request.getParameter("name"),locale.toString()).get("en"))
+                .setNameUa(transliterateIfUa(request.getParameter("name"),locale.toString()).get("ua"))
+                .setSurnameEn(transliterateIfUa(request.getParameter("surname"),locale.toString()).get("en"))
+                .setSurnameUa(transliterateIfUa(request.getParameter("surname"),locale.toString()).get("ua"))
                 .setEmail(email)
                 .setPassword(new SecurityUtil().hashPassword(password))
                 .setRole(User.Role.USER)
                 .build();
-
+        LOG.debug("user: " +user.toString());
         userService.signUpUser(user);
         LOG.info("New user signed up");
         return "redirect:" + PATH_BUNDLE.getString("path.guest.login");
