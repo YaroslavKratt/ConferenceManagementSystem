@@ -29,7 +29,7 @@ public class JdbcReportDao implements ReportDao {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            return reportMapper.mapToObject(resultSet);
+            return reportMapper.mapToObject(resultSet, language);
         } catch (SQLException e) {
             LOG.error("getById failed: " + e);
             throw new RuntimeException();

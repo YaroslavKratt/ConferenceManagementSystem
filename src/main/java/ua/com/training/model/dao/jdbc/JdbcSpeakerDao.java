@@ -55,7 +55,7 @@ public class JdbcSpeakerDao implements SpeakerDao {
                      .prepareStatement(sqlRequestBundle.getString("speaker.get.all.with.reports"))) {
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            return new SpeakerDtoMapper().mapToSpeakersListWithReports(resultSet);
+            return new SpeakerDtoMapper().mapToSpeakersListWithReports(resultSet, language);
         } catch (SQLException e) {
             LOG.error("Can`t get all speakers with reports: " + e);
             throw new RuntimeException();
@@ -124,7 +124,7 @@ public class JdbcSpeakerDao implements SpeakerDao {
             preparedStatement.setInt(2,recordsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            return new SpeakerDtoMapper().mapToSpeakersListWithReports(resultSet);
+            return new SpeakerDtoMapper().mapToSpeakersListWithReports(resultSet, language);
         } catch (SQLException e) {
             LOG.error("Can`t get paginated list of speakers with reports: " + e);
             throw new RuntimeException();

@@ -30,7 +30,7 @@ public class JdbcConferenceDao implements ConferenceDao {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            conference = new ConferenceMapper().mapToObject(resultSet);
+            conference = new ConferenceMapper().mapToObject(resultSet, language);
             return conference;
 
         } catch (SQLException e) {
@@ -48,7 +48,7 @@ public class JdbcConferenceDao implements ConferenceDao {
                      .prepareStatement(sqlRequestBundle.getString("conferences.select.all."))) {
 
             ResultSet resultSet = conferenceStatement.executeQuery();
-            conferences = new ConferenceMapper().mapToList(resultSet);
+            conferences = new ConferenceMapper().mapToList(resultSet, language);
 
         } catch (SQLException e) {
             LOG.error("Cant get all conferences: " + e);
@@ -148,7 +148,7 @@ public class JdbcConferenceDao implements ConferenceDao {
         ) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                subscriptions.add(new SubscriptionDtoMapper().mapToObject(resultSet));
+                subscriptions.add(new SubscriptionDtoMapper().mapToObject(resultSet,language));
             }
             return subscriptions;
         } catch (SQLException e) {
@@ -186,7 +186,7 @@ public class JdbcConferenceDao implements ConferenceDao {
             statement.setInt(1, begin);
             statement.setInt(2, recordsPerPage);
             ResultSet resultSet = statement.executeQuery();
-            paginatedList = conferenceMapper.mapToList(resultSet);
+            paginatedList = conferenceMapper.mapToList(resultSet, language);
             return paginatedList;
         } catch (SQLException e) {
             LOG.error("Cant get paginated list: " + e);

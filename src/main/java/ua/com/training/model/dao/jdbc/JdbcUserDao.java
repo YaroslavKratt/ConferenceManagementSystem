@@ -32,7 +32,7 @@ public class JdbcUserDao implements UserDao {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                user = new UserMapper().mapToObject(resultSet);
+                user = new UserMapper().mapToObject(resultSet, language);
             }
             return user;
 
@@ -51,7 +51,7 @@ public class JdbcUserDao implements UserDao {
                      .prepareStatement(sqlRequestBundle.getString("user.select.all"))) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                users.add(new UserMapper().mapToObject(resultSet));
+                users.add(new UserMapper().mapToObject(resultSet, language));
             }
             return users;
         } catch (SQLException e) {
@@ -101,7 +101,7 @@ public class JdbcUserDao implements UserDao {
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                user = new UserMapper().mapToObject(resultSet);
+                user = new UserMapper().mapToObject(resultSet, language);
             }
             return user;
 
