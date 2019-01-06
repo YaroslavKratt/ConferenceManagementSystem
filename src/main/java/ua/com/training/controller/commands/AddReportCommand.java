@@ -39,16 +39,16 @@ public class AddReportCommand implements Command {
 
         if (!new RequestParamUtil().nullReportParametersPresent(request, "-new")) {
             if (LocalDateTime.parse(request.getParameter("report-date-time-new")).compareTo(conference.getDateTime()) < 0) {
-                request.setAttribute("report-name-new-en", request.getParameter("report-name-new-en"));
-                request.setAttribute("report-name-new-ua", request.getParameter("report-name-new-ua"));
+                request.setAttribute("report-name-en-new", request.getParameter("report-name-en-new"));
+                request.setAttribute("report-name-ua-new", request.getParameter("report-name-ua-new"));
 
                 request.setAttribute("report-date-time-new", request.getParameter("report-date-time-new"));
                 request.setAttribute("earlierThanConference", messages.getString("info.message.earlier.than.conference"));
                 return PATH_BUNDLE.getString("page.add.report");
             }
             new ReportService().addNewReportToConference(conference.getId(), new ReportDTO.Builder()
-                    .setTopicEn(request.getParameter("report-name-new-en"))
-                    .setTopicUa(request.getParameter("report-name-new-ua"))
+                    .setTopicEn(request.getParameter("report-name-en-new"))
+                    .setTopicUa(request.getParameter("report-name-ua-new"))
                     .setDateTime(LocalDateTime.parse(request.getParameter("report-date-time-new")))
                     .setSpeakerId(Long.parseLong(request.getParameter("report-speaker-new")))
                     .build());

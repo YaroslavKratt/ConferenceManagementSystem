@@ -77,14 +77,14 @@ public class JdbcConferenceDao implements ConferenceDao {
             conferenceQuery.setString(1, conference.getTopicEn());
             conferenceQuery.setString(2, conference.getTopicUa());
             conferenceQuery.setString(3, conference.getLocationEn());
-            conferenceQuery.setString(4, conference.getLocationEn());
+            conferenceQuery.setString(4, conference.getLocationUa());
             conferenceQuery.setTimestamp(5, Timestamp.valueOf(conference.getDateTime()));
             conferenceQuery.setLong(6, conference.getId());
             conferenceQuery.executeUpdate();
 
             for (ReportDTO report : conference.getReports()) {
                 reportQuery.setString(1, report.getTopicEn());
-                reportQuery.setString(2, report.getTopicEn());
+                reportQuery.setString(2, report.getTopicUa());
                 reportQuery.setTimestamp(3, Timestamp.valueOf(report.getDateTime()));
                 reportQuery.setLong(4, report.getSpeakerId());
                 reportQuery.setLong(5, report.getId());

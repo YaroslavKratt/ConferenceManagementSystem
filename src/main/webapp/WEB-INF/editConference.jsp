@@ -25,17 +25,29 @@
 
                 <div class="row align-items-center">
                     <div class="col-md-4 col-lg-4 col-sm-12  centered">
-                        <label for="conference-name"><h5><fmt:message key="page.message.topic.of.conference"/></h5>
+                        <label for="conference-name-en"><h5><fmt:message
+                                key="page.message.topic.of.conference.en"/></h5>
                         </label>
-                        <input type="text" name="conference-name" id="conference-name" required
-                               value="${conference.topic}">
+                        <input type="text" name="conference-name-en" id="conference-name-en" required
+                               value="${conference.topicEn}">
                         <input type="hidden" name="conference" value="${conference.id}">
+                        <label for="conference-name-ua"><h5><fmt:message
+                                key="page.message.topic.of.conference.ua"/></h5>
+                        </label>
+                        <input type="text" name="conference-name-ua" id="conference-name-ua" required
+                               value="${conference.topicUa}">
                     </div>
                     <div class="col-md-4 col-lg-4 col-sm-12  centered">
-                        <label for="conference-location"><h5><fmt:message key="page.message.conference.location"/></h5>
+                        <label for="conference-location-en"><h5><fmt:message
+                                key="page.message.conference.location.en"/></h5>
                         </label>
-                        <input type="text" name="conference-location" id="conference-location" required
-                               value="${conference.location}">
+                        <input type="text" name="conference-location-en" id="conference-location-en" required
+                               value="${conference.locationEn}">
+                        <label for="conference-location-ua"><h5><fmt:message
+                                key="page.message.conference.location.ua"/></h5>
+                        </label>
+                        <input type="text" name="conference-location-ua" id="conference-location-ua" required
+                               value="${conference.locationUa}">
                     </div>
                     <div class="col-md-4 col-lg-4 col-sm-12  centered">
                         <label for="conference-date-time"><h5><fmt:message key="page.message.date.of.conference"/></h5>
@@ -70,10 +82,20 @@
                         <c:forEach items="${conference.reports}" var="report">
                             <div class="row report-input align-items-center" id="report-data${report.id}">
                                 <div class="col-md-4 col-lg-4 col-sm-12  centered">
-                                    <input type="text" name="report-name${report.id}" required value="${report.topic}">
-                                    <input type="hidden" name="report-name" value="${report.topic}">
+                                    <div class="row">
+                                    <label for="report-id-en${report.id}"><fmt:message key="page.message.en"/> </label>
+                                    <input type="text" id="report-id-en${report.id}" name="report-name-en${report.id}"
+                                           required value="${report.topicEn}">
+                                    <input type="hidden" name="report-name-en" value="${report.topicEn}">
+                                    </div>
+                                    <div class="row">
+                                    <label for="report-id-ua${report.id}"><fmt:message key="page.message.ua"/> </label>
+                                    <input type="text" id="report-id-ua${report.id}" name="report-name-ua${report.id}"
+                                           required value="${report.topicUa}">
+                                    <input type="hidden" name="report-name-ua" value="${report.topicUa}">
 
                                     <input type="hidden" name="report-id" value="${report.id}">
+                                    </div>
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-sm-12  centered">
                                     <input type="datetime-local" name="report-date-time${report.id}"
@@ -132,15 +154,19 @@
                         </div>
                         <div class="row report-input align-items-center">
                             <div class="col-md-4 col-lg-4 col-sm-12  centered">
-                                <input type="text" name="report-name-new">
+                                <label for="report-name-en0"> <fmt:message key="page.message.en"/> </label>
+                                <input type="text" id="report-name-en0" name="report-name-en0">
+                                <label for="report-name-ua0"><fmt:message key="page.message.ua"/> </label>
+                                <input type="text" id="report-name-ua0"name="report-name-ua0">
+
                             </div>
                             <div class="col-md-4 col-lg-4 col-sm-12  centered">
-                                <input type="datetime-local" name="report-date-time-new">
+                                <input type="datetime-local" name="report-date-time0">
 
 
                             </div>
                             <div class="col-md-4 col-lg-4 col-sm-12  centered">
-                                <select class="selectpicker" id="report-speaker-new" name="report-speaker-new">
+                                <select class="selectpicker" id="report-speaker0" name="report-speaker0">
                                     <c:forEach var="possibleSpeaker" items="${requestScope.possibleSpeakers}">
                                         <option value="${possibleSpeaker.id}"
                                                 name="${possibleSpeaker.id}">${possibleSpeaker.name} ${possibleSpeaker.surname}</option>
@@ -182,7 +208,6 @@
 
     </div><!--card body-->
 </div><!--card-->
-</div><!--/container-->
 
 </body>
 <jsp:include page="sections/footer.jsp"/>

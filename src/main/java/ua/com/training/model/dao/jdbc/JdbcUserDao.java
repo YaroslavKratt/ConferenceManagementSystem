@@ -90,9 +90,10 @@ public class JdbcUserDao implements UserDao {
             preparedStatement.setString(2, user.getNameUa());
             preparedStatement.setString(3, user.getSurnameEn());
             preparedStatement.setString(4, user.getSurnameUa());
-            preparedStatement.setString(5, user.getEmail());
+            preparedStatement.setString(5, user.getRole().toString());
             preparedStatement.setString(6, user.getPassword());
-            preparedStatement.setString(7, user.getRole().toString());
+            preparedStatement.setString(7, user.getEmail());
+
             preparedStatement.execute();
             return true;
         } catch (SQLException e) {

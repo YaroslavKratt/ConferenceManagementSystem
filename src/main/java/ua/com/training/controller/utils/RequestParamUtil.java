@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class RequestParamUtil {
     private Logger LOG = LogManager.getLogger(RequestParamUtil.class);
 
-    public String getOrDefault(HttpServletRequest request, String param, String byDefault) {
+     String getOrDefault(HttpServletRequest request, String param, String byDefault) {
         if (request.getParameter(param) != null) {
             return request.getParameter(param);
         } else {
@@ -20,7 +20,8 @@ public class RequestParamUtil {
     public boolean nullConferenceParametersPresent(HttpServletRequest request) {
         return isNullOrEmpty(request.getParameter("conference-name-en"))
                 || isNullOrEmpty(request.getParameter("conference-name-ua"))
-                || isNullOrEmpty(request.getParameter("conference-location"))
+                || isNullOrEmpty(request.getParameter("conference-location-en"))
+                || isNullOrEmpty(request.getParameter("conference-location-ua"))
                 || isNullOrEmpty(request.getParameter("conference-date-time"));
 
     }

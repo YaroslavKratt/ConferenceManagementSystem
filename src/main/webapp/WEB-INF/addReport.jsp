@@ -18,7 +18,7 @@
 
 <body>
 <div class="container" style="margin-top: 3rem" id="main">
-    <form  id="new-report"method="post" action="${pageContext.request.contextPath}/${sessionScope.role}/addreport">
+    <form id="new-report" method="post" action="${pageContext.request.contextPath}/${sessionScope.role}/addreport">
 
         <div class="container" id="report-inputs">
             <div class="row justify-content-center">
@@ -30,29 +30,34 @@
             </div>
             <div class="row align-items-center">
                 <div class="col-md-4 col-lg-4 col-sm-12  centered">
-                    <h6><fmt:message key="page.message.topic.of.report"/> </h6>
+                    <h6><fmt:message key="page.message.topic.of.report"/></h6>
                 </div>
                 <div class="col-md-4 col-lg-4 col-sm-12  centered">
-                    <h6><fmt:message key="page.message.begin.of.report"/> </h6>
+                    <h6><fmt:message key="page.message.begin.of.report"/></h6>
                 </div>
                 <div class="col-md-4 col-lg-4 col-sm-12  centered">
-                    <h6><fmt:message key="page.message.choose.speaker"/> </h6>
+                    <h6><fmt:message key="page.message.choose.speaker"/></h6>
                 </div>
             </div>
             <div class="container" id="first-inputs">
                 <div class="row report-input align-items-center" id="report-data">
                     <div class="col-md-4 col-lg-4 col-sm-12  centered">
-                        <input type="text" name="report-name-new"  required>
+                        <label for="report-name-en-new"> <fmt:message key="page.message.en"/> </label>
+                        <input type="text" id="report-name-en-new" name="report-name-en-new">
+                        <label for="report-name-ua-new"><fmt:message key="page.message.ua"/> </label>
+                        <input type="text" id="report-name-ua-new" name="report-name-ua-new">
+
                     </div>
                     <div class="col-md-4 col-lg-4 col-sm-12  centered">
-                        <input type="datetime-local" name="report-date-time-new"  required>
+                        <input type="datetime-local" name="report-date-time-new" required>
 
 
                     </div>
                     <div class="col-md-4 col-lg-4 col-sm-12  centered">
                         <select class="selectpicker" id="report-speaker" name="report-speaker-new">
                             <c:forEach var="possibleSpeaker" items="${requestScope.possibleSpeakers}">
-                                <option  value="${possibleSpeaker.id}" name="${possibleSpeaker.id}">${possibleSpeaker.name} ${possibleSpeaker.surname}</option>
+                                <option value="${possibleSpeaker.id}"
+                                        name="${possibleSpeaker.id}">${possibleSpeaker.name} ${possibleSpeaker.surname}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -77,7 +82,7 @@
                 <input type="hidden" name="submitted" value="true">
                 <input type="hidden" name="conferenceId" value="${conferenceId}">
                 <input hidden name="scrollPosition"
-                        value="${scrollPosition}" >
+                       value="${scrollPosition}">
                 <button class="btn btn-primary  center-block" type="submit"><fmt:message
                         key="page.message.add.report"/>
                 </button>

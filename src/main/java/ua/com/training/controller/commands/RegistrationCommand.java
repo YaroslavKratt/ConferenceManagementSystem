@@ -3,7 +3,7 @@ package ua.com.training.controller.commands;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.com.training.controller.utils.SecurityUtil;
-import ua.com.training.controller.utils.TransliteratorUtil;
+import ua.com.training.controller.utils.TransliterationUtil;
 import ua.com.training.controller.utils.ValidationUtil;
 import ua.com.training.model.ResourceEnum;
 import ua.com.training.model.dto.UserDTO;
@@ -85,7 +85,7 @@ public class RegistrationCommand implements Command {
         Map<String,String> names = new HashMap<>();
 
         if(language.equals("uk_UA")) {
-            names.put("en",  TransliteratorUtil.transliterateUatoEn(name));
+            names.put("en",  TransliterationUtil.transliterateUaToEn(name));
             names.put("ua",  name);
 
         }

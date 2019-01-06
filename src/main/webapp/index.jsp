@@ -32,7 +32,6 @@
         </div>
     </div>
 </section>
-<jsp:include page="WEB-INF/sections/footer.jsp"/>
 </fmt:bundle>
 </body>
 

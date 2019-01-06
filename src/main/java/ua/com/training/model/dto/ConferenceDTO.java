@@ -21,7 +21,7 @@ public class ConferenceDTO {
 
     public ConferenceDTO(Conference conferenceEn_us, Conference conferenceUk_ua) {
         this.id = conferenceEn_us.getId();
-        this.locationEn = conferenceEn_us.getTopic();
+        this.topicEn = conferenceEn_us.getTopic();
         this.topicUa = conferenceUk_ua.getTopic();
         this.locationEn = conferenceEn_us.getLocation();
         this.locationUa = conferenceUk_ua.getLocation();

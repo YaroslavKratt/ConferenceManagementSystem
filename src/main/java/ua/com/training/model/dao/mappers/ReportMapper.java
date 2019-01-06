@@ -16,8 +16,8 @@ public class ReportMapper implements Mapper<Report> {
                 .setRegistratedAmount(resultSet.getInt("registrated_participants_amount"))
                 .setComersAmount(resultSet.getInt("visited_participants_amount"))
                 .setDateTime(resultSet.getTimestamp("report_datetime").toLocalDateTime())
-                .setSpeakerName(resultSet.getString("speaker_name_" + language))
-                .setSpeakerSurname(resultSet.getString("speaker_surname_" + language))
+                .setSpeakerName(resultSet.getString("user_name_" + language))
+                .setSpeakerSurname(resultSet.getString("user_surname_" + language))
                 .setSpeakerId(resultSet.getLong("speaker_id"))
                 .build();
 
