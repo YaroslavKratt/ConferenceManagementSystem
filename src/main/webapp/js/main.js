@@ -80,5 +80,6 @@ function removeLastReportInputsDiv() {
 function getScrollPosition(elementForSavingScrollId) {
     var element = document.getElementById(elementForSavingScrollId);
     element.setAttribute("value", window.scrollY.toString());
+    return window.scrollY;
 }
 
