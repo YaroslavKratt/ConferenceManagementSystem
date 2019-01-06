@@ -42,6 +42,10 @@ public class CatalogOfSpeakersCommand implements Command {
         }
 
         userService.vote(userId, speakerId, Integer.valueOf(request.getParameter("rating" + speakerId)));
-        return "redirect:/" + request.getSession().getAttribute("role") + PATH_BUNDLE.getString("path.speakers");
+        return "redirect:/"
+                + request.getSession().getAttribute("role")
+                + PATH_BUNDLE.getString("path.speakers")
+                + "?recordsPerPage=" + request.getParameter("recordsPerPage")
+                + "&currentPage=" + request.getParameter("currentPage");
     }
 }

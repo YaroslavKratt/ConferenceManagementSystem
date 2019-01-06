@@ -2,6 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="ex" uri="/WEB-INF/tagLib.tld" %>
 <%@ page pageEncoding="UTF-8" %>
 
 
@@ -71,7 +72,8 @@
                                 key="page.message.location"/>${conference.location}</h5>
                     </div>
                     <div class="col-2">
-                        <h5 class=" font-weight-bold">${conference.getFormatedDateTime()}</h5>
+                        <h5 class=" font-weight-bold"><ex:formatDateTime localDateTime="${conference.dateTime}"
+                                                                         locale="${sessionScope.locale}"/></h5>
                     </div>
                     <c:choose>
                         <c:when test="${sessionScope.role == 'admin'}">

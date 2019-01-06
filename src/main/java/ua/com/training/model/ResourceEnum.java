@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 public enum ResourceEnum {
     SQL_REQUESTS_BUNDLE {
         {
-            this.bundleName = "sql_requests";
+            this.bundleName = "sqlRequests";
         }
     },
     ACCESS_BUNDLE {
@@ -36,7 +36,12 @@ public enum ResourceEnum {
     },
     BUISNESS_LOGIC {
         {
-            this.bundleName="business_logic";
+            this.bundleName="businessLogic";
+        }
+    },
+    LOCALE_PATTERNS {
+        {
+            this.bundleName="localePatterns";
         }
     };
 
