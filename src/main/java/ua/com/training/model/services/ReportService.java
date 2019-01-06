@@ -4,6 +4,7 @@ import ua.com.training.model.dao.DAO;
 import ua.com.training.model.dao.ReportDao;
 import ua.com.training.model.dao.jdbc.JdbcDaoFactory;
 import ua.com.training.model.dao.jdbc.JdbcReportDao;
+import ua.com.training.model.dto.ReportDTO;
 import ua.com.training.model.entity.Report;
 
 public class ReportService {
@@ -24,7 +25,7 @@ public class ReportService {
         reportDao.unsubscribe(userId, reportId);
     }
 
-    public void addNewReportToConference(long conferenceId, Report report) {
+    public void addNewReportToConference(long conferenceId, ReportDTO report) {
         reportDao.addNew(conferenceId, report);
     }
 

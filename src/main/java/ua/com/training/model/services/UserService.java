@@ -2,6 +2,7 @@ package ua.com.training.model.services;
 
 import ua.com.training.model.dao.DaoFactory;
 import ua.com.training.model.dao.UserDao;
+import ua.com.training.model.dto.UserDTO;
 import ua.com.training.model.entity.User;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class UserService {
         return userDao.getUserRole(id);
     }
 
-    public void signUpUser(User user) {
+    public void signUpUser(UserDTO user) {
         userDao.addNew(user);
     }
 

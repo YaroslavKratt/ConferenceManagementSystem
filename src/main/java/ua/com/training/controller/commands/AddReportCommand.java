@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.com.training.controller.utils.RequestParamUtil;
 import ua.com.training.model.ResourceEnum;
+import ua.com.training.model.dto.ReportDTO;
 import ua.com.training.model.entity.Conference;
 import ua.com.training.model.entity.Report;
 import ua.com.training.model.services.ConferenceService;
@@ -22,9 +23,10 @@ public class AddReportCommand implements Command {
     public String execute(HttpServletRequest request) {
         Locale locale = (Locale) request.getSession().getAttribute("locale");
         ResourceBundle messages = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), locale);
-        Conference conference = new ConferenceService().getConferenceById(Long.parseLong(request.getParameter("conferenceId")));
+        Conference conference = new ConferenceService()
+                .getConferenceById(Long.parseLong(request.getParameter("conferenceId")),locale.toLanguageTag());
 
-        request.setAttribute("possibleSpeakers", new UserService().getAllUsers());
+        request.setAttribute("possibleSpeakers", new UserService().getAllUsers(locale.toLanguageTag()));
         request.setAttribute("conferenceId", request.getParameter("conferenceId"));
         request.setAttribute("recordsPerPage", request.getParameter("recordsPerPage"));
         request.setAttribute("currentPage", request.getParameter("currentPage"));
@@ -37,13 +39,16 @@ public class AddReportCommand implements Command {
 
         if (!new RequestParamUtil().nullReportParametersPresent(request, "-new")) {
             if (LocalDateTime.parse(request.getParameter("report-date-time-new")).compareTo(conference.getDateTime()) < 0) {
-                request.setAttribute("report-name-new", request.getParameter("report-name-new"));
+                request.setAttribute("report-name-new-en", request.getParameter("report-name-new-en"));
+                request.setAttribute("report-name-new-ua", request.getParameter("report-name-new-ua"));
+
                 request.setAttribute("report-date-time-new", request.getParameter("report-date-time-new"));
                 request.setAttribute("earlierThanConference", messages.getString("info.message.earlier.than.conference"));
                 return PATH_BUNDLE.getString("page.add.report");
             }
-            new ReportService().addNewReportToConference(conference.getId(), new Report.Builder()
-                    .setTopic(request.getParameter("report-name-new"))
+            new ReportService().addNewReportToConference(conference.getId(), new ReportDTO.Builder()
+                    .setTopicEn(request.getParameter("report-name-new-en"))
+                    .setTopicUa(request.getParameter("report-name-new-ua"))
                     .setDateTime(LocalDateTime.parse(request.getParameter("report-date-time-new")))
                     .setSpeakerId(Long.parseLong(request.getParameter("report-speaker-new")))
                     .build());

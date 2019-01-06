@@ -6,17 +6,19 @@ import ua.com.training.model.services.ReportService;
 import ua.com.training.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 public class DeleteReportCommand implements Command {
     private final static Logger LOG = LogManager.getLogger(DeleteReportCommand.class);
 
     @Override
     public String execute(HttpServletRequest request) {
+        Locale locale = (Locale) request.getSession().getAttribute("locale");
         long id = Long.parseLong(request.getParameter("reportIdForRemoving"));
         String conferenceIdParameter = "";
 
         new ReportService().deleteReport(id);
-        request.setAttribute("possibleSpeakers", new UserService().getAllUsers());
+        request.setAttribute("possibleSpeakers", new UserService().getAllUsers(locale.toLanguageTag()));
 
         if (request.getParameter("uri").contains("editconference")) {
             conferenceIdParameter = "&conference=" + request.getParameter("conference");
@@ -25,6 +27,6 @@ public class DeleteReportCommand implements Command {
                 + "?recordsPerPage=" + request.getParameter("recordsPerPage")
                 + "&currentPage=" + request.getParameter("currentPage")
                 + "&scrollPosition=" + request.getParameter("scrollPosition")
-                +conferenceIdParameter;
+                + conferenceIdParameter;
     }
 }

@@ -6,6 +6,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import ua.com.training.model.ResourceEnum;
 import ua.com.training.model.dao.UserDao;
 import ua.com.training.model.dao.mappers.UserMapper;
+import ua.com.training.model.dto.UserDTO;
 import ua.com.training.model.entity.User;
 import ua.com.training.model.services.SpeakerService;
 
@@ -73,17 +74,25 @@ public class JdbcUserDao implements UserDao {
         return false;
     }
 
+    @Override
+    public boolean addNew(User item) {
+        throw new UnsupportedOperationException();
+    }
+
 
     @Override
-    public boolean addNew(User user) throws RuntimeException {
+    public boolean addNew(UserDTO user) throws RuntimeException {
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sqlRequestBundle.getString("user.insert.new"))) {
+             PreparedStatement preparedStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("user.insert.new"))) {
 
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getSurname());
-            preparedStatement.setString(3, user.getEmail());
-            preparedStatement.setString(4, user.getPassword());
-            preparedStatement.setString(5, user.getRole().toString());
+            preparedStatement.setString(1, user.getNameEn());
+            preparedStatement.setString(2, user.getNameUa());
+            preparedStatement.setString(3, user.getSurnameEn());
+            preparedStatement.setString(4, user.getSurnameEn());
+            preparedStatement.setString(5, user.getEmail());
+            preparedStatement.setString(6, user.getPassword());
+            preparedStatement.setString(7, user.getRole().toString());
             preparedStatement.execute();
             return true;
         } catch (SQLException e) {
@@ -115,26 +124,26 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public boolean checkUserExist(String email) {
-        return getByEmail(email,"en_US") != null;
+        return getByEmail(email, "en_US") != null;
     }
 
 
     @Override
     public boolean checkUserPassword(String email, String password) {
-        return BCrypt.checkpw(password, getByEmail(email,"en_US").getPassword());
+        return BCrypt.checkpw(password, getByEmail(email, "en_US").getPassword());
 
     }
 
 
     @Override
     public User.Role getUserRole(String email) {
-        return getByEmail(email,"en_US").getRole();
+        return getByEmail(email, "en_US").getRole();
     }
 
 
     @Override
     public User.Role getUserRole(long id) {
-        return getById(id,"en_US").getRole();
+        return getById(id, "en_US").getRole();
     }
 
 
@@ -175,13 +184,13 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public String getNameById(long id, String language) {
-        return getById(id,  language).getName();
+        return getById(id, language).getName();
     }
 
 
     @Override
     public String getSurnameById(long id, String language) {
-        return getById(id,language).getSurname();
+        return getById(id, language).getSurname();
     }
 
 
@@ -244,7 +253,7 @@ public class JdbcUserDao implements UserDao {
             voteStatement.setInt(4, mark);
             voteStatement.executeUpdate();
 
-            newRatingStatement.setLong(1,speakerId);
+            newRatingStatement.setLong(1, speakerId);
             ResultSet newRatingResultSet = newRatingStatement.executeQuery();
             newRatingResultSet.next();
             rating = newRatingResultSet.getDouble(1);

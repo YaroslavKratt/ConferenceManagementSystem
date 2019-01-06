@@ -44,7 +44,7 @@ public class LoginCommand implements Command {
 
         if (!isGuest(request)) {
             LOG.warn("Already logged in user tried to enter");
-            return "redirect:/" + UserService.getRoleString(email);
+            return "redirect:/" + UserService.getRoleString(email,locale.toLanguageTag());
         }
         if (!userService.checkUserExist(email)) {
             LOG.info("User" + email + " dose not exist");
@@ -57,7 +57,7 @@ public class LoginCommand implements Command {
             dropSessionIfLoggedIn(request, email);
             logInUser(request, email, password);
             LOG.info("User " + email + " signed in");
-            return "redirect:/" + UserService.getRoleString(email) + PATH_BUNDLE.getString("path.catalog");
+            return "redirect:/" + UserService.getRoleString(email,locale.toLanguageTag()) + PATH_BUNDLE.getString("path.catalog");
         } else {
             putMessageInRequest(request, "wrongPassword", messageBundle, "info.message.wrong.password");
             LOG.warn("Wrong password");

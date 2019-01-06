@@ -6,6 +6,8 @@ import ua.com.training.model.ResourceEnum;
 import ua.com.training.model.dao.ConferenceDao;
 import ua.com.training.model.dao.mappers.ConferenceMapper;
 import ua.com.training.model.dao.mappers.SubscriptionDtoMapper;
+import ua.com.training.model.dto.ConferenceDTO;
+import ua.com.training.model.dto.ReportDTO;
 import ua.com.training.model.dto.SubscriptionDTO;
 import ua.com.training.model.entity.Conference;
 import ua.com.training.model.entity.Report;
@@ -58,7 +60,12 @@ public class JdbcConferenceDao implements ConferenceDao {
     }
 
     @Override
-    public void update(Conference conference) {
+    public void update(Conference item) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void update(ConferenceDTO conference) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement conferenceQuery = connection
                      .prepareStatement(sqlRequestBundle.getString("conference.update"), Statement.RETURN_GENERATED_KEYS);
@@ -67,21 +74,20 @@ public class JdbcConferenceDao implements ConferenceDao {
 
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             connection.setAutoCommit(false);
-            conferenceQuery.setString(1, conference.getTopic());
-            conferenceQuery.setString(2, conference.getLocation());
-            conferenceQuery.setTimestamp(3, Timestamp.valueOf(conference.getDateTime()));
-            conferenceQuery.setLong(4, conference.getId());
+            conferenceQuery.setString(1, conference.getTopicEn());
+            conferenceQuery.setString(2, conference.getTopicUa());
+            conferenceQuery.setString(3, conference.getLocationEn());
+            conferenceQuery.setString(4, conference.getLocationEn());
+            conferenceQuery.setTimestamp(5, Timestamp.valueOf(conference.getDateTime()));
+            conferenceQuery.setLong(6, conference.getId());
             conferenceQuery.executeUpdate();
 
-            for (Report report : conference.getReports()) {
-                reportQuery.setString(1, report.getTopic());
-                LOG.debug("report id:" + report.getId());
-
-                reportQuery.setTimestamp(2, Timestamp.valueOf(report.getDateTime()));
-                reportQuery.setString(3, report.getSpeakerName());
-                reportQuery.setString(4, report.getSpeakerSurname());
-                reportQuery.setLong(5, report.getSpeakerId());
-                reportQuery.setLong(6, report.getId());
+            for (ReportDTO report : conference.getReports()) {
+                reportQuery.setString(1, report.getTopicEn());
+                reportQuery.setString(2, report.getTopicEn());
+                reportQuery.setTimestamp(3, Timestamp.valueOf(report.getDateTime()));
+                reportQuery.setLong(4, report.getSpeakerId());
+                reportQuery.setLong(5, report.getId());
                 reportQuery.addBatch();
             }
             reportQuery.executeBatch();
@@ -107,7 +113,12 @@ public class JdbcConferenceDao implements ConferenceDao {
     }
 
     @Override
-    public boolean addNew(Conference conference) {
+    public boolean addNew(Conference item) {
+        return false;
+    }
+
+    @Override
+    public boolean addNew(ConferenceDTO conference) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement conferenceQuery = connection
                      .prepareStatement(sqlRequestBundle.getString("conference.insert"), Statement.RETURN_GENERATED_KEYS);
@@ -115,17 +126,23 @@ public class JdbcConferenceDao implements ConferenceDao {
                      .prepareStatement((sqlRequestBundle.getString("report.insert")))) {
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             connection.setAutoCommit(false);
-            conferenceQuery.setString(1, conference.getTopic());
-            conferenceQuery.setString(2, conference.getLocation());
-            conferenceQuery.setTimestamp(3, Timestamp.valueOf(conference.getDateTime()));
+            conferenceQuery.setString(1, conference.getTopicEn());
+            conferenceQuery.setString(2, conference.getTopicUa());
+
+            conferenceQuery.setString(3, conference.getLocationEn());
+            conferenceQuery.setString(4, conference.getLocationUa());
+
+            conferenceQuery.setTimestamp(5, Timestamp.valueOf(conference.getDateTime()));
             conferenceQuery.executeUpdate();
             ResultSet idResultSet = conferenceQuery.getGeneratedKeys();
             if (idResultSet.next()) {
-                for (Report report : conference.getReports()) {
-                    reportQuery.setString(1, report.getTopic());
-                    reportQuery.setLong(2, idResultSet.getLong(1));
-                    reportQuery.setLong(3, report.getSpeakerId());
-                    reportQuery.setTimestamp(4, Timestamp.valueOf(report.getDateTime()));
+                for (ReportDTO report : conference.getReports()) {
+                    reportQuery.setString(1, report.getTopicEn());
+                    reportQuery.setString(2, report.getTopicEn());
+
+                    reportQuery.setLong(3, idResultSet.getLong(1));
+                    reportQuery.setLong(4, report.getSpeakerId());
+                    reportQuery.setTimestamp(5, Timestamp.valueOf(report.getDateTime()));
                     reportQuery.addBatch();
                 }
             }

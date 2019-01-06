@@ -1,5 +1,6 @@
 package ua.com.training.model.dao;
 
+import ua.com.training.model.dto.ConferenceDTO;
 import ua.com.training.model.dto.SubscriptionDTO;
 import ua.com.training.model.entity.Conference;
 import ua.com.training.model.entity.Report;
@@ -11,6 +12,10 @@ public interface ConferenceDao extends DAO<Conference> {
 
     List<Conference> getAll(String language);
 
+
+    void update(ConferenceDTO conference);
+
+    boolean addNew(ConferenceDTO conference);
 
     List<SubscriptionDTO> getSubscriptionsList(String language);
 

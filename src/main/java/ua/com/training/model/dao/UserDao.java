@@ -1,5 +1,6 @@
 package ua.com.training.model.dao;
 
+import ua.com.training.model.dto.UserDTO;
 import ua.com.training.model.entity.User;
 
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 public interface UserDao extends DAO<User> {
 
 
+    boolean addNew(UserDTO user) throws RuntimeException;
 
     User getByEmail(String email, String language);
 

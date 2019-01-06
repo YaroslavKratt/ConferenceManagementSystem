@@ -3,13 +3,17 @@ package ua.com.training.controller.commands;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.com.training.controller.utils.SecurityUtil;
+import ua.com.training.controller.utils.TransliteratorUtil;
 import ua.com.training.controller.utils.ValidationUtil;
 import ua.com.training.model.ResourceEnum;
+import ua.com.training.model.dto.UserDTO;
 import ua.com.training.model.entity.User;
 import ua.com.training.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class RegistrationCommand implements Command {
@@ -59,8 +63,11 @@ public class RegistrationCommand implements Command {
             return PATH_BUNDLE.getString("page.registration");
 
         }
-        User user = new User.Builder().setName(request.getParameter("name"))
-                .setSurname(request.getParameter("surname"))
+        UserDTO user = new UserDTO.Builder()
+                .setNameEn(transliterateIfUa(request.getParameter("name"),locale.toLanguageTag()).get("en"))
+                .setNameUa(transliterateIfUa(request.getParameter("name"),locale.toLanguageTag()).get("en"))
+                .setSurnameEn(request.getParameter("surname-en"))
+                .setSurnameUa(request.getParameter("surname-ua"))
                 .setEmail(email)
                 .setPassword(new SecurityUtil().hashPassword(password))
                 .setRole(User.Role.USER)
@@ -73,5 +80,19 @@ public class RegistrationCommand implements Command {
 
     private boolean isEmptyRequest(HttpServletRequest request) {
         return !request.getParameterNames().hasMoreElements();
+    }
+    private Map<String,String> transliterateIfUa(String name,String language) {
+        Map<String,String> names = new HashMap<>();
+
+        if(language.equals("uk_UA")) {
+            names.put("en",  TransliteratorUtil.transliterateUatoEn(name));
+            names.put("ua",  name);
+
+        }
+        else {
+            names.put("en",  name);
+            names.put("ua",  name);
+        }
+        return names;
     }
 }

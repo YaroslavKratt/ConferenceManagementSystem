@@ -1,5 +1,6 @@
 package ua.com.training.model.dao;
 
+import ua.com.training.model.dto.ReportDTO;
 import ua.com.training.model.entity.Report;
 
 public interface ReportDao extends DAO<Report>{
@@ -10,6 +11,8 @@ public interface ReportDao extends DAO<Report>{
     void unsubscribe(long userId, long reportId);
 
     void addNew(long conferenceId, Report report);
+
+    void addNew(long conferenceId, ReportDTO report);
 
     int getAmountOfSubscribedUsers(long reportId);
 

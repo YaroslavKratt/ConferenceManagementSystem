@@ -6,6 +6,7 @@ import ua.com.training.model.ResourceEnum;
 import ua.com.training.model.dao.ReportDao;
 import ua.com.training.model.dao.mappers.Mapper;
 import ua.com.training.model.dao.mappers.ReportMapper;
+import ua.com.training.model.dto.ReportDTO;
 import ua.com.training.model.entity.Report;
 
 import javax.sql.DataSource;
@@ -121,16 +122,22 @@ public class JdbcReportDao implements ReportDao {
         }
     }
 
-
     @Override
     public void addNew(long conferenceId, Report report) {
+
+    }
+
+
+    @Override
+    public void addNew(long conferenceId, ReportDTO report) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection
                      .prepareStatement(sqlRequestBundle.getString("report.add.new.to.conference"))) {
-            preparedStatement.setString(1, report.getTopic());
-            preparedStatement.setLong(2, conferenceId);
-            preparedStatement.setLong(3, report.getSpeakerId());
-            preparedStatement.setTimestamp(4, Timestamp.valueOf(report.getDateTime()));
+            preparedStatement.setString(1, report.getTopicEn());
+            preparedStatement.setString(2, report.getTopicUa());
+            preparedStatement.setLong(3, conferenceId);
+            preparedStatement.setLong(4, report.getSpeakerId());
+            preparedStatement.setTimestamp(5, Timestamp.valueOf(report.getDateTime()));
             preparedStatement.execute();
         } catch (SQLException e) {
             LOG.error("Add new report to conference failed: " + e);

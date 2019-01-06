@@ -8,6 +8,7 @@ import ua.com.training.model.services.ConferenceService;
 import ua.com.training.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 import java.util.Map;
 
 public class CatalogCommand implements Command {
@@ -17,15 +18,16 @@ public class CatalogCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
+        Locale locale = (Locale) request.getSession().getAttribute("locale");
         Map<String, Integer> paginationParameters = new PaginationUtil().calcPaginationParameters(request,
                 conferenceService.getConferencesAmount());
         request.setAttribute("paginationParameters", paginationParameters);
         request.setAttribute("conferences", conferenceService.getPaginatedList(paginationParameters.get("begin"),
-                paginationParameters.get("recordsPerPage")));
+                paginationParameters.get("recordsPerPage"),locale.toLanguageTag()));
         request.setAttribute("scrollPosition", request.getParameter("scrollPosition"));
 
         if (!isGuest(request)) {
-            long userId = userService.getUserId((String) request.getSession().getAttribute("email"));
+            long userId = userService.getUserId((String) request.getSession().getAttribute("email"),locale.toLanguageTag());
             request.setAttribute("userId", userId);
             request.setAttribute("subscriptions", userService.getUserSubscriptionsIds(userId));
         }

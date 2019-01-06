@@ -1,5 +1,7 @@
 package ua.com.training.model.entity;
 
+import ua.com.training.model.dto.ReportDTO;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -12,6 +14,17 @@ public class Conference {
     private String location;
     private LocalDateTime dateTime;
     private List<Report> reports = new ArrayList<>();
+
+    public static List<ReportDTO> toReportDTOList(List<Report> reportsEn, List<Report> reportsUa) {
+        List<ReportDTO> reportDTOList = new ArrayList<>();
+
+        for (int i = 0; i < reportsEn.size(); i++) {
+            reportDTOList.add(new ReportDTO(reportsEn.get(i), reportsUa.get(i)));
+
+        }
+        return reportDTOList;
+    }
+
     public void addReport(Report report) {
         reports.add(report);
 
@@ -53,13 +66,13 @@ public class Conference {
         return dateTime;
     }
 
-    public String getFormatedDateTime(){
-        return dateTime.format(
-                DateTimeFormatter.ofPattern("dd.MM.yyyy HH:MM"));
-    }
-
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public String getFormatedDateTime() {
+        return dateTime.format(
+                DateTimeFormatter.ofPattern("dd.MM.yyyy HH:MM"));
     }
 
     @Override
@@ -74,14 +87,14 @@ public class Conference {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj == null ||obj.getClass()!=this.getClass()){
+        if (obj == null || obj.getClass() != this.getClass()) {
             return false;
         }
-        if (this == obj){
+        if (this == obj) {
             return true;
         }
-        Conference conference = (Conference)obj;
-        return     this.id==conference.id
+        Conference conference = (Conference) obj;
+        return this.id == conference.id
                 && this.topic.equals(conference.topic)
                 && this.location.equals(conference.location)
                 && this.dateTime.equals(conference.dateTime);
