@@ -200,7 +200,7 @@ public class JdbcUserDao implements UserDao {
             }
             return subscriptedEmails;
         } catch (SQLException e) {
-            LOG.error("Can`y get list of subscripted emails: " + e);
+            LOG.error("Can`y get list of subscribed emails: " + e);
             throw new RuntimeException();
         }
     }

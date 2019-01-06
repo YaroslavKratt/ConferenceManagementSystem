@@ -9,8 +9,8 @@ import java.util.List;
 public class UserService {
     private static UserDao userDao = DaoFactory.getInstance().createUserDao();
 
-    public static String getRoleString(String email) {
-        return userDao.getByEmail(email).getRole().toString().toLowerCase();
+    public static String getRoleString(String email, String language) {
+        return userDao.getByEmail(email, language).getRole().toString().toLowerCase();
 
     }
 
@@ -34,28 +34,28 @@ public class UserService {
         userDao.addNew(user);
     }
 
-    public long getUserId(String email) {
-        return userDao.getByEmail(email).getId();
+    public long getUserId(String email,String language) {
+        return userDao.getByEmail(email,language).getId();
     }
 
     public List<Long> getUserSubscriptionsIds(long userId) {
         return userDao.getUserSubscriptionsIds(userId);
     }
 
-    public List<User> getAllUsers() {
-        return userDao.getAll();
+    public List<User> getAllUsers(String language) {
+        return userDao.getAll( language);
     }
 
     public void changeRole(long id, User.Role role) {
         userDao.changeRole(id, role);
     }
 
-    public String getNameById(long id) {
-        return userDao.getNameById(id);
+    public String getNameById(long id, String language) {
+        return userDao.getNameById(id, language);
     }
 
-    public String getSurnameById(long id) {
-        return userDao.getSurnameById(id);
+    public String getSurnameById(long id, String language) {
+        return userDao.getSurnameById(id, language);
     }
 
     public List<String> getUserSubscribedEmails() {

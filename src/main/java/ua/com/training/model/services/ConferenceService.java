@@ -10,10 +10,6 @@ import java.util.List;
 public class ConferenceService {
     private static ConferenceDao conferenceDao = DaoFactory.getInstance().createConferenceDao();
 
-    public List<Conference> getAllConferences() {
-        return conferenceDao.getAll();
-    }
-
     public boolean addConference(Conference conference) {
         return conferenceDao.addNew(conference);
     }
@@ -22,11 +18,11 @@ public class ConferenceService {
         return conferenceDao.delete(id);
     }
 
-    public Conference getConferenceById(long conferenceId) {
-        return conferenceDao.getById(conferenceId);
+    public Conference getConferenceById(long conferenceId, String language) {
+        return conferenceDao.getById(conferenceId,language);
     }
-    public List<Conference> getPaginatedList(int begin, int recordsPerPage) {
-        return conferenceDao.getPaginatedList(begin,recordsPerPage);
+    public List<Conference> getPaginatedList(int begin, int recordsPerPage, String language) {
+        return conferenceDao.getPaginatedList(begin,recordsPerPage, language);
     }
 
     public int getConferencesAmount() {

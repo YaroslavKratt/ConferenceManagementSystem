@@ -31,7 +31,7 @@ public class SpeakerService {
     }
 
 
-    public List<SpeakerDTO> getPaginatedList(Integer begin, Integer recordsPerPage) {
-        return speakerDao.getPaginatedList(begin, recordsPerPage);
+    public List<SpeakerDTO> getPaginatedList(Integer begin, Integer recordsPerPage, String language) {
+        return speakerDao.getPaginatedList(begin, recordsPerPage, language);
     }
 }
