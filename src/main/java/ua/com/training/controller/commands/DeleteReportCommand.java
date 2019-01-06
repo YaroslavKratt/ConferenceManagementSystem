@@ -18,7 +18,7 @@ public class DeleteReportCommand implements Command {
         String conferenceIdParameter = "";
 
         new ReportService().deleteReport(id);
-        request.setAttribute("possibleSpeakers", new UserService().getAllUsers(locale.toLanguageTag()));
+        request.setAttribute("possibleSpeakers", new UserService().getAllUsers(locale.toString()));
 
         if (request.getParameter("uri").contains("editconference")) {
             conferenceIdParameter = "&conference=" + request.getParameter("conference");

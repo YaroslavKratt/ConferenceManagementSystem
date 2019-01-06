@@ -31,7 +31,7 @@ public class EditConference implements Command {
                 new ConferenceDTO(conferenceService.getConferenceById(conferenceId, "en_US"),
                         conferenceService.getConferenceById(conferenceId, "uk_UA"));
 
-        request.setAttribute("possibleSpeakers", new UserService().getAllUsers(locale.toLanguageTag()));
+        request.setAttribute("possibleSpeakers", new UserService().getAllUsers(locale.toString()));
         request.setAttribute("conference", conference);
         request.setAttribute("currentPage", request.getParameter("currentPage"));
         request.setAttribute("recordsPerPage", request.getParameter("recordsPerPage"));

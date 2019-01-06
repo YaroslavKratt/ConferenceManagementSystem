@@ -25,18 +25,18 @@ public class StatisticsCommand implements Command {
                 conferenceService.getConferencesAmount());
         request.setAttribute("paginationParameters", paginationParameters);
         request.setAttribute("conferences", conferenceService.getPaginatedList(paginationParameters.get("begin"),
-                paginationParameters.get("recordsPerPage"),locale.toLanguageTag()));
+                paginationParameters.get("recordsPerPage"),locale.toString()));
         request.setAttribute("scrollPosition", request.getParameter("scrollPosition"));
 
         if (!Objects.isNull(request.getParameter("submitted"))) {
             setVisitorsAmountForAllReports(request);
         }
 
-        long userId = userService.getUserId((String) request.getSession().getAttribute("email"),locale.toLanguageTag());
+        long userId = userService.getUserId((String) request.getSession().getAttribute("email"),locale.toString());
         request.setAttribute("userId", userId);
         request.setAttribute("subscriptions", userService.getUserSubscriptionsIds(userId));
         request.setAttribute("conferences", conferenceService.getPaginatedList(paginationParameters.get("begin"),
-                paginationParameters.get("recordsPerPage"),locale.toLanguageTag()));
+                paginationParameters.get("recordsPerPage"),locale.toString()));
         return PATH_BUNDLE.getString("page.statistic");
     }
 

@@ -18,7 +18,7 @@ public class UnsubscribeCommand implements Command {
         HttpSession session = request.getSession();
         Locale locale = (Locale) request.getSession().getAttribute("locale");
         ResourceBundle messageBundle = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), request.getLocale());
-        long userId = userService.getUserId((String) session.getAttribute("email"),locale.toLanguageTag());
+        long userId = userService.getUserId((String) session.getAttribute("email"),locale.toString());
         long reportId = Long.valueOf(request.getParameter("reportForUnsubscription"));
 
         if (reportService.checkSubscription(userId, reportId)) {

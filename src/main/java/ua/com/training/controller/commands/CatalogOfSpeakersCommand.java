@@ -22,9 +22,9 @@ public class CatalogOfSpeakersCommand implements Command {
         ResourceBundle messageBundle = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), locale);
         Map<String, Integer> paginationParameters = new PaginationUtil().calcPaginationParameters(request,
                 speakerService.getSpeakersAmount());
-        long userId = userService.getUserId((String) request.getSession().getAttribute("email"),locale.toLanguageTag());
+        long userId = userService.getUserId((String) request.getSession().getAttribute("email"),locale.toString());
         List<SpeakerDTO> speakers = speakerService.getPaginatedList(paginationParameters.get("begin"),
-                paginationParameters.get("recordsPerPage"),locale.toLanguageTag());
+                paginationParameters.get("recordsPerPage"),locale.toString());
 
         request.setAttribute("paginationParameters", paginationParameters);
         request.setAttribute("speakers", speakers);

@@ -25,7 +25,7 @@ public class CreateConferenceCommand implements Command {
         ConferenceDTO conference = new ConferenceDTO();
         Locale locale = (Locale) request.getSession().getAttribute("locale");
         ResourceBundle messages = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), locale);
-        request.setAttribute("possibleSpeakers", new UserService().getAllUsers(locale.toLanguageTag()));
+        request.setAttribute("possibleSpeakers", new UserService().getAllUsers(locale.toString()));
 
         if (request.getParameter("conference-name-en") == null || request.getParameter("conference-name-ua") == null) {
             return PATH_BUNDLE.getString("page.conference");

@@ -20,7 +20,7 @@ public class SubscribeCommand implements Command {
         Locale locale = (Locale) request.getSession().getAttribute("locale");
         HttpSession session = request.getSession();
         long reportId = Long.valueOf(request.getParameter("reportForSubscription"));
-        long userId = userService.getUserId((String) session.getAttribute("email"),locale.toLanguageTag());
+        long userId = userService.getUserId((String) session.getAttribute("email"),locale.toString());
 
         reportService.subscribeUserOnReport(userId, reportId);
         request.setAttribute(String.valueOf(reportId), "subscribed");
