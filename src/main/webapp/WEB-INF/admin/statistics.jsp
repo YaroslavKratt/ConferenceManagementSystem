@@ -14,7 +14,7 @@
 
 
 </head>
-<jsp:include page="sections/header.jsp"/>
+<jsp:include page="../sections/header.jsp"/>
 <div class="container" id="main">
     <div class="container">
         <div class="row">
@@ -173,7 +173,7 @@
     </div>
 </div>
 </fmt:bundle>
-<jsp:include page="sections/footer.jsp"/>
+<jsp:include page="../sections/footer.jsp"/>
 <script src=<c:url value="/js/main.js"/>></script>
 <script> window.scroll({top:  ${scrollPosition}, left: 0});
 </script>

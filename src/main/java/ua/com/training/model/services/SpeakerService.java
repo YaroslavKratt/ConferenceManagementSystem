@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class SpeakerService {
-    private final static ResourceBundle BUISNESS_LOGIC_BUNDLE = ResourceBundle.getBundle(ResourceEnum.BUISNESS_LOGIC.getBundleName());
+    private final static ResourceBundle BUISNESS_LOGIC_BUNDLE = ResourceBundle.getBundle(ResourceEnum.BUSINESS_LOGIC.getBundleName());
     private SpeakerDao speakerDao = new JdbcDaoFactory().createSpeakerDao();
 
     public Map<Long, Integer> getRatingMapFrom(List<SpeakerDTO> speakers) {

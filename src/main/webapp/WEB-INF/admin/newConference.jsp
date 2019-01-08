@@ -13,7 +13,7 @@
     <link href="<c:url value='/bootstrap/css/bootstrap-grid.css' />" rel="stylesheet">
     <link href="<c:url value='/bootstrap/css/bootstrap-reboot.css' />" rel="stylesheet">
     <link href="<c:url value='/css/main.css' />" rel="stylesheet">
-    <jsp:include page="sections/header.jsp"/>
+    <jsp:include page="../sections/header.jsp"/>
     <fmt:bundle basename="messages"></head>
 
 <body>
@@ -114,7 +114,7 @@
         </div>
     </form>
 </div>
-<jsp:include page="sections/footer.jsp"/>
+<jsp:include page="../sections/footer.jsp"/>
 </fmt:bundle>
 <script src=<c:url value="/js/main.js"/>></script>
 </body>

@@ -15,7 +15,7 @@
 
 </head>
 <body>
-<jsp:include page="sections/header.jsp"/>
+<jsp:include page="../sections/header.jsp"/>
 <div class="container center-block" id="main">
     <h3 class="text-center"><fmt:message key="page.message.edit.conference"/></h3>
     <div class="card text-center">
@@ -210,7 +210,7 @@
 </div><!--card-->
 
 </body>
-<jsp:include page="sections/footer.jsp"/>
+<jsp:include page="../sections/footer.jsp"/>
 
 <script src=<c:url value="/js/main.js"/>></script>
 

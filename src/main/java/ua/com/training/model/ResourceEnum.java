@@ -4,6 +4,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public enum ResourceEnum {
+    
     SQL_REQUESTS_BUNDLE {
         {
             this.bundleName = "sqlRequests";
@@ -34,7 +35,7 @@ public enum ResourceEnum {
             this.bundleName = "email";
         }
     },
-    BUISNESS_LOGIC {
+    BUSINESS_LOGIC {
         {
             this.bundleName="businessLogic";
         }

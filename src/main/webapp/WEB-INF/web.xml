@@ -78,17 +78,17 @@
 
     <error-page>
         <error-code>404</error-code>
-        <location>/WEB-INF/404errorPage.jsp</location>
+        <location>/WEB-INF/errors/404errorPage.jsp</location>
     </error-page>
 
     <error-page>
         <exception-type>ua.com.training.model.exceptions.AccessDeniedException</exception-type>
-        <location>/WEB-INF/permissionDenied.jsp</location>
+        <location>/WEB-INF/errors/permissionDenied.jsp</location>
     </error-page>
 
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
-        <location>/WEB-INF/serverErrorPage.jsp</location>
+        <location>/WEB-INF/errors/serverErrorPage.jsp</location>
     </error-page>
 
     <jsp-config>
