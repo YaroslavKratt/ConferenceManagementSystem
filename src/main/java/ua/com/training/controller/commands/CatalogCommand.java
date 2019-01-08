@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.com.training.controller.utils.PaginationUtil;
 import ua.com.training.model.entity.User;
-import ua.com.training.model.services.ConferenceService;
+import ua.com.training.model.services.conference_service.ConferenceService;
 import ua.com.training.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;

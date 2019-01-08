@@ -1,7 +1,7 @@
 package ua.com.training.controller.commands;
 
 import ua.com.training.model.ResourceEnum;
-import ua.com.training.model.services.ConferenceService;
+import ua.com.training.model.services.conference_service.ConferenceService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;

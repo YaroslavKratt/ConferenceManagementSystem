@@ -42,11 +42,14 @@
             <div class="container" id="first-inputs">
                 <div class="row report-input align-items-center" id="report-data">
                     <div class="col-md-4 col-lg-4 col-sm-12  centered">
-                        <label for="report-name-en-new"> <fmt:message key="page.message.en"/> </label>
-                        <input type="text" id="report-name-en-new" name="report-name-en-new">
-                        <label for="report-name-ua-new"><fmt:message key="page.message.ua"/> </label>
-                        <input type="text" id="report-name-ua-new" name="report-name-ua-new">
-
+                        <div class="row">
+                            <label for="report-name-en-new"> <fmt:message key="page.message.en"/> </label>
+                            <input type="text" id="report-name-en-new" name="report-name-en-new">
+                        </div>
+                        <div class="row">
+                            <label for="report-name-ua-new"><fmt:message key="page.message.ua"/> </label>
+                            <input type="text" id="report-name-ua-new" name="report-name-ua-new">
+                        </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-sm-12  centered">
                         <input type="datetime-local" name="report-date-time-new" required>

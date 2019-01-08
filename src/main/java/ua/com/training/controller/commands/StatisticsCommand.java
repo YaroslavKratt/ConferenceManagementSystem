@@ -3,9 +3,10 @@ package ua.com.training.controller.commands;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.com.training.controller.utils.PaginationUtil;
-import ua.com.training.model.services.ConferenceService;
+import ua.com.training.model.services.conference_service.ConferenceService;
 import ua.com.training.model.services.ReportService;
 import ua.com.training.model.services.UserService;
+import ua.com.training.model.services.conference_service.FilterSortType;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
@@ -20,24 +21,37 @@ public class StatisticsCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
+        LOG.debug("type" + request.getParameter("sortType"));
         Locale locale = (Locale) request.getSession().getAttribute("locale");
-        Map<String, Integer> paginationParameters = new PaginationUtil().calcPaginationParameters(request,
-                conferenceService.getConferencesAmount());
+        FilterSortType filterSortType = setFilterSortType(request);
+        Map<String, Integer> paginationParameters = new PaginationUtil()
+                .calcPaginationParameters(request, conferenceService.getConferencesAmount(filterSortType));
         request.setAttribute("paginationParameters", paginationParameters);
-        request.setAttribute("conferences", conferenceService.getPaginatedList(paginationParameters.get("begin"),
-                paginationParameters.get("recordsPerPage"),locale.toString()));
+        request.setAttribute("conferences", conferenceService.getSortedPaginatedConferences(filterSortType, paginationParameters.get("begin"),
+                paginationParameters.get("recordsPerPage"), locale.toString()));
         request.setAttribute("scrollPosition", request.getParameter("scrollPosition"));
+        request.setAttribute("sortType", request.getParameter("sortType"));
 
         if (!Objects.isNull(request.getParameter("submitted"))) {
             setVisitorsAmountForAllReports(request);
         }
 
-        long userId = userService.getUserId((String) request.getSession().getAttribute("email"),locale.toString());
+        long userId = userService.getUserId((String) request.getSession().getAttribute("email"), locale.toString());
         request.setAttribute("userId", userId);
         request.setAttribute("subscriptions", userService.getUserSubscriptionsIds(userId));
-        request.setAttribute("conferences", conferenceService.getPaginatedList(paginationParameters.get("begin"),
-                paginationParameters.get("recordsPerPage"),locale.toString()));
+        request.setAttribute("conferences", conferenceService.getSortedPaginatedConferences(filterSortType, paginationParameters.get("begin"),
+                paginationParameters.get("recordsPerPage"), locale.toString()));
         return PATH_BUNDLE.getString("page.statistic");
+    }
+
+    private FilterSortType setFilterSortType(HttpServletRequest request) {
+        FilterSortType filterSortType;
+        if (Objects.isNull(request.getParameter("sortType"))) {
+            filterSortType = FilterSortType.ALL;
+        } else {
+            filterSortType = FilterSortType.valueOf(request.getParameter("sortType").toUpperCase());
+        }
+        return filterSortType;
     }
 
     private void setVisitorsAmountForAllReports(HttpServletRequest request) {

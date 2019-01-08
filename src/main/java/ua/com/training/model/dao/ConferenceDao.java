@@ -22,7 +22,15 @@ public interface ConferenceDao extends DAO<Conference> {
     List<Long> getAllConferenceIdsInSubscriptions();
 
 
-    List<Conference> getPaginatedList(int begin, int recordsPerPage, String language);
+    List<Conference> getPaginatedConferences(int begin, int recordsPerPage, String language);
 
     int getConferencesAmount();
+
+    List<Conference> getPaginatedPastConferences(int begin, int recordsPerPage, String language);
+
+    List<Conference> getPaginatedFutureConferences(int begin, int recordsPerPage, String language);
+
+    int getFutureConferencesAmount();
+
+    int getPastConferencesAmount();
 }

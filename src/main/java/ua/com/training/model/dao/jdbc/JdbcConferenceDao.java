@@ -10,7 +10,6 @@ import ua.com.training.model.dto.ConferenceDTO;
 import ua.com.training.model.dto.ReportDTO;
 import ua.com.training.model.dto.SubscriptionDTO;
 import ua.com.training.model.entity.Conference;
-import ua.com.training.model.entity.Report;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -25,7 +24,7 @@ public class JdbcConferenceDao implements ConferenceDao {
 
 
     @Override
-    public Conference getById(long id,String language) {
+    public Conference getById(long id, String language) {
         Conference conference;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sqlRequestBundle.getString("conference.select.by.id"))) {
@@ -165,7 +164,7 @@ public class JdbcConferenceDao implements ConferenceDao {
         ) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                subscriptions.add(new SubscriptionDtoMapper().mapToObject(resultSet,language));
+                subscriptions.add(new SubscriptionDtoMapper().mapToObject(resultSet, language));
             }
             return subscriptions;
         } catch (SQLException e) {
@@ -193,22 +192,90 @@ public class JdbcConferenceDao implements ConferenceDao {
     }
 
     @Override
-    public List<Conference> getPaginatedList(int begin, int recordsPerPage,String language) {
-        List<Conference> paginatedList;
+    public List<Conference> getPaginatedConferences(int begin, int recordsPerPage, String language) {
         ConferenceMapper conferenceMapper = new ConferenceMapper();
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection
                      .prepareStatement(sqlRequestBundle.getString("conferences.select.paginated"))) {
-            statement.setInt(1, begin);
-            statement.setInt(2, recordsPerPage);
-            ResultSet resultSet = statement.executeQuery();
-            paginatedList = conferenceMapper.mapToList(resultSet, language);
-            return paginatedList;
+            return getConferences(begin, recordsPerPage, language, conferenceMapper, statement);
         } catch (SQLException e) {
             LOG.error("Cant get paginated list: " + e);
             throw new RuntimeException();
         }
+    }
+
+
+    @Override
+    public List<Conference> getPaginatedPastConferences(int begin, int recordsPerPage, String language) {
+        ConferenceMapper conferenceMapper = new ConferenceMapper();
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection
+                     .prepareStatement(sqlRequestBundle.getString("conferences.select.paginated.past"))) {
+            LOG.debug(getConferences(begin, recordsPerPage, language, conferenceMapper, statement).size());
+                       return getConferences(begin, recordsPerPage, language, conferenceMapper, statement);
+        } catch (SQLException e) {
+            LOG.error("Cant get paginated past conferences list: " + e);
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public List<Conference> getPaginatedFutureConferences(int begin, int recordsPerPage, String language) {
+        ConferenceMapper conferenceMapper = new ConferenceMapper();
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection
+                     .prepareStatement(sqlRequestBundle.getString("conferences.select.paginated.future"))) {
+            return getConferences(begin, recordsPerPage, language, conferenceMapper, statement);
+        } catch (SQLException e) {
+            LOG.error("Cant get paginated future conferences list: " + e);
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public int getFutureConferencesAmount() {
+        int conferenceAmount = 0;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement conferenceStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("conferences.future.count"))) {
+            ResultSet resultSet = conferenceStatement.executeQuery();
+            if (resultSet.next()) {
+                conferenceAmount = resultSet.getInt(1);
+            }
+            return conferenceAmount;
+        } catch (SQLException e) {
+            LOG.error("Cant count future conferences: " + e);
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public int getPastConferencesAmount() {
+        int conferenceAmount = 0;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement conferenceStatement = connection
+                     .prepareStatement(sqlRequestBundle.getString("conferences.past.count"))) {
+            ResultSet resultSet = conferenceStatement.executeQuery();
+            if (resultSet.next()) {
+                conferenceAmount = resultSet.getInt(1);
+            }
+            return conferenceAmount;
+        } catch (SQLException e) {
+            LOG.error("Cant count past conferences: " + e);
+            throw new RuntimeException();
+        }
+    }
+
+    private List<Conference> getConferences(int begin, int recordsPerPage, String language, ConferenceMapper conferenceMapper, PreparedStatement statement) throws SQLException {
+        List<Conference> paginatedList;
+        statement.setInt(1, begin);
+        statement.setInt(2, recordsPerPage);
+        ResultSet resultSet = statement.executeQuery();
+        paginatedList = conferenceMapper.mapToList(resultSet, language);
+        return paginatedList;
     }
 
     @Override
@@ -227,5 +294,7 @@ public class JdbcConferenceDao implements ConferenceDao {
             throw new RuntimeException();
         }
     }
+
+
 }
 

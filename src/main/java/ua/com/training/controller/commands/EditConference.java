@@ -7,7 +7,7 @@ import ua.com.training.model.ResourceEnum;
 import ua.com.training.model.dto.ConferenceDTO;
 import ua.com.training.model.dto.ReportDTO;
 import ua.com.training.model.entity.User;
-import ua.com.training.model.services.ConferenceService;
+import ua.com.training.model.services.conference_service.ConferenceService;
 import ua.com.training.model.services.ReportService;
 import ua.com.training.model.services.UserService;
 

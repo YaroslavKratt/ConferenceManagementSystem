@@ -5,10 +5,8 @@ import org.apache.logging.log4j.Logger;
 import ua.com.training.model.ResourceEnum;
 import ua.com.training.model.dto.ConferenceDTO;
 import ua.com.training.model.dto.ReportDTO;
-import ua.com.training.model.entity.Conference;
-import ua.com.training.model.entity.Report;
 import ua.com.training.model.entity.User;
-import ua.com.training.model.services.ConferenceService;
+import ua.com.training.model.services.conference_service.ConferenceService;
 import ua.com.training.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
