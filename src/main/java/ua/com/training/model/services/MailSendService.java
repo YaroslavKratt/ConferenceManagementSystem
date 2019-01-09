@@ -77,7 +77,7 @@ public class MailSendService implements Runnable {
 
         for (String email : subscribedEmails) {
             for (Long id : conferenceIds) {
-                if (checkForAppropriateSubscription(email, id, subscriptions)) {
+                if (isAppropriateSubscription(email, id, subscriptions)) {
                     try {
                         messages.add(createMessage(session, email, getAppropriateSubscriptions(email, id, subscriptions)));
                     } catch (TooEarlyDateException ignored) {
@@ -148,7 +148,7 @@ public class MailSendService implements Runnable {
     }
 
 
-    private boolean checkForAppropriateSubscription(String email, Long id, List<SubscriptionDTO> subscriptions) {
+    private boolean isAppropriateSubscription(String email, Long id, List<SubscriptionDTO> subscriptions) {
         return getAppropriateSubscriptions(email, id, subscriptions).size() > 0;
     }
 

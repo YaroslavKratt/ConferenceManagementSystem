@@ -34,7 +34,7 @@ public class FrontControllerTest {
         when(request.getRequestDispatcher(path)).thenReturn(dispatcher);
         when(request.getParameter(anyString())).thenReturn(email);
         when(request.getSession()).thenReturn(session);
-        when(service.checkUserExist(email)).thenReturn(false);
+        when(service.isUserExist(email)).thenReturn(false);
         when(session.getAttribute("role")).thenReturn(role);
         when(session.getAttribute("locale")).thenReturn(new Locale("en", "US"));
         servlet.doPost(request, response);

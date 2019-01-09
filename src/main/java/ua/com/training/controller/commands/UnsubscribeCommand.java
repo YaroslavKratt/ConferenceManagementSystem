@@ -21,7 +21,7 @@ public class UnsubscribeCommand implements Command {
         long userId = userService.getUserId((String) session.getAttribute("email"),locale.toString());
         long reportId = Long.valueOf(request.getParameter("reportForUnsubscription"));
 
-        if (reportService.checkSubscription(userId, reportId)) {
+        if (reportService.isSubscribed(userId, reportId)) {
             reportService.unsubscribeUserFromReport(userId, reportId);
             request.setAttribute(String.valueOf(reportId), "unsubscribed");
             request.setAttribute("subscriptions", userService.getUserSubscriptionsIds(userId));

@@ -46,7 +46,7 @@ public class RegistrationCommand implements Command {
 
         String email = request.getParameter("email");
 
-        if (userService.checkUserExist(email)) {
+        if (userService.isUserExist(email)) {
             request.setAttribute("wrongEmail", messageBundle.getString("info.message.user.already.exist"));
             return PATH_BUNDLE.getString("page.registration");
         }

@@ -3,6 +3,7 @@ package ua.com.training.controller.commands;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.com.training.controller.utils.RequestParamUtil;
+import ua.com.training.controller.utils.ValidationUtil;
 import ua.com.training.model.ResourceEnum;
 import ua.com.training.model.dto.ConferenceDTO;
 import ua.com.training.model.dto.ReportDTO;
@@ -19,7 +20,7 @@ public class EditConference implements Command {
     private final static Logger LOG = LogManager.getLogger(EditConference.class);
     private UserService userService = new UserService();
     private ConferenceService conferenceService = new ConferenceService();
-    private RequestParamUtil requestParamUtil = new RequestParamUtil();
+    private ValidationUtil validationUtil = new ValidationUtil();
     private ReportService reportService = new ReportService();
 
     @Override
@@ -44,7 +45,7 @@ public class EditConference implements Command {
 
         String[] reportIds = request.getParameterValues("report-id");
 
-        if (requestParamUtil.nullReportParametersPresent(request, reportIds) || requestParamUtil.nullConferenceParametersPresent(request)) {
+        if (validationUtil.nullReportParametersPresent(request, reportIds) || validationUtil.nullConferenceParametersPresent(request)) {
             LOG.trace("Some parameter is null");
 
             return PATH_BUNDLE.getString("page.edit.conference");
@@ -84,7 +85,7 @@ public class EditConference implements Command {
 
         request.setAttribute("conference", conference);
 
-        if (!requestParamUtil.nullReportParametersPresent(request, "0")) {
+        if (!validationUtil.nullReportParametersPresent(request, "0")) {
             LocalDateTime newReportDateTime = LocalDateTime.parse(request.getParameter("report-date-time0"));
 
             if (newReportDateTime.compareTo(conferenceDateTime) < 0) {

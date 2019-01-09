@@ -18,12 +18,12 @@ public class UserServiceTest {
     @Test
     public void returnTrueIfUserWithSuchEmailExist() {
         String email = "kratt202@gmail.com";
-        assertTrue(userService.checkUserExist(email));
+        assertTrue(userService.isUserExist(email));
     }
 
     @Test
     public void returnTrueIfUserWithSuchEmailNotExist() {
         String email = "email-not-exist@email.com";
-        assertFalse(userService.checkUserExist(email));
+        assertFalse(userService.isUserExist(email));
     }
 }

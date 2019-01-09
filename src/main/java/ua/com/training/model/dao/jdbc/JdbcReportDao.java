@@ -90,7 +90,7 @@ public class JdbcReportDao implements ReportDao {
 
 
     @Override
-    public boolean checkSubscription(long userId, long reportId) {
+    public boolean isSubscribed(long userId, long reportId) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection
                      .prepareStatement(sqlRequestBundle.getString("report.select.subscription.by.id"))) {

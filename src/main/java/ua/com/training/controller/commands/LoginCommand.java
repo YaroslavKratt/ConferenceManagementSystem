@@ -46,7 +46,7 @@ public class LoginCommand implements Command {
             LOG.warn("Already logged in user tried to enter");
             return "redirect:/" + UserService.getRoleString(email,locale.toString());
         }
-        if (!userService.checkUserExist(email)) {
+        if (!userService.isUserExist(email)) {
             LOG.info("User" + email + " dose not exist");
             putMessageInRequest(request, "wrongEmail", messageBundle, "info.message.no.user.with.email");
             return PATH_BUNDLE.getString("page.login");

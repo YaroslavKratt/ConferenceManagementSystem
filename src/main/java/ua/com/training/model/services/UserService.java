@@ -15,7 +15,7 @@ public class UserService {
 
     }
 
-    public boolean checkUserExist(String email) {
+    public boolean isUserExist(String email) {
         return userDao.checkUserExist(email);
     }
 
