@@ -1,6 +1,8 @@
 package ua.com.training.controller.utils;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 import ua.com.training.model.entity.User;
 
@@ -8,9 +10,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SecurityUtil {
-    private static final Map<String, List<String>> permittedCommandMap = new HashMap<>();
+    private static final Map<String, List<String>> permittedCommandMap = new ConcurrentHashMap<>();
+    private final static Logger LOG = LogManager.getLogger(SecurityUtil.class);
+
 
     static {
         init();
@@ -32,6 +37,7 @@ public class SecurityUtil {
         adminCommand.add("deletereport");
         adminCommand.add("statistics");
         adminCommand.add("addreport");
+
 
 
 
@@ -73,8 +79,11 @@ public class SecurityUtil {
     }
 
     public boolean isSecuredPage(String urlPattern) {
+
         for (User.Role role : User.Role.values()) {
-            return urlPattern.contains(role.getStringRole());
+            if (urlPattern.contains(role.getStringRole())) {
+                return true;
+            }
         }
         return false;
     }

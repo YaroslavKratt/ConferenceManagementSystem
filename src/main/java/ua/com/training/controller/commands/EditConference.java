@@ -29,6 +29,9 @@ public class EditConference implements Command {
         ResourceBundle messages = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), locale);
         ResourceBundle regexpBundle = ResourceBundle.getBundle(ResourceEnum.REGEXP_BUNDLE.getBundleName(), locale);
 
+        if(Objects.isNull(request.getParameter("conference"))) {
+            return "redirect:/" + request.getSession().getAttribute("role") + PATH_BUNDLE.getString("path.catalog");
+        }
         long conferenceId = Long.parseLong(request.getParameter("conference"));
         ConferenceDTO conference =
                 new ConferenceDTO(conferenceService.getConferenceById(conferenceId, "en_US"),

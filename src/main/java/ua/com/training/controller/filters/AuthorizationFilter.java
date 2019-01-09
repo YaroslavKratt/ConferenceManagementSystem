@@ -3,15 +3,17 @@ package ua.com.training.controller.filters;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.com.training.controller.utils.SecurityUtil;
+import ua.com.training.model.entity.User;
 import ua.com.training.model.exceptions.AccessDeniedException;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class AuthorizationFilter implements Filter {
-    private final static Logger LOG = LogManager.getLogger(SecurityUtil.class);
+    private final static Logger LOG = LogManager.getLogger(AuthorizationFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

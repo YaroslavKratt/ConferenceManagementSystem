@@ -25,18 +25,17 @@ public class GuestFilter implements Filter {
 
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
+       // HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
         String role = (String) session.getAttribute("role");
 
         if (Objects.isNull(role)) {
             session.setAttribute("role", User.Role.GUEST.getStringRole());
             LOG.debug("PATH IN FILTER: " + request.getRequestURI());
-            response.sendRedirect(request.getRequestURI());
-            return;
+
         }
 
-        filterChain.doFilter(request, response);
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override
