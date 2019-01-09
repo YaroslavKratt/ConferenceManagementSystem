@@ -5,6 +5,7 @@ import ua.com.training.model.services.conference_service.ConferenceService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class DeleteConferenceCommand implements Command {
@@ -13,6 +14,9 @@ public class DeleteConferenceCommand implements Command {
         Locale locale = (Locale) request.getSession().getAttribute("locale");
         ResourceBundle messages = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), locale);
 
+        if (Objects.isNull(request.getParameter("deleteConference"))) {
+            return "redirect:/" + request.getSession().getAttribute("role") + PATH_BUNDLE.getString("path.catalog");
+        }
         if (!new ConferenceService().deleteConference(Long.valueOf(request.getParameter("deleteConference")))) {
             throw new RuntimeException(messages.getString("error.message.conference.not.deleted"));
         }

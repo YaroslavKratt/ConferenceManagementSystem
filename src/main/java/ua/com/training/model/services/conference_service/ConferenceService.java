@@ -33,13 +33,13 @@ public class ConferenceService {
     }
 
     public List<Conference> getSortedPaginatedConferences(FilterSortType type, int begin, int recordsPerPage, String language) {
-        Map<FilterSortType, PaginatedFilterSort> sorted = new HashMap<>();
+        Map<FilterSortType, PaginatedFilterSort> filterSortMap = new HashMap<>();
 
-        sorted.put(FilterSortType.ALL, () -> getPaginatedList(begin, recordsPerPage, language));
-        sorted.put(FilterSortType.PAST, () -> getPaginatedPastConferences(begin, recordsPerPage, language));
-        sorted.put(FilterSortType.FUTURE, () -> getPaginatedFutureConferences(begin, recordsPerPage, language));
+        filterSortMap.put(FilterSortType.ALL, () -> getPaginatedList(begin, recordsPerPage, language));
+        filterSortMap.put(FilterSortType.PAST, () -> getPaginatedPastConferences(begin, recordsPerPage, language));
+        filterSortMap.put(FilterSortType.FUTURE, () -> getPaginatedFutureConferences(begin, recordsPerPage, language));
 
-        return sorted.get(type).filterSort();
+        return filterSortMap.get(type).filterSort();
 
 
     }

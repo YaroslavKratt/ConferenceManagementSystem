@@ -8,6 +8,7 @@ import ua.com.training.model.services.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Locale;
+import java.util.Objects;
 
 
 public class SubscribeCommand implements Command {
@@ -19,8 +20,13 @@ public class SubscribeCommand implements Command {
     public String execute(HttpServletRequest request) {
         Locale locale = (Locale) request.getSession().getAttribute("locale");
         HttpSession session = request.getSession();
-        long reportId = Long.valueOf(request.getParameter("reportForSubscription"));
         long userId = userService.getUserId((String) session.getAttribute("email"),locale.toString());
+
+        if (Objects.isNull(request.getParameter("reportForSubscription"))) {
+            return "redirect:/" + request.getSession().getAttribute("role") + PATH_BUNDLE.getString("path.catalog");
+        }
+
+        long reportId = Long.valueOf(request.getParameter("reportForSubscription"));
 
         reportService.subscribeUserOnReport(userId, reportId);
         request.setAttribute(String.valueOf(reportId), "subscribed");

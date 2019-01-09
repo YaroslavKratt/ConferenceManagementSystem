@@ -7,6 +7,7 @@ import ua.com.training.model.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
+import java.util.Objects;
 
 public class DeleteReportCommand implements Command {
     private final static Logger LOG = LogManager.getLogger(DeleteReportCommand.class);
@@ -14,6 +15,11 @@ public class DeleteReportCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         Locale locale = (Locale) request.getSession().getAttribute("locale");
+
+        if(Objects.isNull(request.getParameter("reportIdForRemoving"))) {
+            return "redirect:/" + request.getSession().getAttribute("role") + PATH_BUNDLE.getString("path.catalog");
+        }
+
         long id = Long.parseLong(request.getParameter("reportIdForRemoving"));
         String conferenceIdParameter = "";
 

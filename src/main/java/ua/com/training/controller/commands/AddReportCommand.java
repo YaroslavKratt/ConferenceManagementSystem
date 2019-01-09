@@ -11,9 +11,9 @@ import ua.com.training.model.services.UserService;
 import ua.com.training.model.services.conference_service.ConferenceService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.*;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class AddReportCommand implements Command {
@@ -25,6 +25,11 @@ public class AddReportCommand implements Command {
         Locale locale = (Locale) request.getSession().getAttribute("locale");
         ResourceBundle messages = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), locale);
         ResourceBundle regexpBundle = ResourceBundle.getBundle(ResourceEnum.REGEXP_BUNDLE.getBundleName(), locale);
+
+        if (Objects.isNull(request.getParameter("conferenceId"))) {
+            return "redirect:/" + request.getSession().getAttribute("role") + PATH_BUNDLE.getString("path.catalog");
+
+        }
         Conference conference = new ConferenceService()
                 .getConferenceById(Long.parseLong(request.getParameter("conferenceId")), locale.toString());
 
@@ -39,28 +44,31 @@ public class AddReportCommand implements Command {
             return PATH_BUNDLE.getString("page.add.report");
         }
 
-        if (!validationUtil.nullReportParametersPresent(request, "-new")) {
-            if (LocalDateTime.parse(request.getParameter("report-date-time-new")).compareTo(conference.getDateTime()) < 0) {
-                request.setAttribute("report-name-en-new", request.getParameter("report-name-en-new"));
-                request.setAttribute("report-name-ua-new", request.getParameter("report-name-ua-new"));
+        if (validationUtil.nullReportParametersPresent(request, "-new")) {
+            return PATH_BUNDLE.getString("page.add.report");
 
-                request.setAttribute("report-date-time-new", request.getParameter("report-date-time-new"));
-                request.setAttribute("earlierThanConference", messages.getString("info.message.earlier.than.conference"));
-                return PATH_BUNDLE.getString("page.add.report");
-            }
-
-            if (!validationUtil.validate(request.getParameter("report-name-en-new"), regexpBundle.getString("regexp.text.in.english"))) {
-                request.setAttribute("notInEnglish", messages.getString("info.not.in.english"));
-                return PATH_BUNDLE.getString("page.add.report");
-
-            }
-            new ReportService().addNewReportToConference(conference.getId(), new ReportDTO.Builder()
-                    .setTopicEn(request.getParameter("report-name-en-new"))
-                    .setTopicUa(request.getParameter("report-name-ua-new"))
-                    .setDateTime(LocalDateTime.parse(request.getParameter("report-date-time-new")))
-                    .setSpeakerId(Long.parseLong(request.getParameter("report-speaker-new")))
-                    .build());
         }
+        if (LocalDateTime.parse(request.getParameter("report-date-time-new")).compareTo(conference.getDateTime()) < 0) {
+            request.setAttribute("report-name-en-new", request.getParameter("report-name-en-new"));
+            request.setAttribute("report-name-ua-new", request.getParameter("report-name-ua-new"));
+
+            request.setAttribute("report-date-time-new", request.getParameter("report-date-time-new"));
+            request.setAttribute("earlierThanConference", messages.getString("info.message.earlier.than.conference"));
+            return PATH_BUNDLE.getString("page.add.report");
+        }
+
+        if (!validationUtil.validate(request.getParameter("report-name-en-new"), regexpBundle.getString("regexp.text.in.english"))) {
+            request.setAttribute("notInEnglish", messages.getString("info.not.in.english"));
+            return PATH_BUNDLE.getString("page.add.report");
+
+        }
+        new ReportService().addNewReportToConference(conference.getId(), new ReportDTO.Builder()
+                .setTopicEn(request.getParameter("report-name-en-new"))
+                .setTopicUa(request.getParameter("report-name-ua-new"))
+                .setDateTime(LocalDateTime.parse(request.getParameter("report-date-time-new")))
+                .setSpeakerId(Long.parseLong(request.getParameter("report-speaker-new")))
+                .build());
+
         return "redirect:/"
                 + request.getSession().getAttribute("role")
                 + PATH_BUNDLE.getString("path.catalog")
