@@ -32,8 +32,7 @@ public class CatalogCommand implements Command {
 
         request.setAttribute("sortType", request.getParameter("sortType"));
         request.setAttribute("scrollPosition", request.getParameter("scrollPosition"));
-        LOG.debug(conferenceService.getSortedPaginatedConferences(filterSortType, paginationParameters.get("begin"),
-                paginationParameters.get("recordsPerPage"), locale.toString()));
+
         if (!isGuest(request)) {
             long userId = userService.getUserId((String) request.getSession().getAttribute("email"),locale.toString());
             request.setAttribute("userId", userId);
