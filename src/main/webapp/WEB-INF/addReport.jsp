@@ -45,6 +45,8 @@
                         <div class="row">
                             <label for="report-name-en-new"> <fmt:message key="page.message.en"/> </label>
                             <input type="text" id="report-name-en-new" name="report-name-en-new">
+                            <p class="text-danger"> ${notInEnglish}</p>
+
                         </div>
                         <div class="row">
                             <label for="report-name-ua-new"><fmt:message key="page.message.ua"/> </label>

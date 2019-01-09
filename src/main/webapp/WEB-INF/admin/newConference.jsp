@@ -30,12 +30,14 @@
                 <div class="col-md-4 col-lg-4 col-sm-12  centered">
                     <label for="conference-name-en"><fmt:message key="page.message.topic.of.conference.en"/></label>
                     <input type="text" name="conference-name-en" id="conference-name-en" required>
+                    <p class="text-danger"> ${conferenceNameEnNotInEnglish}</p>
                     <label for="conference-name-ua"><fmt:message key="page.message.topic.of.conference.ua"/></label>
                     <input type="text" name="conference-name-ua" id="conference-name-ua" required>
                 </div>
                 <div class="col-md-4 col-lg-4 col-sm-12  centered">
                     <label for="conference-location-en"><fmt:message key="page.message.conference.location.en"/></label>
                     <input type="text" name="conference-location-en" id="conference-location-en" required>
+                    <p class="text-danger"> ${conferenceLocationEnNotInEnglish}</p>
                     <label for="conference-location-ua"><fmt:message key="page.message.conference.location.ua"/></label>
                     <input type="text" name="conference-location-ua" id="conference-location-ua" required>
                 </div>

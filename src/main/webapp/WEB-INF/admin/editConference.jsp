@@ -30,6 +30,8 @@
                         </label>
                         <input type="text" name="conference-name-en" id="conference-name-en" required
                                value="${conference.topicEn}">
+                        <p class="text-danger"> ${conferenceNameEnNotInEnglish}</p>
+
                         <input type="hidden" name="conference" value="${conference.id}">
                         <label for="conference-name-ua"><h5><fmt:message
                                 key="page.message.topic.of.conference.ua"/></h5>
@@ -43,6 +45,8 @@
                         </label>
                         <input type="text" name="conference-location-en" id="conference-location-en" required
                                value="${conference.locationEn}">
+                        <p class="text-danger"> ${conferenceLocationEnNotInEnglish}</p>
+
                         <label for="conference-location-ua"><h5><fmt:message
                                 key="page.message.conference.location.ua"/></h5>
                         </label>

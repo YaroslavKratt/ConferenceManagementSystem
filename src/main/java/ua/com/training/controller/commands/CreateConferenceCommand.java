@@ -2,6 +2,7 @@ package ua.com.training.controller.commands;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ua.com.training.controller.utils.ValidationUtil;
 import ua.com.training.model.ResourceEnum;
 import ua.com.training.model.dto.ConferenceDTO;
 import ua.com.training.model.dto.ReportDTO;
@@ -16,6 +17,7 @@ import java.util.*;
 public class CreateConferenceCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(CreateConferenceCommand.class);
     private UserService userService = new UserService();
+    private ValidationUtil validationUtil = new ValidationUtil();
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -23,12 +25,29 @@ public class CreateConferenceCommand implements Command {
         ConferenceDTO conference = new ConferenceDTO();
         Locale locale = (Locale) request.getSession().getAttribute("locale");
         ResourceBundle messages = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), locale);
+        ResourceBundle regexpBundle = ResourceBundle.getBundle(ResourceEnum.REGEXP_BUNDLE.getBundleName(), locale);
+
         request.setAttribute("possibleSpeakers", new UserService().getAllUsers(locale.toString()));
 
-        if (request.getParameter("conference-name-en") == null || request.getParameter("conference-name-ua") == null) {
+        if (validationUtil.nullConferenceParametersPresent(request)) {
             return PATH_BUNDLE.getString("page.conference");
         }
-        LocalDateTime conferenceDateTime = LocalDateTime.parse(request.getParameter("conference-date-time"));
+
+        if (!validationUtil.validate(request.getParameter("conference-name-en"), regexpBundle.getString("regexp.text.in.english"))) {
+            request.setAttribute("conferenceNameEnNotInEnglish", messages.getString("info.not.in.english"));
+
+            return PATH_BUNDLE.getString("page.conference");
+
+        }
+        if (!validationUtil.validate(request.getParameter("conference-location-en"), regexpBundle.getString("regexp.text.in.english"))) {
+            request.setAttribute("conferenceLocationEnNotInEnglish", messages.getString("info.not.in.english"));
+
+            return PATH_BUNDLE.getString("page.conference");
+
+        }
+
+
+            LocalDateTime conferenceDateTime = LocalDateTime.parse(request.getParameter("conference-date-time"));
         if (conferenceDateTime.compareTo(LocalDateTime.now()) < 0) {
             request.setAttribute("wrongDate", messages.getString("info.message.early.date"));
             return PATH_BUNDLE.getString("page.conference");

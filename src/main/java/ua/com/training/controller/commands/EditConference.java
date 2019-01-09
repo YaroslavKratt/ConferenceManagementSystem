@@ -27,6 +27,8 @@ public class EditConference implements Command {
     public String execute(HttpServletRequest request) {
         Locale locale = (Locale) request.getSession().getAttribute("locale");
         ResourceBundle messages = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), locale);
+        ResourceBundle regexpBundle = ResourceBundle.getBundle(ResourceEnum.REGEXP_BUNDLE.getBundleName(), locale);
+
         long conferenceId = Long.parseLong(request.getParameter("conference"));
         ConferenceDTO conference =
                 new ConferenceDTO(conferenceService.getConferenceById(conferenceId, "en_US"),
@@ -51,7 +53,20 @@ public class EditConference implements Command {
             return PATH_BUNDLE.getString("page.edit.conference");
 
         }
+        if (!validationUtil.validate(request.getParameter("conference-name-en"), regexpBundle.getString("regexp.text.in.english"))) {
+            request.setAttribute("conferenceNameEnNotInEnglish", messages.getString("info.not.in.english"));
 
+            return PATH_BUNDLE.getString("page.edit.conference");
+
+
+        }
+        if (!validationUtil.validate(request.getParameter("conference-location-en"), regexpBundle.getString("regexp.text.in.english"))) {
+            request.setAttribute("conferenceLocationEnNotInEnglish", messages.getString("info.not.in.english"));
+
+            return PATH_BUNDLE.getString("page.edit.conference");
+
+
+        }
         LocalDateTime conferenceDateTime = LocalDateTime.parse(request.getParameter("conference-date-time"));
         LOG.trace("Checking date");
 

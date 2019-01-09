@@ -11,6 +11,7 @@ import ua.com.training.model.services.UserService;
 import ua.com.training.model.services.conference_service.ConferenceService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.*;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -23,6 +24,7 @@ public class AddReportCommand implements Command {
     public String execute(HttpServletRequest request) {
         Locale locale = (Locale) request.getSession().getAttribute("locale");
         ResourceBundle messages = ResourceBundle.getBundle(ResourceEnum.MESSAGE_BUNDLE.getBundleName(), locale);
+        ResourceBundle regexpBundle = ResourceBundle.getBundle(ResourceEnum.REGEXP_BUNDLE.getBundleName(), locale);
         Conference conference = new ConferenceService()
                 .getConferenceById(Long.parseLong(request.getParameter("conferenceId")), locale.toString());
 
@@ -45,6 +47,12 @@ public class AddReportCommand implements Command {
                 request.setAttribute("report-date-time-new", request.getParameter("report-date-time-new"));
                 request.setAttribute("earlierThanConference", messages.getString("info.message.earlier.than.conference"));
                 return PATH_BUNDLE.getString("page.add.report");
+            }
+
+            if (!validationUtil.validate(request.getParameter("report-name-en-new"), regexpBundle.getString("regexp.text.in.english"))) {
+                request.setAttribute("notInEnglish", messages.getString("info.not.in.english"));
+                return PATH_BUNDLE.getString("page.add.report");
+
             }
             new ReportService().addNewReportToConference(conference.getId(), new ReportDTO.Builder()
                     .setTopicEn(request.getParameter("report-name-en-new"))
