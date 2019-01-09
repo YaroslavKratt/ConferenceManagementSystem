@@ -21,7 +21,6 @@
               onchange="submit()">
             <input type="hidden" name="currentPage" value="1">
             <div class="row">
-
                 <div class="col-4">
                     <label for="records"><fmt:message key="page.message.records.per.page"/> </label>
                     <select class="form-control" id="records" name="recordsPerPage">
@@ -53,36 +52,35 @@
                 </div>
                 <div class="col-4">
 
-                    <label for="sortType">SortType </label>
+                    <label for="sortType"><fmt:message key="page.message.filter"/> </label>
                     <select class="form-control" id="sortType" name="sortType">
                         <c:choose>
                             <c:when test="${sortType=='all'}">
-                                <option value="all" selected>all</option>
+                                <option value="all" selected><fmt:message key="page.message.sort.asсending"/> </option>
                             </c:when>
                             <c:otherwise>
-                                <option value="all">all</option>
+                                <option value="all"><fmt:message key="page.message.sort.asсending"/> </option>
                             </c:otherwise>
                         </c:choose>
                         <c:choose>
                             <c:when test="${sortType=='past'}">
-                                <option value="past" selected>past</option>
+                                <option value="past" selected><fmt:message key="page.message.sort.only.past" /></option>
                             </c:when>
                             <c:otherwise>
-                                <option value="past">past</option>
+                                <option value="past"><fmt:message key="page.message.sort.only.past" /></option>
                             </c:otherwise>
                         </c:choose>
                         <c:choose>
                             <c:when test="${sortType=='future'}">
-                                <option value="future" selected>future</option>
+                                <option value="future" selected><fmt:message key="page.message.sort.only.future" /></option>
                             </c:when>
                             <c:otherwise>
-                                <option value="future">future</option>
+                                <option value="future"><fmt:message key="page.message.sort.only.future" /></option>
                             </c:otherwise>
                         </c:choose>
                     </select>
                 </div>
             </div>
-
         </form>
     </div><!--container-->
     <div class=" container">

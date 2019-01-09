@@ -23,38 +23,71 @@
 <body>
 
 <div class="container">
-    <div class="row">
         <form action="${pageContext.request.contextPath}/${sessionScope.role}/catalog" onchange="submit()">
             <input type="hidden" name="currentPage" value="1">
-            <label for="records"><fmt:message key="page.message.records.per.page"/> </label>
-            <select class="form-control" id="records" name="recordsPerPage">
-                <c:choose>
-                    <c:when test="${paginationParameters.recordsPerPage==5}">
-                        <option value="5" selected>5</option>
-                    </c:when>
-                    <c:otherwise>
-                        <option value="5">5</option>
-                    </c:otherwise>
-                </c:choose>
-                <c:choose>
-                    <c:when test="${paginationParameters.recordsPerPage==10}">
-                        <option value="10" selected>10</option>
-                    </c:when>
-                    <c:otherwise>
-                        <option value="10">10</option>
-                    </c:otherwise>
-                </c:choose>
-                <c:choose>
-                    <c:when test="${paginationParameters.recordsPerPage==15}">
-                        <option value="15" selected>15</option>
-                    </c:when>
-                    <c:otherwise>
-                        <option value="15">15</option>
-                    </c:otherwise>
-                </c:choose>
-            </select>
+            <div class="row">
+
+                <div class="col-4">
+                    <label for="records"><fmt:message key="page.message.records.per.page"/> </label>
+                    <select class="form-control" id="records" name="recordsPerPage">
+                        <c:choose>
+                            <c:when test="${paginationParameters.recordsPerPage==5}">
+                                <option value="5" selected>5</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="5">5</option>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="${paginationParameters.recordsPerPage==10}">
+                                <option value="10" selected>10</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="10">10</option>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="${paginationParameters.recordsPerPage==15}">
+                                <option value="15" selected>15</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="15">15</option>
+                            </c:otherwise>
+                        </c:choose>
+                    </select>
+                </div>
+                <div class="col-4">
+
+                    <label for="sortType"><fmt:message key="page.message.filter"/> </label>
+                    <select class="form-control" id="sortType" name="sortType">
+                        <c:choose>
+                            <c:when test="${sortType=='all'}">
+                                <option value="all" selected><fmt:message key="page.message.sort.asсending"/> </option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="all"><fmt:message key="page.message.sort.asсending"/> </option>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="${sortType=='past'}">
+                                <option value="past" selected><fmt:message key="page.message.sort.only.past" /></option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="past"><fmt:message key="page.message.sort.only.past" /></option>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="${sortType=='future'}">
+                                <option value="future" selected><fmt:message key="page.message.sort.only.future" /></option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="future"><fmt:message key="page.message.sort.only.future" /></option>
+                            </c:otherwise>
+                        </c:choose>
+                    </select>
+                </div>
+            </div>
         </form>
-    </div>
 </div><!--container-->
 <div class="container justify-content-lg-center" id="main">
 

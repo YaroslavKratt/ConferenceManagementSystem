@@ -26,6 +26,7 @@ public class StatisticsCommand implements Command {
         FilterSortType filterSortType = setFilterSortType(request);
         Map<String, Integer> paginationParameters = new PaginationUtil()
                 .calcPaginationParameters(request, conferenceService.getConferencesAmount(filterSortType));
+
         request.setAttribute("paginationParameters", paginationParameters);
         request.setAttribute("conferences", conferenceService.getSortedPaginatedConferences(filterSortType, paginationParameters.get("begin"),
                 paginationParameters.get("recordsPerPage"), locale.toString()));

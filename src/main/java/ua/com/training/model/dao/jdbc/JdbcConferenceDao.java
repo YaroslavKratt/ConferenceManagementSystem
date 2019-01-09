@@ -213,7 +213,6 @@ public class JdbcConferenceDao implements ConferenceDao {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection
                      .prepareStatement(sqlRequestBundle.getString("conferences.select.paginated.past"))) {
-            LOG.debug(getConferences(begin, recordsPerPage, language, conferenceMapper, statement).size());
                        return getConferences(begin, recordsPerPage, language, conferenceMapper, statement);
         } catch (SQLException e) {
             LOG.error("Cant get paginated past conferences list: " + e);
