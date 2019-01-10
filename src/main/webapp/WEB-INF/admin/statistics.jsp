@@ -151,6 +151,7 @@
                                         <input hidden name="scrollPosition"
                                                id="scroll${conference.id}" value="">
                                         <input hidden name="submitted" value="true">
+                                        <input type="hidden" name="sortType" value="${sortType}">
                                         <button id="btn${conference.id}" class="btn btn-primary"
                                                 type="submit"
                                                 name="reportForSubscription"
@@ -180,7 +181,7 @@
                     <ul class="pagination">
                         <c:if test="${paginationParameters.currentPage != 1}">
                             <li class="page-item"><a class="page-link"
-                                                     href="/${sessionScope.role}/statistics?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage-1}"><<</a>
+                                                     href="/${sessionScope.role}/statistics?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage-1}&sortType=${sortType}"><<</a>
                             </li>
                         </c:if>
                         <c:forEach begin="1" end="${paginationParameters.pagesAmount}" var="i">
@@ -192,14 +193,14 @@
                                 </c:when>
                                 <c:otherwise>
                                     <li class="page-item"><a class="page-link"
-                                                             href="/${sessionScope.role}/statistics?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${i}">${i}</a>
+                                                             href="/${sessionScope.role}/statistics?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${i}&sortType=${sortType}">${i}</a>
                                     </li>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
                         <c:if test="${paginationParameters.currentPage lt paginationParameters.pagesAmount}">
                             <li class="page-item"><a class="page-link"
-                                                     href="/${sessionScope.role}/statistics?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage+1}">>></a>
+                                                     href="/${sessionScope.role}/statistics?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage+1}&sortType=${sortType}">>></a>
                             </li>
                         </c:if>
                     </ul>

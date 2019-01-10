@@ -8,7 +8,7 @@ import java.util.Objects;
 public class FilterSortUtil {
     public FilterSortType setFilterSortType(HttpServletRequest request) {
         FilterSortType filterSortType;
-        if (Objects.isNull(request.getParameter("sortType"))) {
+        if (new ValidationUtil().isNullOrEmpty(request.getParameter("sortType"))) {
             filterSortType = FilterSortType.ALL;
         } else {
             filterSortType = FilterSortType.valueOf(request.getParameter("sortType").toUpperCase());

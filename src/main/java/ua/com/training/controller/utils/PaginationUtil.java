@@ -1,10 +1,15 @@
 package ua.com.training.controller.utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PaginationUtil {
+    private final static Logger LOG = LogManager.getLogger(PaginationUtil.class);
+
     public Map<String, Integer> calcPaginationParameters(HttpServletRequest request, int rows) {
         RequestParamUtil requestParamUtil = new RequestParamUtil();
         int currentPage =
@@ -25,7 +30,10 @@ public class PaginationUtil {
 
         int begin = currentPage * recordsPerPage - recordsPerPage;
 
-        Map<String, Integer> parameters = new HashMap<>();
+        if (begin < 0) {
+            begin = 0;
+        }
+            Map<String, Integer> parameters = new HashMap<>();
         parameters.put("currentPage", currentPage);
         parameters.put("recordsPerPage", recordsPerPage);
         parameters.put("pagesAmount", pagesAmount);

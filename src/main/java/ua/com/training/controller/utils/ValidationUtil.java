@@ -51,7 +51,7 @@ public class ValidationUtil {
 
     }
 
-    private boolean isNullOrEmpty(String str) {
+    public boolean isNullOrEmpty(String str) {
         return str == null || str.isEmpty();
     }
 }

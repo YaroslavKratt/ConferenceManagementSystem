@@ -5,8 +5,11 @@ import org.apache.logging.log4j.Logger;
 import ua.com.training.model.dao.ConferenceDao;
 import ua.com.training.model.dao.DaoFactory;
 import ua.com.training.model.dto.ConferenceDTO;
+import ua.com.training.model.dto.SpeakerDTO;
 import ua.com.training.model.entity.Conference;
 
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +32,7 @@ public class ConferenceService {
     }
 
     public List<Conference> getPaginatedList(int begin, int recordsPerPage, String language) {
-        return conferenceDao.getPaginatedConferences(begin, recordsPerPage, language);
+        return sortPaginatedConferencesByDateTime(conferenceDao.getPaginatedConferences(begin, recordsPerPage, language));
     }
 
     public List<Conference> getSortedPaginatedConferences(FilterSortType type, int begin, int recordsPerPage, String language) {
@@ -45,11 +48,11 @@ public class ConferenceService {
     }
 
     private List<Conference> getPaginatedPastConferences(int begin, int recordsPerPage, String language) {
-        return conferenceDao.getPaginatedPastConferences(begin, recordsPerPage, language);
+        return sortPaginatedConferencesByDateTime(conferenceDao.getPaginatedPastConferences(begin, recordsPerPage, language));
     }
 
     private List<Conference> getPaginatedFutureConferences(int begin, int recordsPerPage, String language) {
-        return conferenceDao.getPaginatedFutureConferences(begin, recordsPerPage, language);
+        return sortPaginatedConferencesByDateTime(conferenceDao.getPaginatedFutureConferences(begin, recordsPerPage, language));
     }
 
     public int getConferencesAmount() {
@@ -62,6 +65,12 @@ public class ConferenceService {
         filteredSorted.put(FilterSortType.FUTURE, this::getFutureConferencesAmount);
 
         return filteredSorted.get(type).getAmount();
+    }
+
+    private List<Conference> sortPaginatedConferencesByDateTime(List<Conference> conferences) {
+        Comparator<Conference> byDateTime = Comparator.comparing(Conference::getDateTime);
+        conferences.sort(byDateTime);
+        return conferences;
     }
     private int getFutureConferencesAmount(){
         return conferenceDao.getFutureConferencesAmount();

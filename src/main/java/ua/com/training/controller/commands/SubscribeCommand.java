@@ -20,7 +20,7 @@ public class SubscribeCommand implements Command {
     public String execute(HttpServletRequest request) {
         Locale locale = (Locale) request.getSession().getAttribute("locale");
         HttpSession session = request.getSession();
-        long userId = userService.getUserId((String) session.getAttribute("email"),locale.toString());
+        long userId = userService.getUserId((String) session.getAttribute("email"), locale.toString());
 
         if (Objects.isNull(request.getParameter("reportForSubscription"))) {
             return "redirect:/" + request.getSession().getAttribute("role") + PATH_BUNDLE.getString("path.catalog");
@@ -36,7 +36,8 @@ public class SubscribeCommand implements Command {
                 + PATH_BUNDLE.getString("path.catalog")
                 + "?recordsPerPage=" + request.getParameter("recordsPerPage")
                 + "&currentPage=" + request.getParameter("currentPage")
-                +"&scrollPosition="+request.getParameter("scrollPosition");
+                + "&scrollPosition=" + request.getParameter("scrollPosition")
+                + "&sortType=" + (request.getParameter("sortType").isEmpty()?"all":request.getParameter("sortType"));
 
     }
 }

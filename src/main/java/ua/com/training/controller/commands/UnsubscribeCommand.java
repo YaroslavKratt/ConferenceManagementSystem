@@ -39,7 +39,9 @@ public class UnsubscribeCommand implements Command {
                 + PATH_BUNDLE.getString("path.catalog")
                 + "?recordsPerPage=" + request.getParameter("recordsPerPage")
                 + "&currentPage=" + request.getParameter("currentPage")
-                + "&scrollPosition=" + request.getParameter("scrollPosition");
+                + "&scrollPosition=" + request.getParameter("scrollPosition")
+                + "&sortType=" + (request.getParameter("sortType").isEmpty()?"all":request.getParameter("sortType"));
+
 
     }
 }

@@ -23,71 +23,71 @@
 <body>
 
 <div class="container">
-        <form action="${pageContext.request.contextPath}/${sessionScope.role}/catalog" onchange="submit()">
-            <input type="hidden" name="currentPage" value="1">
-            <div class="row">
+    <form action="${pageContext.request.contextPath}/${sessionScope.role}/catalog" onchange="submit()">
+        <input type="hidden" name="currentPage" value="1">
+        <div class="row">
 
-                <div class="col-4">
-                    <label for="records"><fmt:message key="page.message.records.per.page"/> </label>
-                    <select class="form-control" id="records" name="recordsPerPage">
-                        <c:choose>
-                            <c:when test="${paginationParameters.recordsPerPage==5}">
-                                <option value="5" selected>5</option>
-                            </c:when>
-                            <c:otherwise>
-                                <option value="5">5</option>
-                            </c:otherwise>
-                        </c:choose>
-                        <c:choose>
-                            <c:when test="${paginationParameters.recordsPerPage==10}">
-                                <option value="10" selected>10</option>
-                            </c:when>
-                            <c:otherwise>
-                                <option value="10">10</option>
-                            </c:otherwise>
-                        </c:choose>
-                        <c:choose>
-                            <c:when test="${paginationParameters.recordsPerPage==15}">
-                                <option value="15" selected>15</option>
-                            </c:when>
-                            <c:otherwise>
-                                <option value="15">15</option>
-                            </c:otherwise>
-                        </c:choose>
-                    </select>
-                </div>
-                <div class="col-4">
-
-                    <label for="sortType"><fmt:message key="page.message.filter"/> </label>
-                    <select class="form-control" id="sortType" name="sortType">
-                        <c:choose>
-                            <c:when test="${sortType=='all'}">
-                                <option value="all" selected><fmt:message key="page.message.sort.asсending"/> </option>
-                            </c:when>
-                            <c:otherwise>
-                                <option value="all"><fmt:message key="page.message.sort.asсending"/> </option>
-                            </c:otherwise>
-                        </c:choose>
-                        <c:choose>
-                            <c:when test="${sortType=='past'}">
-                                <option value="past" selected><fmt:message key="page.message.sort.only.past" /></option>
-                            </c:when>
-                            <c:otherwise>
-                                <option value="past"><fmt:message key="page.message.sort.only.past" /></option>
-                            </c:otherwise>
-                        </c:choose>
-                        <c:choose>
-                            <c:when test="${sortType=='future'}">
-                                <option value="future" selected><fmt:message key="page.message.sort.only.future" /></option>
-                            </c:when>
-                            <c:otherwise>
-                                <option value="future"><fmt:message key="page.message.sort.only.future" /></option>
-                            </c:otherwise>
-                        </c:choose>
-                    </select>
-                </div>
+            <div class="col-4">
+                <label for="records"><fmt:message key="page.message.records.per.page"/> </label>
+                <select class="form-control" id="records" name="recordsPerPage">
+                    <c:choose>
+                        <c:when test="${paginationParameters.recordsPerPage==5}">
+                            <option value="5" selected>5</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="5">5</option>
+                        </c:otherwise>
+                    </c:choose>
+                    <c:choose>
+                        <c:when test="${paginationParameters.recordsPerPage==10}">
+                            <option value="10" selected>10</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="10">10</option>
+                        </c:otherwise>
+                    </c:choose>
+                    <c:choose>
+                        <c:when test="${paginationParameters.recordsPerPage==15}">
+                            <option value="15" selected>15</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="15">15</option>
+                        </c:otherwise>
+                    </c:choose>
+                </select>
             </div>
-        </form>
+            <div class="col-4">
+
+                <label for="sortType"><fmt:message key="page.message.filter"/> </label>
+                <select class="form-control" id="sortType" name="sortType">
+                    <c:choose>
+                        <c:when test="${sortType=='all'}">
+                            <option value="all" selected><fmt:message key="page.message.sort.asсending"/></option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="all"><fmt:message key="page.message.sort.asсending"/></option>
+                        </c:otherwise>
+                    </c:choose>
+                    <c:choose>
+                        <c:when test="${sortType=='past'}">
+                            <option value="past" selected><fmt:message key="page.message.sort.only.past"/></option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="past"><fmt:message key="page.message.sort.only.past"/></option>
+                        </c:otherwise>
+                    </c:choose>
+                    <c:choose>
+                        <c:when test="${sortType=='future'}">
+                            <option value="future" selected><fmt:message key="page.message.sort.only.future"/></option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="future"><fmt:message key="page.message.sort.only.future"/></option>
+                        </c:otherwise>
+                    </c:choose>
+                </select>
+            </div>
+        </div>
+    </form>
 </div><!--container-->
 <div class="container justify-content-lg-center" id="main">
 
@@ -178,6 +178,7 @@
                                                            value="${paginationParameters.recordsPerPage}">
                                                     <input hidden name="scrollPosition"
                                                            id="scroll-subs${report.id}">
+                                                    <input hidden value="${requestScope.sortType}" name="sortType">
                                                     <button id="btn${report.id}" class="btn btn-primary"
                                                             type="submit"
                                                             name="reportForSubscription"
@@ -188,7 +189,8 @@
                                                 </form>
                                             </c:when>
                                             <c:otherwise>
-                                                <form method="post" onsubmit="getScrollPosition('scroll-uns${report.id}')"
+                                                <form method="post"
+                                                      onsubmit="getScrollPosition('scroll-uns${report.id}')"
                                                       action="${pageContext.request.contextPath}/${sessionScope.role}/unsubscribe">
                                                     <input hidden name="currentPage"
                                                            value="${paginationParameters.currentPage}">
@@ -196,6 +198,8 @@
                                                            value="${paginationParameters.recordsPerPage}">
                                                     <input hidden name="scrollPosition"
                                                            id="scroll-uns${report.id}">
+                                                    <input hidden="${sortType}" name="sortType">
+
 
                                                     <button class="btn btn-danger" type="submit"
                                                             name="reportForUnsubscription"
@@ -209,14 +213,14 @@
                                 </c:choose>
                                 <c:choose>
                                     <c:when test="${sessionScope.role=='admin' ||(sessionScope.role=='speaker' && requestScope.userId==report.speakerId)}">
-                                        <form method="post"  onsubmit="getScrollPosition('scroll-delete${report.id}')"
+                                        <form method="post" onsubmit="getScrollPosition('scroll-delete${report.id}')"
                                               action="${pageContext.request.contextPath}/${sessionScope.role}/deletereport">
                                             <input hidden name="currentPage"
                                                    value="${paginationParameters.currentPage}">
                                             <input hidden name="recordsPerPage"
                                                    value="${paginationParameters.recordsPerPage}">
                                             <input hidden name="scrollPosition"
-                                                   id="scroll-delete${report.id}" value="" >
+                                                   id="scroll-delete${report.id}" value="">
                                             <input type="hidden" name="uri"
                                                    value="${pageContext.request.contextPath}/${sessionScope.role}/catalog">
                                             <button class="btn btn-danger" type="submit"
@@ -238,14 +242,15 @@
         <c:if test="${sessionScope.role == 'admin'|| sessionScope.role == 'speaker'}">
             <div class="row" style="margin-top: 10px">
                 <div class="col-12 text-center">
-                    <form action="${pageContext.request.contextPath}/${sessionScope.role}/addreport" onsubmit="getScrollPosition('scroll-add-report${conference.id}')">
+                    <form action="${pageContext.request.contextPath}/${sessionScope.role}/addreport"
+                          onsubmit="getScrollPosition('scroll-add-report${conference.id}')">
                         <input type="hidden" name="conferenceId" value="${conference.id}">
                         <input hidden name="currentPage"
                                value="${paginationParameters.currentPage}">
                         <input hidden name="recordsPerPage"
                                value="${paginationParameters.recordsPerPage}">
                         <input hidden name="scrollPosition"
-                               id="scroll-add-report${conference.id}" value="" >
+                               id="scroll-add-report${conference.id}" value="">
                         <button class="btn btn-primary" type="submit"><fmt:message
                                 key="page.message.add.report"/></button>
                     </form>
@@ -274,7 +279,7 @@
                 <ul class="pagination">
                     <c:if test="${paginationParameters.currentPage != 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="/${sessionScope.role}/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage-1}"><<</a>
+                                                 href="/${sessionScope.role}/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage-1}&sortType=${sortType}"><<</a>
                         </li>
                     </c:if>
                     <c:forEach begin="1" end="${paginationParameters.pagesAmount}" var="i">
@@ -286,14 +291,14 @@
                             </c:when>
                             <c:otherwise>
                                 <li class="page-item"><a class="page-link"
-                                                         href="/${sessionScope.role}/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${i}">${i}</a>
+                                                         href="/${sessionScope.role}/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${i}&sortType=${sortType}">${i}</a>
                                 </li>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
                     <c:if test="${paginationParameters.currentPage lt paginationParameters.pagesAmount}">
                         <li class="page-item"><a class="page-link"
-                                                 href="/${sessionScope.role}/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage+1}">>></a>
+                                                 href="/${sessionScope.role}/catalog?recordsPerPage=${paginationParameters.recordsPerPage}&currentPage=${paginationParameters.currentPage+1}&sortType=${sortType}">>></a>
                         </li>
                     </c:if>
                 </ul>
